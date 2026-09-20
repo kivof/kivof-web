@@ -50,7 +50,7 @@ export function Workspace({
     router.replace("/login");
   }
   return (
-    <div className={styles.workspace}>
+    <div className={styles.workspace} data-section={section}>
       <aside className={styles.sidebar} data-open={menu}>
         <Link href="/" className={styles.brand}>
           <span>K</span>
