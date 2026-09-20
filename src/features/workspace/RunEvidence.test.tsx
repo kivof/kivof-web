@@ -88,6 +88,37 @@ test("run detail presents units and recorded geometry without dumping cable arra
   assert.doesNotMatch(html, /cable_points_m|\[\[0,0,0\]/);
 });
 
+test("native run detail displays its own rendered frame and observation simulation time", () => {
+  const native: Run = {
+    ...run,
+    source: "isaac-sim",
+    observations: [
+      {
+        source: "isaac-sim",
+        simulation_time_s: 9.25,
+        robots: [{ id: "franka-0" }],
+      },
+    ],
+    evidence: {
+      frames: [
+        {
+          source: "isaac-sim",
+          media_type: "image/png",
+          simulation_time_s: 9.25,
+          sha256: "a".repeat(64),
+          data_url: "data:image/png;base64,iVBORw0KGgoAAA==",
+        },
+      ],
+    },
+  };
+  const html = renderToStaticMarkup(
+    <RunsPanel runs={[native]} runId={native.id} />,
+  );
+  assert.match(html, /data-native-source="run"/);
+  assert.match(html, /Observations 1 · 9.25 s/);
+  assert.doesNotMatch(html, /Recorded factory preview/);
+});
+
 test("all locales translate replay phases and preserve small measurements", () => {
   for (const locale of ["en", "es", "de", "fr"] as Locale[]) {
     const copy = dictionaries[locale];

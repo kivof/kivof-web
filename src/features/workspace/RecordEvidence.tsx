@@ -79,6 +79,15 @@ export function ObservationSummary({
           max_skew_ms: value.max_skew_ms,
           frame: value.frame,
           calibration_version: value.calibration_version,
+          ...(value.source === "isaac-sim"
+            ? {
+                simulation_time_s: value.simulation_time_s,
+                robot_count: Array.isArray(value.robots)
+                  ? value.robots.length
+                  : undefined,
+                camera_sha256: value.camera_sha256,
+              }
+            : {}),
         }}
       />
       {!!sensors.length && (

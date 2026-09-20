@@ -1,5 +1,7 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+release|Release|Soltar|Loslassen|Relâcher
+camera_sha256|Rendered frame SHA-256|SHA-256 del fotograma renderizado|SHA-256 des gerenderten Bildes|SHA-256 de l’image rendue
 recordedRobot|Recorded robot|Robot registrado|Aufgezeichneter Roboter|Robot enregistré
 webLayer|Web interface|Interfaz web|Weboberfläche|Interface web
 backendLayer|Rust backend|Servidor Rust|Rust-Backend|Serveur Rust

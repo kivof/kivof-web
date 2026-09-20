@@ -2,9 +2,11 @@
 "use client";
 import Link from "next/link";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
+import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import type { Run } from "@/lib/models/domain";
+import { isaacFrames } from "@/lib/models/robotScene";
 import { Fields, RunBadge } from "./Fields";
 import styles from "./PanelsStyles.module.css";
 import { RawRecord } from "./RawRecord";
@@ -44,6 +46,14 @@ export function RunsPanel({ runs, runId }: { runs: Run[]; runId?: string }) {
           </div>
           <Fields values={run.metrics} />
         </section>
+        {!!isaacFrames(run).length && (
+          <section className={styles.card}>
+            <div className={styles.cardHeader}>
+              <h2>{t.nativeFrame}</h2>
+            </div>
+            <RecordedScene run={run} title={t.sceneTitle} />
+          </section>
+        )}
         <section className={styles.card}>
           <div className={styles.cardHeader}>
             <h2>{t.cableGeometry}</h2>
@@ -60,7 +70,7 @@ export function RunsPanel({ runs, runId }: { runs: Run[]; runId?: string }) {
                 <summary>
                   {key === "steps"
                     ? stepLabel(item, t, locale)
-                    : `${t.observations} ${recordNumber(Number(item.sequence ?? i) + 1, locale)} · ${recordNumber(item.sensor_time_s, locale, "s")} · ${t[String(item.quality)] ?? t.unknown}`}
+                    : `${t.observations} ${recordNumber(Number(item.sequence ?? i) + 1, locale)} · ${recordNumber(item.sensor_time_s ?? item.simulation_time_s, locale, "s")} · ${t[String(item.quality)] ?? t.unknown}`}
                 </summary>
                 {key === "steps" ? (
                   <>
