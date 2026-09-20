@@ -1,0 +1,112 @@
+.blocks {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.card {
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--panel);
+  padding: 0.9rem;
+  overflow: hidden;
+}
+.card h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0 0 0.7rem;
+}
+.card h5 {
+  font-size: 0.72rem;
+  margin: 0.5rem 0;
+}
+.card p,
+.card li,
+.card dd {
+  font-size: 0.75rem;
+}
+.metric {
+  font-size: 2rem;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+.card small {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.card dl {
+  margin: 0;
+}
+.card dt {
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+.card dd {
+  margin: 0.3rem 0 0.8rem;
+}
+.scroll {
+  max-width: 100%;
+  overflow: auto;
+}
+.scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.65rem;
+}
+.scroll td,
+.scroll th {
+  padding: 0.45rem;
+  border-bottom: 1px solid var(--line);
+}
+.scroll th {
+  color: var(--muted);
+  font-weight: 500;
+}
+.sources {
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+  margin-top: 0.7rem;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+.sources summary {
+  cursor: pointer;
+}
+.sources p {
+  font-size: 0.65rem;
+  margin: 0.6rem 0;
+}
+.nodes {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.nodes span {
+  padding: 0.45rem 0.7rem;
+  background: var(--accentSoft);
+  color: var(--accent);
+  border-radius: 0.4rem;
+  font-size: 0.68rem;
+}
+.edges {
+  padding-left: 1rem;
+}
+.chart {
+  display: block;
+  width: 100%;
+  max-height: 12rem;
+}
+.chart rect {
+  fill: var(--accent);
+}
+.chart text {
+  fill: var(--muted);
+  font-size: 0.5rem;
+}
+.notice {
+  color: var(--warning);
+  margin-bottom: 0.5rem;
+}
