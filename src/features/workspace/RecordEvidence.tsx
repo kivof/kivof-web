@@ -153,9 +153,11 @@ export function CableEvidence({
             <text x="40" y="225">
               {recordNumber(minX, locale)} m
             </text>
-            <text x="600" y="225">
-              {recordNumber(maxX, locale)} m
-            </text>
+            {maxX > minX && (
+              <text x={40 + (maxX - minX) * scale} y="225" textAnchor="end">
+                {recordNumber(maxX, locale)} m
+              </text>
+            )}
             <polyline
               points={points
                 .map((point) => `${x(point)},${z(point)}`)
