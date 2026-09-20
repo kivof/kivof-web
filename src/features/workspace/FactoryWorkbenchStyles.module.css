@@ -497,7 +497,7 @@
     flex: 1;
   }
   .stage > figure:has(img) {
-    padding-bottom: 0;
+    padding-bottom: 3.5rem;
   }
   .stage > figure > img {
     flex: 1;
@@ -509,7 +509,7 @@
   .stage > figure:has(img) > figcaption {
     position: absolute;
     left: 5rem;
-    bottom: 3.8rem;
+    bottom: 6.2rem;
     width: calc(100% - 6rem);
     max-width: 55%;
   }
