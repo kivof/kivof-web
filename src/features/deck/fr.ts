@@ -1,0 +1,95 @@
+import type { Slide } from "./content";
+export const fr: Slide[] = [
+  {
+    label: "KIVOF / IA PHYSIQUE",
+    title: "Chaque exécution.\nUne meilleure prochaine étape.",
+    body: "L’espace de preuves pour les opérations robotiques industrielles et l’apprentissage.",
+    points: ["THEKER · HackSpain 2026", "Démonstrateur Harness Forge"],
+    note: "Démonstrateur logiciel. L’autonomie physique et la mise en service exigent une validation distincte.",
+    visual: "cell",
+  },
+  {
+    label: "01 / LE PROBLÈME",
+    title: "Un robot échoue.\nLe contexte se disperse.",
+    body: "Vidéo, force, décisions et résultats sont souvent séparés. Améliorer commence par reconstituer les faits.",
+    points: [
+      "Quelle observation était fiable ?",
+      "Qu’a réellement fait le contrôleur ?",
+      "La tâche a-t-elle été vérifiée indépendamment ?",
+    ],
+    note: "Hypothèse de produit issue du défi fourni ; demande client non validée.",
+    visual: "loop",
+  },
+  {
+    label: "02 / LE PARCOURS",
+    title: "De l’observation\nà l’amélioration revue.",
+    body: "Kivof relie l’exécution, les preuves capteurs, une évaluation bornée et l’annotation résultante.",
+    points: [
+      "Inspecter provenance et qualité",
+      "Demander une explication visuelle sourcée",
+      "Conserver les échecs pour la revue",
+    ],
+    note: "L’interface distingue simulation enregistrée, transport connecté et matériel indisponible.",
+    visual: "loop",
+  },
+  {
+    label: "03 / HARNESS FORGE",
+    title: "Un câble.\nTrois guides.\nUn résultat vérifiable.",
+    body: "La preuve THEKER porte sur le guidage de câble et l’insertion de connecteur sous variations contrôlées.",
+    points: [
+      "Assemblage nominal",
+      "Occlusion caméra",
+      "Pic de force et récupération bornée",
+    ],
+    note: "La simulation CPU fournit des preuves inspectables. Isaac Sim et les essais physiques sont des capacités distinctes.",
+    visual: "proof",
+  },
+  {
+    label: "04 / LES PREUVES",
+    title: "Une réponse\nque l’on peut inspecter.",
+    body: "Texte, voix, tableaux, graphiques et diagrammes partagent une conversation avec sources et état du fournisseur.",
+    points: [
+      "Sélection du modèle via le cœur",
+      "Illustrations générées clairement identifiées",
+      "Annotations liées à l’identité d’exécution",
+    ],
+    note: "Une explication n’est pas une autorisation de sécurité. Les résumés montrent le travail observable, pas le raisonnement privé.",
+    visual: "layers",
+  },
+  {
+    label: "05 / LE SYSTÈME",
+    title: "L’autorité physique\nreste locale.",
+    body: "Le navigateur relie services Rust et orchestration. Les identifiants du modèle restent dans le cœur d’inférence.",
+    points: [
+      "Web → backend authentifié",
+      "OpenClaw → cœur Rust",
+      "Environnement robot → contrôleur local",
+    ],
+    note: "Une proposition dans le chat ne devient jamais directement une commande moteur.",
+    visual: "layers",
+  },
+  {
+    label: "06 / LE PILOTE",
+    title: "Une cellule pour commencer.\nUne amélioration à mesurer.",
+    body: "Une équipe industrielle, une tâche approuvée. Évaluer diagnostic, annotations et répétabilité.",
+    points: [
+      "Utilisateurs : robotique et opérations",
+      "Acheteur proposé : ingénierie de production",
+      "Mesurer diagnostic et tâches réservées",
+    ],
+    note: "Hypothèse commerciale. Aucun client, revenu, marché chiffré, économie ou certification n’est revendiqué.",
+    visual: "loop",
+  },
+  {
+    label: "07 / PROCHAINE VALIDATION",
+    title: "Apportez un cas difficile.\nInspectons les preuves.",
+    body: "Ouvrez l’espace, lancez une variation contrôlée, examinez la vérification et interrogez les observations.",
+    points: [
+      "Inspecter chaque échec",
+      "Connecter et valider le matériel compatible",
+      "Évaluer une tâche physique réservée",
+    ],
+    note: "Kivof · Défi THEKER · Développé par JO · 20 septembre 2026",
+    visual: "cell",
+  },
+];

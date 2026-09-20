@@ -1,0 +1,95 @@
+import type { Slide } from "./content";
+export const es: Slide[] = [
+  {
+    label: "KIVOF / IA FÍSICA",
+    title: "Cada ejecución.\nUn siguiente paso mejor.",
+    body: "El espacio de evidencias para operaciones robóticas industriales y aprendizaje.",
+    points: ["THEKER · HackSpain 2026", "Demostrador Harness Forge"],
+    note: "Demostrador de software. La autonomía física requiere validación y puesta en marcha independientes.",
+    visual: "cell",
+  },
+  {
+    label: "01 / EL PROBLEMA",
+    title: "Un robot falla.\nEl contexto se dispersa.",
+    body: "Vídeo, fuerza, decisiones y resultados suelen estar separados. Mejorar empieza por reconstruir lo ocurrido.",
+    points: [
+      "¿Qué observación era fiable?",
+      "¿Qué hizo realmente el controlador?",
+      "¿Se verificó la tarea de forma independiente?",
+    ],
+    note: "Hipótesis de producto basada en el reto proporcionado; demanda todavía no validada.",
+    visual: "loop",
+  },
+  {
+    label: "02 / EL FLUJO",
+    title: "De la observación\na una mejora revisada.",
+    body: "Kivof conecta la ejecución, sus sensores, una evaluación acotada y la anotación resultante.",
+    points: [
+      "Inspeccionar origen y calidad",
+      "Pedir una explicación visual fundamentada",
+      "Conservar fallos para revisión",
+    ],
+    note: "La interfaz distingue simulación registrada, transporte conectado y hardware no disponible.",
+    visual: "loop",
+  },
+  {
+    label: "03 / HARNESS FORGE",
+    title: "Un cable.\nTres guías.\nUn resultado verificable.",
+    body: "La prueba THEKER se centra en guiar cables e insertar conectores con variaciones controladas.",
+    points: [
+      "Ensamblaje nominal",
+      "Oclusión de cámara",
+      "Pico de fuerza y recuperación acotada",
+    ],
+    note: "La simulación CPU produce evidencias inspeccionables. Isaac Sim y los ensayos físicos son capacidades independientes.",
+    visual: "proof",
+  },
+  {
+    label: "04 / LA EVIDENCIA",
+    title: "Una respuesta\nque puedes inspeccionar.",
+    body: "Texto, voz, tablas, gráficos y diagramas comparten conversación, fuentes y estado explícito del proveedor.",
+    points: [
+      "Selección de modelos mediante el núcleo",
+      "Ilustraciones generadas identificadas",
+      "Las anotaciones conservan la identidad",
+    ],
+    note: "Una explicación no es una autorización de seguridad. Los resúmenes muestran trabajo observable, no razonamiento privado.",
+    visual: "layers",
+  },
+  {
+    label: "05 / EL SISTEMA",
+    title: "La autoridad física\npermanece local.",
+    body: "El navegador conecta servicios Rust y una pasarela de orquestación. Las credenciales del modelo quedan en el núcleo.",
+    points: [
+      "Web → backend autenticado",
+      "OpenClaw → núcleo de inferencia Rust",
+      "Entorno robótico → controlador local",
+    ],
+    note: "Una propuesta del chat nunca se convierte directamente en una orden de movimiento.",
+    visual: "layers",
+  },
+  {
+    label: "06 / EL PILOTO",
+    title: "Empieza por una célula.\nMide la mejora.",
+    body: "Un equipo industrial, una tarea aprobada. Evalúa el diagnóstico, las anotaciones y la repetibilidad.",
+    points: [
+      "Usuarios: robótica y operaciones",
+      "Comprador propuesto: ingeniería de fabricación",
+      "Medir diagnóstico y resultados reservados",
+    ],
+    note: "Hipótesis comercial. No se afirman clientes, ingresos, tamaño de mercado, ahorro ni certificación.",
+    visual: "loop",
+  },
+  {
+    label: "07 / PRÓXIMA VALIDACIÓN",
+    title: "Trae una ejecución difícil.\nRevisemos las evidencias.",
+    body: "Abre el espacio, ejecuta una variación controlada, inspecciona la verificación y pregunta qué respaldan las observaciones.",
+    points: [
+      "Inspeccionar cada fallo",
+      "Conectar y validar hardware compatible",
+      "Evaluar una tarea física reservada",
+    ],
+    note: "Kivof · Reto THEKER · Desarrollado por JO · 20 de septiembre de 2026",
+    visual: "cell",
+  },
+];

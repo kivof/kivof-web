@@ -1,0 +1,95 @@
+import type { Slide } from "./content";
+export const en: Slide[] = [
+  {
+    label: "KIVOF / PHYSICAL AI",
+    title: "Every run.\nA better next step.",
+    body: "The evidence workspace for industrial robot operations and learning.",
+    points: ["THEKER · HackSpain 2026", "Harness Forge demonstrator"],
+    note: "Software demonstrator. Hardware autonomy and commissioning require separate validation.",
+    visual: "cell",
+  },
+  {
+    label: "01 / THE PROBLEM",
+    title: "A robot fails.\nThe context scatters.",
+    body: "Video, force, decisions and outcomes often sit in separate places. Finding what to improve starts with reconstructing what happened.",
+    points: [
+      "Which observation was trustworthy?",
+      "What did the controller actually do?",
+      "Was the task independently verified?",
+    ],
+    note: "Product hypothesis grounded in the supplied project challenge; customer demand is not yet validated.",
+    visual: "loop",
+  },
+  {
+    label: "02 / THE WORKFLOW",
+    title: "From observation\nto a reviewed improvement.",
+    body: "Kivof connects the run, its sensor evidence, a bounded evaluation and the resulting annotation.",
+    points: [
+      "Inspect provenance and quality",
+      "Ask for a grounded visual explanation",
+      "Preserve failures for review",
+    ],
+    note: "The interface distinguishes recorded simulation, live transport and unavailable hardware.",
+    visual: "loop",
+  },
+  {
+    label: "03 / HARNESS FORGE",
+    title: "One cable.\nThree guides.\nA verifiable result.",
+    body: "The THEKER proof centers on cable routing and connector insertion under controlled variation.",
+    points: [
+      "Nominal cable assembly",
+      "Camera occlusion",
+      "Force spike and bounded recovery",
+    ],
+    note: "CPU simulation supplies inspectable evidence. Isaac Sim and physical trials remain separate runtime capabilities.",
+    visual: "proof",
+  },
+  {
+    label: "04 / THE EVIDENCE",
+    title: "An answer you\ncan inspect.",
+    body: "Text, voice, tables, charts and diagrams share one conversation, with source identifiers and explicit provider status.",
+    points: [
+      "Model selection through the core gateway",
+      "Generated illustrations labeled as illustrations",
+      "Reviewed annotations retain run identity",
+    ],
+    note: "A model explanation is not a safety approval. Tool summaries describe observable work, not private chain-of-thought.",
+    visual: "layers",
+  },
+  {
+    label: "05 / THE SYSTEM",
+    title: "Physical authority\nstays local.",
+    body: "A browser workspace connects to Rust services and an orchestration gateway. Model credentials stay inside the inference core.",
+    points: [
+      "Web → authenticated backend",
+      "OpenClaw → Rust inference core",
+      "Robot runtime → local controller",
+    ],
+    note: "A proposal never becomes a motor command through the chat interface.",
+    visual: "layers",
+  },
+  {
+    label: "06 / THE PILOT",
+    title: "Start with one cell.\nMeasure the improvement.",
+    body: "Work with one industrial team on one approved task. Evaluate diagnosis quality, annotation utility and repeatable completion.",
+    points: [
+      "Users: robotics and operations teams",
+      "Buyer hypothesis: manufacturing engineering",
+      "Measure diagnosis time and held-out task outcomes",
+    ],
+    note: "Commercial hypothesis. No customers, revenue, market size, savings or safety certification are claimed.",
+    visual: "loop",
+  },
+  {
+    label: "07 / NEXT VALIDATION",
+    title: "Bring a difficult run.\nLet’s inspect the evidence.",
+    body: "Open the workspace, run a controlled variation, trace the verifier result and ask what the observations support.",
+    points: [
+      "Inspect every failed trial",
+      "Connect and commission compatible hardware",
+      "Evaluate a held-out physical task",
+    ],
+    note: "Kivof · THEKER challenge · Built by JO · 20 September 2026",
+    visual: "cell",
+  },
+];

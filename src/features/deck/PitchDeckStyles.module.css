@@ -1,0 +1,221 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.3rem;
+  max-width: 100rem;
+  margin: auto;
+}
+.page > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 5rem;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  font-size: 1.7rem;
+  letter-spacing: -0.07em;
+  font-weight: 700;
+}
+.page > header > span {
+  display: none;
+  font: 0.6rem var(--fontMono);
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+.page > header > div {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.page > header button {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: transparent;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.4rem;
+}
+.active {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.slide {
+  display: grid;
+  width: 100%;
+  gap: 2rem;
+  padding: 2.5rem 0;
+}
+.label {
+  font: 0.62rem var(--fontMono);
+  color: var(--accent);
+  letter-spacing: 0.14em;
+}
+.copy h1 {
+  font-size: clamp(2.1rem, 4.5vw, 4.5rem);
+  white-space: pre-line;
+  line-height: 1.07;
+  letter-spacing: -0.055em;
+  font-weight: 500;
+  margin: 1.2rem 0;
+}
+.copy > p {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 35rem;
+}
+.copy ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.6rem 0 0;
+  display: grid;
+  gap: 0.7rem;
+}
+.copy li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+}
+.copy li > span {
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.slide > figure {
+  align-self: center;
+  border: 1px solid var(--line);
+}
+.slide > footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: end;
+  gap: 2rem;
+  justify-content: space-between;
+  font-size: 0.63rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 1.1rem;
+}
+.slide > footer p {
+  max-width: 52rem;
+}
+.slide > footer > span {
+  font-family: var(--fontMono);
+  white-space: nowrap;
+}
+.visual {
+  align-self: center;
+  display: grid;
+  gap: 0.8rem;
+}
+.visual > div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--line);
+  padding: 1.2rem;
+  background: var(--panel);
+  border-radius: 0.6rem;
+}
+.visual span {
+  font: 0.7rem var(--fontMono);
+  color: var(--accent);
+}
+.visual strong {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.visual svg {
+  margin-left: auto;
+  color: var(--accent);
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 0 1.5rem;
+}
+.controls > button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 0.4rem;
+}
+.controls > div {
+  display: flex;
+  gap: 0.45rem;
+}
+.controls > div button {
+  width: 0.4rem;
+  height: 0.4rem;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background: var(--line);
+}
+.controls > div button[aria-current="step"] {
+  background: var(--accent);
+}
+.controls > a {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-left: auto;
+}
+.print {
+  display: none;
+}
+@media (min-width: 50rem) {
+  .page {
+    padding: 0 2.5rem;
+  }
+  .page > header > span {
+    display: block;
+  }
+  .slide {
+    grid-template-columns: 1.1fr 1fr;
+    column-gap: 3rem;
+  }
+  .controls > a {
+    display: flex;
+  }
+  .controls {
+    justify-content: flex-start;
+  }
+}
+@media print {
+  .page {
+    padding: 0;
+  }
+  .page > header,
+  .controls,
+  .active {
+    display: none;
+  }
+  .print {
+    display: block;
+  }
+  .slide {
+    min-height: 95vh;
+    break-after: page;
+    grid-template-columns: 1.1fr 1fr;
+    padding: 2rem;
+  }
+  .copy h1 {
+    font-size: 2.6rem;
+  }
+  .slide > footer {
+    align-self: end;
+  }
+}

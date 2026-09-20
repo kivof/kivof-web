@@ -1,0 +1,95 @@
+import type { Slide } from "./content";
+export const de: Slide[] = [
+  {
+    label: "KIVOF / PHYSISCHE KI",
+    title: "Jeder Lauf.\nEin besserer nächster Schritt.",
+    body: "Der Nachweis-Arbeitsbereich für industrielle Roboteroperationen und Lernen.",
+    points: ["THEKER · HackSpain 2026", "Harness-Forge-Demonstrator"],
+    note: "Software-Demonstrator. Physische Autonomie und Inbetriebnahme benötigen separate Validierung.",
+    visual: "cell",
+  },
+  {
+    label: "01 / DAS PROBLEM",
+    title: "Ein Roboter scheitert.\nDer Kontext zerfällt.",
+    body: "Video, Kraft, Entscheidungen und Ergebnisse liegen oft getrennt. Verbesserung beginnt mit der Rekonstruktion.",
+    points: [
+      "Welche Beobachtung war verlässlich?",
+      "Was hat der Controller wirklich ausgeführt?",
+      "Wurde die Aufgabe unabhängig geprüft?",
+    ],
+    note: "Produkthypothese aus der bereitgestellten Challenge; Kundennachfrage ist noch nicht validiert.",
+    visual: "loop",
+  },
+  {
+    label: "02 / DER ABLAUF",
+    title: "Von der Beobachtung\nzur geprüften Verbesserung.",
+    body: "Kivof verbindet Lauf, Sensornachweise, begrenzte Evaluation und Annotation.",
+    points: [
+      "Herkunft und Qualität prüfen",
+      "Eine belegte visuelle Erklärung anfordern",
+      "Fehler für die Prüfung bewahren",
+    ],
+    note: "Die Oberfläche trennt aufgezeichnete Simulation, verbundenen Transport und nicht verfügbare Hardware.",
+    visual: "loop",
+  },
+  {
+    label: "03 / HARNESS FORGE",
+    title: "Ein Kabel.\nDrei Führungen.\nEin prüfbares Ergebnis.",
+    body: "Der THEKER-Nachweis betrifft Kabelführung und Steckermontage unter kontrollierter Variation.",
+    points: [
+      "Nominale Montage",
+      "Kameraverdeckung",
+      "Kraftspitze und begrenzte Wiederherstellung",
+    ],
+    note: "CPU-Simulation liefert prüfbare Nachweise. Isaac Sim und physische Versuche sind separate Laufzeitfähigkeiten.",
+    visual: "proof",
+  },
+  {
+    label: "04 / DER NACHWEIS",
+    title: "Eine Antwort,\ndie sich prüfen lässt.",
+    body: "Text, Sprache, Tabellen, Grafiken und Diagramme teilen ein Gespräch mit Quellen und Anbieterstatus.",
+    points: [
+      "Modellauswahl über das Core-Gateway",
+      "Generierte Illustrationen klar gekennzeichnet",
+      "Annotationen behalten die Laufidentität",
+    ],
+    note: "Eine Modellerklärung ist keine Sicherheitsfreigabe. Zusammenfassungen zeigen beobachtbare Arbeit, keine privaten Denkprozesse.",
+    visual: "layers",
+  },
+  {
+    label: "05 / DAS SYSTEM",
+    title: "Physische Freigabe\nbleibt lokal.",
+    body: "Der Browser verbindet Rust-Dienste und Orchestrierung. Modell-Zugangsdaten bleiben im Inferenzkern.",
+    points: [
+      "Web → authentifiziertes Backend",
+      "OpenClaw → Rust-Inferenzkern",
+      "Roboterlaufzeit → lokaler Controller",
+    ],
+    note: "Ein Chat-Vorschlag wird niemals direkt zu einem Motorbefehl.",
+    visual: "layers",
+  },
+  {
+    label: "06 / DER PILOT",
+    title: "Mit einer Zelle starten.\nVerbesserung messen.",
+    body: "Ein Industrieteam und eine freigegebene Aufgabe. Diagnosequalität, Annotationen und Wiederholbarkeit evaluieren.",
+    points: [
+      "Nutzer: Robotik- und Betriebsteams",
+      "Käuferhypothese: Fertigungsengineering",
+      "Diagnosezeit und zurückgehaltene Aufgaben messen",
+    ],
+    note: "Kommerzielle Hypothese. Keine Kunden, Umsätze, Marktgröße, Einsparungen oder Zertifizierung werden behauptet.",
+    visual: "loop",
+  },
+  {
+    label: "07 / NÄCHSTE VALIDIERUNG",
+    title: "Bringen Sie einen schwierigen Lauf.\nPrüfen wir die Nachweise.",
+    body: "Arbeitsbereich öffnen, Variation ausführen, Verifizierung verfolgen und Beobachtungen hinterfragen.",
+    points: [
+      "Jeden fehlgeschlagenen Versuch prüfen",
+      "Kompatible Hardware verbinden und einrichten",
+      "Eine zurückgehaltene physische Aufgabe evaluieren",
+    ],
+    note: "Kivof · THEKER-Challenge · Entwickelt von JO · 20. September 2026",
+    visual: "cell",
+  },
+];
