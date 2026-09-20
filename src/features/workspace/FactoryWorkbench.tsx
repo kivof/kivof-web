@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RobotScene } from "@/components/ui/data-display/RobotScene/RobotScene";
+import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import type { Overview, Run } from "@/lib/models/domain";
@@ -136,7 +136,11 @@ export function FactoryWorkbench({ overview }: { overview: Overview }) {
           </Badge>
           <span>HARNESS FORGE</span>
         </div>
-        <RobotScene title={t.sceneTitle} caption={t.sceneCaption} />
+        <RecordedScene
+          run={run}
+          title={t.sceneTitle}
+          caption={t.sceneCaption}
+        />
         <div className={styles.stageBottom}>
           <span>
             <i />

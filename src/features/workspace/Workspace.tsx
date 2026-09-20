@@ -190,6 +190,7 @@ export function Workspace({
                 {section === "simulation" && (
                   <SimulationPanel
                     capabilities={state.overview.capabilities}
+                    latestRun={state.overview.latest_run}
                     refresh={state.refresh}
                   />
                 )}

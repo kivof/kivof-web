@@ -1,0 +1,41 @@
+.scene {
+  margin: 0;
+  width: 100%;
+  position: relative;
+}
+.scene img {
+  width: 100%;
+  min-height: 26rem;
+  max-height: 70dvh;
+  object-fit: contain;
+  display: block;
+}
+.scene figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 1rem;
+  color: var(--muted);
+  font-size: 0.6rem;
+}
+.scene strong {
+  color: var(--accent);
+  font-size: 0.65rem;
+}
+.scene code {
+  font: 0.52rem var(--fontMono);
+}
+.scrubber {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.5rem 1rem 1rem;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+.scrubber input {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--accent);
+}

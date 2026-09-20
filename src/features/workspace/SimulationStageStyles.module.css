@@ -1,0 +1,80 @@
+.workbench {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.stage {
+  min-width: 0;
+  min-height: 29rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: radial-gradient(ellipse, var(--raised), var(--bg));
+  display: flex;
+  align-items: center;
+}
+.stage > figure {
+  width: 100%;
+  background: transparent;
+}
+.controls,
+.inspector {
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--panel);
+  min-width: 0;
+}
+.controls h2,
+.inspector h2 {
+  font-size: 0.78rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--line);
+  padding: 0.75rem;
+}
+.controls > div {
+  display: grid;
+  gap: 0.8rem;
+  padding: 0.75rem;
+}
+.inspector > strong,
+.inspector > p {
+  display: block;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+}
+.inspector table {
+  width: 100%;
+  font-size: 0.6rem;
+  border-collapse: collapse;
+}
+.inspector th,
+.inspector td {
+  text-align: left;
+  padding: 0.6rem 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.inspector th {
+  color: var(--muted);
+  font-weight: 400;
+}
+@media (min-width: 70rem) {
+  .workbench {
+    grid-template-columns: 12rem minmax(0, 1fr) 17rem;
+    min-height: calc(100dvh - 14rem);
+  }
+  .controls {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+  }
+  .stage {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .inspector {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+  }
+}

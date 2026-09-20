@@ -395,3 +395,12 @@
     min-height: 23rem;
   }
 }
+
+.stage > figure:has(img) {
+  padding-bottom: 3rem;
+}
+.stage > figure:has(img) > figcaption {
+  position: static;
+  max-width: none;
+  padding: 0.7rem 1rem;
+}
