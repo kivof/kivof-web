@@ -11,6 +11,7 @@ import {
   type LiveScene,
   parseLiveScene,
 } from "@/lib/models/liveScene";
+import { liveSessionContext } from "@/lib/models/liveSessionContext";
 import { pollLiveFeed } from "./liveFeed";
 
 type LiveFailure = "failed" | "cameraError" | "stopError" | "busy" | "expired";
@@ -41,7 +42,12 @@ export function useLiveScene() {
 
   const receive = useCallback((next: LiveScene) => {
     if (next.id !== session.current || !mounted.current) return;
-    if (next.sequence < (samples.current.at(-1)?.sequence ?? -1)) return;
+    if (
+      next.sequence < (samples.current.at(-1)?.sequence ?? -1) &&
+      next.status !== "stopped" &&
+      next.status !== "failed"
+    )
+      return;
     const nextSamples = sampleLiveFrame(samples.current, next, Date.now());
     if (nextSamples !== samples.current) {
       samples.current = nextSamples;
@@ -93,8 +99,8 @@ export function useLiveScene() {
         .then(async (context) => {
           if (controller.signal.aborted || generation !== operation.current)
             return;
-          const id = context.current_live_session;
-          if (id === null) {
+          const discovered = liveSessionContext(context, session.current);
+          if (discovered.state === "stopped") {
             session.current = null;
             setActiveId(null);
             setScene((value) =>
@@ -102,10 +108,17 @@ export function useLiveScene() {
             );
             return;
           }
-          if (typeof id !== "string" || !/^[a-zA-Z0-9_-]{1,128}$/.test(id))
+          if (discovered.state !== "active") {
+            if (session.current && discovered.state === "unavailable")
+              setError("failed");
             return;
+          }
           const next = parseLiveScene(
-            await api(`simulation/live/${id}`, undefined, controller.signal),
+            await api(
+              `simulation/live/${discovered.id}`,
+              undefined,
+              controller.signal,
+            ),
           );
           if (!controller.signal.aborted && generation === operation.current)
             adopt(next);
