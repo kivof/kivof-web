@@ -4,12 +4,12 @@ export const nativePreview = {
   dataOrigin: "simulated",
   preview: true,
   physicalOutcomeVerified: false,
-  url: "/native/factory-8c79ccd8734e0af2.png",
-  sha256: "8c79ccd8734e0af265b8a84363bdb61a815c52a59c01f7b044510cb74b2533ec",
+  url: "/native/factory-a94e5c205bdec3ea.png",
+  sha256: "a94e5c205bdec3ea723e2b76675ca4edcc2eb9042c60ed458bbd3a97eda344ca",
   sourceReceiptSha256:
-    "9ebb96a6bd8be2c0810b99a4fecf66956668524b4acee1f0d4ed22edb4d1147d",
-  width: 1280,
-  height: 720,
+    "ab5ffaac23f7a2be0d26a8261502c1d9734f6c00687bd9aa171364812e4a2aae",
+  width: 640,
+  height: 360,
   simulationTime: 9.466667160391808,
-  recordedAt: "2026-09-20T04:02:26.234210+00:00",
+  recordedAt: "2026-09-20T04:21:06.597730+00:00",
 } as const;
