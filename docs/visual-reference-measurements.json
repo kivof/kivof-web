@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "measured_at": "2026-09-20",
+  "pixel_parity_accepted": false,
+  "coordinates": "original source-image pixels; component bounds manually inspected, color patches computed",
+  "references": [
+    {
+      "surface": "overview",
+      "path": "samples/ux-ui/original-733fab41e18c761ab0fb83df81b38072.webp",
+      "sha256": "133b622f7641bbcfb482b87e33dfa1e47ad117925803344b103360a3d154ea28",
+      "size": [1504, 1128],
+      "geometry": {
+        "left_metrics": [62, 47, 278, 239],
+        "timeline": [568, 50, 841, 48],
+        "stage": [404, 79, 1100, 968],
+        "right_metrics": [1063, 761, 402, 328]
+      },
+      "colors": {
+        "stage": {
+          "bounds_xyxy": [470, 110, 543, 154],
+          "median": "#091c1c",
+          "mode": "#081c1c",
+          "mode_pixels": 660
+        },
+        "panel": {
+          "bounds_xyxy": [88, 53, 301, 79],
+          "median": "#3f494c",
+          "mode": "#3e494c",
+          "mode_pixels": 1251
+        },
+        "metric_row": {
+          "bounds_xyxy": [147, 101, 272, 122],
+          "median": "#212c2f",
+          "mode": "#212c2f",
+          "mode_pixels": 753
+        }
+      }
+    },
+    {
+      "surface": "sensors",
+      "path": "samples/ux-ui/49ff0b24bc8c02bdc8b47a31b3713fda.webp",
+      "sha256": "ddc63ae192edfd8b6741288704302d5ffa005eb5281803c399f0c88a45d9d3d9",
+      "size": [1504, 1128],
+      "geometry": {
+        "app": [113, 101, 1279, 912],
+        "gauge_grid": [368, 355, 989, 443],
+        "gauge_columns": 4,
+        "gauge_rows": 2,
+        "approximate_gap": 10
+      },
+      "colors": {
+        "card": {
+          "bounds_xyxy": [394, 401, 573, 422],
+          "median": "#303f3f",
+          "mode": "#314141",
+          "mode_pixels": 712
+        },
+        "card_header": {
+          "bounds_xyxy": [413, 360, 573, 373],
+          "median": "#303f3e",
+          "mode": "#2e3e3d",
+          "mode_pixels": 367
+        }
+      }
+    },
+    {
+      "surface": "simulation",
+      "path": "samples/ux-ui/original-f46d3ae8b4584a3fa77f2b1dc22e7950.webp",
+      "sha256": "3de4a26efdf78832f5d4a5c9d629f3e7ae7ee49a75994d76b1edd06f562140c3",
+      "size": [1504, 1128],
+      "geometry": {
+        "left_devices": [107, 434, 444, 694],
+        "right_inspector": [1253, 321, 251, 807],
+        "timeline": [423, 222, 1081, 69]
+      },
+      "colors": {
+        "stage": {
+          "bounds_xyxy": [632, 323, 852, 397],
+          "median": "#263939",
+          "mode": "#253939",
+          "mode_pixels": 2882
+        },
+        "panel": {
+          "bounds_xyxy": [188, 445, 455, 464],
+          "median": "#323e40",
+          "mode": "#2b3639",
+          "mode_pixels": 720
+        },
+        "metric_row": {
+          "bounds_xyxy": [212, 542, 417, 571],
+          "median": "#10191b",
+          "mode": "#161e20",
+          "mode_pixels": 161
+        }
+      }
+    },
+    {
+      "surface": "canvas",
+      "path": "samples/ux-ui/original-02f1d2af7f69b0d2cdf33990636d5ad1.webp",
+      "sha256": "332a587b0ce574c2fc386d5acc006f0b4307831eeb66fb53a30a9bb2d4820bde",
+      "size": [1504, 1128],
+      "geometry": {
+        "app": [85, 114, 1334, 903],
+        "inspector": [1088, 195, 310, 613],
+        "lane_count": 3,
+        "nodes_per_lane": 4
+      },
+      "colors": {
+        "stage": {
+          "bounds_xyxy": [529, 242, 676, 279],
+          "median": "#182c2a",
+          "mode": "#172a28",
+          "mode_pixels": 713
+        },
+        "panel": {
+          "bounds_xyxy": [1175, 206, 1322, 229],
+          "median": "#2f3d3d",
+          "mode": "#2f3d3d",
+          "mode_pixels": 1003
+        },
+        "metric_row": {
+          "bounds_xyxy": [1178, 267, 1322, 279],
+          "median": "#1d2b2a",
+          "mode": "#1c2929",
+          "mode_pixels": 345
+        }
+      }
+    }
+  ],
+  "notes": {
+    "en": "Canonical references contain composited factory photography and several robots. Current product shows one recorded Harness Forge fixture, three sensor identities, truthful source evidence and accessible controls. No reference image is presented as a live factory. Dark color tokens are sampled; light theme is an authored accessible counterpart. Font identity, composited 3D imagery, eight production lines and exact pixel equality are not verified.",
+    "es": "Las referencias contienen fotografías de fábrica compuestas y varios robots. El producto muestra una célula Harness Forge registrada, tres sensores, evidencias reales y controles accesibles. Ninguna referencia se presenta como fábrica en vivo. Los colores oscuros se muestrean; el tema claro es una adaptación accesible. Tipografía, imágenes 3D, ocho líneas de producción e igualdad exacta de píxeles sin verificar.",
+    "de": "Die Referenzen enthalten montierte Fabrikfotografien und mehrere Roboter. Das Produkt zeigt einen aufgezeichneten Harness-Forge-Testaufbau, drei Sensoridentitäten, echte Nachweise und zugängliche Bedienelemente. Kein Referenzbild gilt als Live-Fabrik. Dunkle Farbtokens wurden gemessen; das helle Thema ist eine zugängliche eigene Variante. Schriftidentität, 3D-Bildmontage, acht Produktionslinien und Pixelgleichheit sind nicht verifiziert.",
+    "fr": "Les références contiennent des photographies d’usine compositées et plusieurs robots. Le produit affiche un montage Harness Forge enregistré, trois identités de capteurs, des preuves réelles et des commandes accessibles. Aucune référence ne représente une usine en direct. Les couleurs sombres sont échantillonnées ; le thème clair est une variante accessible. Police, imagerie 3D, huit lignes de production et égalité exacte des pixels non vérifiées."
+  },
+  "selected_dark_tokens": {
+    "background": "#081c1c",
+    "panel": "#1c2929",
+    "raised": "#2f3d3d",
+    "accent": "#5aed05"
+  }
+}

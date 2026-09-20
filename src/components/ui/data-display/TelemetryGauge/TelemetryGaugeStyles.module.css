@@ -1,7 +1,11 @@
 .card {
-  background: linear-gradient(140deg, var(--raised), var(--panel));
+  background: linear-gradient(
+    140deg,
+    var(--raised),
+    color-mix(in srgb, var(--raised) 70%, var(--panel))
+  );
   border: 1px solid var(--line);
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
   min-width: 0;
   overflow: hidden;
 }
