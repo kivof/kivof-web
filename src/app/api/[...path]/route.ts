@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { safeError } from "@/lib/api/boundary";
+import { ApiError, safeError } from "@/lib/api/boundary";
 import { proxyRequest, verifyOrigin } from "@/lib/api/server";
 import { config } from "@/lib/config";
 
@@ -13,6 +13,7 @@ async function handle(
   try {
     if (path === "auth/logout" && request.method === "POST") {
       verifyOrigin(request);
+      await proxyRequest(request, "auth/logout");
       const response = NextResponse.json({ ok: true });
       response.cookies.set(settings.cookieName, "", {
         httpOnly: true,
@@ -26,7 +27,11 @@ async function handle(
     const data = await proxyRequest(request, path);
     if (path === "realtime/session") data.url = settings.realtime;
     const token = path === "auth/login" ? data.token : undefined;
-    if (path === "auth/login") delete data.token;
+    if (path === "auth/login") {
+      if (typeof token !== "string" || !token || token.length >= 4096)
+        throw new ApiError(502, "invalid_response");
+      delete data.token;
+    }
     const response = NextResponse.json(data, {
       headers: { "Cache-Control": "no-store" },
     });
@@ -49,3 +54,5 @@ async function handle(
 }
 export const GET = handle;
 export const POST = handle;
+
+export const DELETE = handle;

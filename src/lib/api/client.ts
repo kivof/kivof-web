@@ -2,9 +2,10 @@ export async function api<T = Record<string, unknown>>(
   path: string,
   body?: unknown,
   signal?: AbortSignal,
+  method?: "GET" | "POST" | "DELETE",
 ): Promise<T> {
   const response = await fetch(`/api/${path}`, {
-    method: body === undefined ? "GET" : "POST",
+    method: method ?? (body === undefined ? "GET" : "POST"),
     headers: { "Content-Type": "application/json" },
     body: body === undefined ? undefined : JSON.stringify(body),
     credentials: "same-origin",

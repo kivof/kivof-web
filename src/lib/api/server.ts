@@ -5,18 +5,24 @@ import { ApiError, boundedText, jsonObject } from "./boundary";
 const routes: Record<string, string[]> = {
   "auth/login": ["POST"],
   "auth/me": ["GET"],
+  "auth/logout": ["POST"],
   overview: ["GET"],
   models: ["GET"],
   runs: ["GET", "POST"],
   sensors: ["GET"],
   ontology: ["GET"],
   labels: ["GET", "POST"],
-  chat: ["POST"],
+  chat: ["GET", "POST", "DELETE"],
+  learning: ["GET"],
+  "learning/policy": ["POST"],
+  "learning/world-model": ["POST"],
   "realtime/session": ["POST"],
 };
 export function allowedRoute(path: string, method: string) {
   return (
     routes[path]?.includes(method) ||
+    (method === "GET" && /^chat\/[a-zA-Z0-9_-]{1,128}\/image$/.test(path)) ||
+    (method === "DELETE" && /^labels\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
     (method === "GET" && /^runs\/[a-zA-Z0-9_-]{1,128}$/.test(path))
   );
 }
@@ -46,13 +52,27 @@ export async function proxyRequest(request: NextRequest, path: string) {
     headers,
     body,
     cache: "no-store",
-    signal: AbortSignal.timeout(180_000),
+    signal: AbortSignal.any([request.signal, AbortSignal.timeout(180_000)]),
   });
-  if (!upstream.ok)
-    throw new ApiError(
-      upstream.status,
-      upstream.status === 401 ? "unauthorized" : "request_failed",
-    );
+  if (!upstream.ok) {
+    const safeCodes = [
+      "unauthorized",
+      "invalid_request",
+      "rate_limited",
+      "model_unavailable_or_output_rejected",
+      "provider_unavailable",
+      "review_rejected",
+    ];
+    const errorBody = await boundedText(upstream, 4096);
+    let code = upstream.status === 401 ? "unauthorized" : "request_failed";
+    try {
+      const candidate = JSON.parse(errorBody).error;
+      if (safeCodes.includes(candidate)) code = candidate;
+    } catch {
+      code = "request_failed";
+    }
+    throw new ApiError(upstream.status, code);
+  }
   return jsonObject(
     JSON.parse(await boundedText(upstream, settings.maxResponseBytes)),
   );

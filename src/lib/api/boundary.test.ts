@@ -19,3 +19,11 @@ test("unknown errors never expose provider text", () => {
     code: "service_unavailable",
   });
 });
+
+test("authenticated history and model routes are precisely allowlisted", () => {
+  assert.equal(allowedRoute("chat", "DELETE"), true);
+  assert.equal(allowedRoute("chat/record-1/image", "GET"), true);
+  assert.equal(allowedRoute("chat/record-1/image", "POST"), false);
+  assert.equal(allowedRoute("learning/policy", "POST"), true);
+  assert.equal(allowedRoute("learning/policy/shell", "POST"), false);
+});

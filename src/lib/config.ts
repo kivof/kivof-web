@@ -16,7 +16,7 @@ export function config() {
     surface: process.env.KIVOF_SURFACE ?? "product",
     cookieName: "kivof_session",
     sessionSeconds: 8 * 60 * 60,
-    maxBodyBytes: 64 * 1024,
+    maxBodyBytes: 512 * 1024,
     maxResponseBytes: 16 * 1024 * 1024,
   };
 }
