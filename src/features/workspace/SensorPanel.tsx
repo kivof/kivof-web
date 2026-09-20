@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noArrayIndexKey: Immutable result snapshots preserve ordered items without source row IDs.
 "use client";
+import { TelemetryGauge } from "@/components/ui/data-display/TelemetryGauge/TelemetryGauge";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import type { Sensor } from "@/lib/models/domain";
@@ -9,6 +10,27 @@ export function SensorPanel({ sensors }: { sensors: Sensor[] }) {
   return (
     <>
       <p className={styles.intro}>{t.sensorBody}</p>
+      <div className={styles.sensorGauges}>
+        {sensors.map((sensor) => (
+          <TelemetryGauge
+            key={sensor.id}
+            label={t[sensor.id] ?? sensor.name}
+            value={
+              sensor.value == null
+                ? "—"
+                : new Intl.NumberFormat(locale, {
+                    maximumFractionDigits: 3,
+                  }).format(sensor.value)
+            }
+            unit={sensor.unit}
+            quality={t[sensor.quality] ?? sensor.quality}
+            source={t[sensor.source] ?? sensor.source}
+            available={
+              sensor.value != null && sensor.quality !== "disconnected"
+            }
+          />
+        ))}
+      </div>
       <section className={styles.card}>
         <div className={styles.tableWrap}>
           <table>
@@ -23,8 +45,8 @@ export function SensorPanel({ sensors }: { sensors: Sensor[] }) {
               {sensors.map((sensor) => (
                 <tr key={sensor.id}>
                   <td>
-                    <strong>{sensor.name}</strong>
-                    <small>{sensor.kind}</small>
+                    <strong>{t[sensor.id] ?? sensor.name}</strong>
+                    <small>{t[sensor.kind] ?? sensor.kind}</small>
                   </td>
                   <td>
                     {sensor.value == null
@@ -45,7 +67,7 @@ export function SensorPanel({ sensors }: { sensors: Sensor[] }) {
                       {t[sensor.quality] ?? sensor.quality}
                     </Badge>
                   </td>
-                  <td>{sensor.source}</td>
+                  <td>{t[sensor.source] ?? sensor.source}</td>
                   <td>
                     {sensor.last_seen
                       ? new Date(sensor.last_seen).toLocaleString(locale)

@@ -1,5 +1,8 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+robot-camera|Robot camera|Cámara del robot|Roboterkamera|Caméra du robot
+robot-contact|Contact sensor|Sensor de contacto|Kontaktsensor|Capteur de contact
+factory-vibration|Factory vibration|Vibración de fábrica|Fabrikvibration|Vibrations de l’usine
 language|Language|Idioma|Sprache|Langue
 light|Light mode|Modo claro|Heller Modus|Mode clair
 dark|Dark mode|Modo oscuro|Dunkler Modus|Mode sombre

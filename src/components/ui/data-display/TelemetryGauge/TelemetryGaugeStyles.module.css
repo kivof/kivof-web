@@ -1,0 +1,96 @@
+.card {
+  background: linear-gradient(140deg, var(--raised), var(--panel));
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  min-width: 0;
+  overflow: hidden;
+}
+.card header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+.card h2 {
+  font-size: 0.73rem;
+  font-weight: 500;
+}
+.status {
+  width: 4px;
+  height: 10px;
+  background: var(--accent);
+}
+.device {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.gauge {
+  position: relative;
+  max-width: 20rem;
+  margin: auto;
+  padding: 0.6rem 1rem 0;
+}
+.gauge svg {
+  display: block;
+  width: 100%;
+}
+.track,
+.arc {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 14;
+}
+.arc {
+  stroke: var(--accent);
+  stroke-width: 8;
+}
+.ticks {
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+.gauge > div {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.65rem;
+  text-align: center;
+}
+.gauge strong {
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-weight: 400;
+  letter-spacing: -0.065em;
+}
+.gauge > div span {
+  font: 0.67rem var(--fontMono);
+  color: var(--muted);
+  margin-left: 0.4rem;
+}
+.card footer {
+  padding: 0.55rem 0.8rem 0.7rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.6rem;
+}
+.card footer i {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  margin-right: 0.4rem;
+}
+.card footer small {
+  font-size: 0.53rem;
+  color: var(--muted);
+}
+.card[data-available="false"] .arc {
+  stroke: var(--line);
+}
+.card[data-available="false"] .status,
+.card[data-available="false"] footer i {
+  background: var(--warning);
+}
