@@ -2,10 +2,11 @@
   margin: 0;
   width: 100%;
   position: relative;
+  min-width: 0;
 }
 .scene img {
   width: 100%;
-  min-height: 26rem;
+  height: auto;
   max-height: 70dvh;
   object-fit: contain;
   display: block;
@@ -25,6 +26,11 @@
 }
 .scene code {
   font: 0.52rem var(--fontMono);
+}
+.scene figcaption p {
+  flex-basis: 100%;
+  line-height: 1.5;
+  margin: 0;
 }
 .scrubber {
   display: flex;

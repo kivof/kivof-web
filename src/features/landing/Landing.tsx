@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RobotScene } from "@/components/ui/data-display/RobotScene/RobotScene";
+import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import {
   Preferences,
@@ -57,7 +57,7 @@ export function Landing() {
               <span>{t.sceneTitle}</span>
               <Badge tone="good">{t.simulationBadge}</Badge>
             </div>
-            <RobotScene title={t.sceneTitle} caption={t.sceneCaption} />
+            <RecordedScene title={t.sceneTitle} />
             <div className={styles.flow}>
               {["flow1", "flow2", "flow3", "flow4"].map((key, index) => (
                 <div key={key}>

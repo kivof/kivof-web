@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RobotScene } from "@/components/ui/data-display/RobotScene/RobotScene";
+import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import {
   Preferences,
   usePreferences,
@@ -13,7 +13,7 @@ import styles from "./PitchDeckStyles.module.css";
 function Visual({ slide }: { slide: Slide }) {
   const { t } = usePreferences();
   if (slide.visual === "cell" || slide.visual === "proof")
-    return <RobotScene title={t.sceneTitle} caption={t.sceneCaption} />;
+    return <RecordedScene title={t.sceneTitle} />;
   return (
     <div className={styles.visual}>
       {slide.visual === "layers"

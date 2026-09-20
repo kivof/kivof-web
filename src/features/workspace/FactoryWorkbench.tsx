@@ -6,6 +6,7 @@ import { RecordedScene } from "@/components/ui/data-display/RecordedScene/Record
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import type { Overview } from "@/lib/models/domain";
+import { isaacFrames } from "@/lib/models/robotScene";
 import styles from "./FactoryWorkbenchStyles.module.css";
 import { Fields, RunBadge } from "./Fields";
 import { StepSummary, VerificationSummary } from "./RecordEvidence";
@@ -131,15 +132,13 @@ export function FactoryWorkbench({ overview }: { overview: Overview }) {
       <div className={styles.stage}>
         <div className={styles.stageMeta}>
           <Badge>
-            {t.simulated} · {t.replay}
+            {isaacFrames(run).length
+              ? `${t.simulated} · ${t.replay}`
+              : t.recordedPreview}
           </Badge>
           <span>HARNESS FORGE</span>
         </div>
-        <RecordedScene
-          run={run}
-          title={t.sceneTitle}
-          caption={t.sceneCaption}
-        />
+        <RecordedScene run={run} title={t.sceneTitle} />
         <div className={styles.stageBottom}>
           <span>
             <i />

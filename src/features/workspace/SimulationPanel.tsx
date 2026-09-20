@@ -51,11 +51,7 @@ export function SimulationPanel({
       <p className={styles.intro}>{t.simBody}</p>
       <section className={stageStyles.workbench}>
         <div className={stageStyles.stage}>
-          <RecordedScene
-            run={currentRun}
-            title={t.sceneTitle}
-            caption={t.sceneCaption}
-          />
+          <RecordedScene run={currentRun} title={t.sceneTitle} />
         </div>
         <div className={stageStyles.controls}>
           <h2>{t.simulation}</h2>

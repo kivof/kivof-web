@@ -1,5 +1,8 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+recordedPreview|Recorded factory preview|Vista previa de fábrica registrada|Aufgezeichnete Fabrikvorschau|Aperçu d’usine enregistré
+recordedPreviewBody|Shared recorded Isaac scene with eight Franka robots. This preview is separate from the selected run; it is not a live camera or a qualified autonomous task.|Escena Isaac compartida con ocho robots Franka. Esta vista previa es independiente de la ejecución seleccionada; no es una cámara en vivo ni una tarea autónoma cualificada.|Gemeinsame aufgezeichnete Isaac-Szene mit acht Franka-Robotern. Diese Vorschau gehört nicht zum ausgewählten Lauf; keine Live-Kamera und keine qualifizierte autonome Aufgabe.|Scène Isaac enregistrée partagée avec huit robots Franka. Cet aperçu est distinct de l’exécution sélectionnée ; ni caméra en direct ni tâche autonome qualifiée.
+recordedFrameBody|Recorded renderer output from this run. Simulated scene; inspect the independent task result separately.|Salida del renderizador registrada en esta ejecución. Escena simulada; revisa por separado el resultado independiente de la tarea.|Aufgezeichnete Renderer-Ausgabe dieses Laufs. Simulierte Szene; unabhängiges Aufgabenergebnis getrennt prüfen.|Sortie du moteur de rendu enregistrée pour cette exécution. Scène simulée ; consultez séparément le résultat indépendant de la tâche.
 jointState|Joint state|Estado articular|Gelenkzustand|État articulaire
 nativeCell|Isaac factory scene|Escena de fábrica Isaac|Isaac-Fabrikszene|Scène d’usine Isaac
 assemblyCell|Cable assembly cell|Célula de montaje de cables|Kabelmontagezelle|Cellule d’assemblage de câbles

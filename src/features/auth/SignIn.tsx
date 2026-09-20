@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RobotScene } from "@/components/ui/data-display/RobotScene/RobotScene";
+import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import {
   Preferences,
   usePreferences,
@@ -44,7 +44,7 @@ export function SignIn() {
         <section className={styles.visual}>
           <span>{t.eyebrow}</span>
           <h1>{t.signInTitle}</h1>
-          <RobotScene title={t.sceneTitle} caption={t.sceneCaption} />
+          <RecordedScene title={t.sceneTitle} />
           <p>{t.localAuthority}</p>
         </section>
         <section className={styles.formPanel}>
