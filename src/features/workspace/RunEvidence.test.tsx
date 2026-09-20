@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { dictionaries, type Locale } from "@/lib/i18n";
 import type { Overview, Run } from "@/lib/models/domain";
 import { FactoryWorkbench } from "./FactoryWorkbench";
+import { GraphPanel, ontologyLabel } from "./GraphPanel";
 import { RunsPanel } from "./RunsPanel";
 import { fieldValue, geometryPoints, stepLabel } from "./recordPresentation";
 import { SensorPanel } from "./SensorPanel";
@@ -172,4 +173,34 @@ test("native telemetry keeps eight actual robot values without invented age pane
     html,
     /Recorded age|Derived from these records|Worker label/,
   );
+});
+
+test("native ontology localizes known entities and relations while keeping source accessible", () => {
+  const graph = {
+    source: "native-scene-and-recorded-state",
+    nodes: [
+      { id: "cell", label: "Worker cell label", type: "cell" },
+      { id: "franka-7-joints", label: "Worker joint label", type: "sensor" },
+    ],
+    edges: [
+      { source: "cell", target: "franka-7-joints", label: "observed_by" },
+    ],
+  };
+  const html = renderToStaticMarkup(<GraphPanel graph={graph} />);
+  assert.match(html, /Franka 8 · Joint state/);
+  assert.match(html, /Observed by/);
+  assert.match(html, /Full source record/);
+  assert.doesNotMatch(html, /Worker cell label|Worker joint label|observed_by/);
+  for (const locale of ["en", "es", "de", "fr"] as Locale[]) {
+    const copy = dictionaries[locale];
+    assert.equal(
+      ontologyLabel(graph.nodes[0], copy, locale, true),
+      copy.nativeCell,
+    );
+    assert.ok(
+      ontologyLabel(graph.nodes[1], copy, locale, true).endsWith(
+        copy.jointState,
+      ),
+    );
+  }
 });

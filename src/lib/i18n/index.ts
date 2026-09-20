@@ -1,5 +1,26 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+jointState|Joint state|Estado articular|Gelenkzustand|État articulaire
+nativeCell|Isaac factory scene|Escena de fábrica Isaac|Isaac-Fabrikszene|Scène d’usine Isaac
+assemblyCell|Cable assembly cell|Célula de montaje de cables|Kabelmontagezelle|Cellule d’assemblage de câbles
+renderedCamera|Isaac rendered camera|Cámara renderizada de Isaac|Gerenderte Isaac-Kamera|Caméra rendue par Isaac
+nativeGraphBody|Scene entities and the eight recorded robot states come from the latest native run. Relationships describe the scene; they do not qualify an autonomous task or prove a physical installation.|Las entidades y los ocho estados de robot proceden de la última ejecución nativa. Las relaciones describen la escena; no cualifican tareas autónomas ni demuestran una instalación física.|Szenenobjekte und acht aufgezeichnete Roboterzustände stammen aus dem letzten nativen Lauf. Beziehungen beschreiben die Szene; sie qualifizieren keine autonome Aufgabe und belegen keine physische Anlage.|Les entités et les huit états de robots proviennent de la dernière exécution native. Les relations décrivent la scène ; elles ne qualifient aucune tâche autonome et ne prouvent aucune installation physique.
+entity_robot|Simulation arm|Brazo simulado|Simulationsarm|Bras simulé
+entity_plug|Keyed plug|Conector con guía|Kodierter Stecker|Connecteur détrompé
+entityType_site|Factory site|Instalación|Werksstandort|Site industriel
+entityType_cell|Assembly cell|Célula de montaje|Montagezelle|Cellule d’assemblage
+entityType_robot|Robot|Robot|Roboter|Robot
+entityType_sensor|Recorded sensor|Sensor registrado|Aufgezeichneter Sensor|Capteur enregistré
+entityType_material|Material|Material|Material|Matériau
+entityType_fixture|Fixture|Elemento de fijación|Vorrichtung|Dispositif de fixation
+entityType_part|Part|Pieza|Bauteil|Pièce
+relation_contains|Contains|Contiene|Enthält|Contient
+relation_hosts|Hosts|Aloja|Beherbergt|Héberge
+relation_observed_by|Observed by|Observado por|Beobachtet durch|Observé par
+relation_routes|Routes|Enruta|Führt|Achemine
+relation_passes_through|Passes through|Pasa por|Verläuft durch|Traverse
+relation_terminates_in|Terminates in|Termina en|Endet in|Se termine par
+relation_mates_with|Mates with|Se acopla con|Passt zu|S’accouple avec
 jointSpeed|Joint speed|Velocidad articular|Gelenkgeschwindigkeit|Vitesse articulaire
 isaac-joint-velocity|Maximum recorded joint speed|Velocidad articular máxima registrada|Maximale aufgezeichnete Gelenkgeschwindigkeit|Vitesse articulaire maximale enregistrée
 nativeSensorBody|Maximum absolute speed across seven recorded joints for each Franka robot. Values come from Isaac Sim articulation states. Observation age is unknown; these are recorded samples, not live physical sensors.|Velocidad absoluta máxima de siete articulaciones registradas por robot Franka. Valores del estado articular de Isaac Sim. Antigüedad desconocida; son muestras registradas, no sensores físicos en vivo.|Maximale absolute Geschwindigkeit aus sieben aufgezeichneten Gelenken je Franka-Roboter. Werte stammen aus Isaac-Sim-Gelenkzuständen. Beobachtungsalter unbekannt; aufgezeichnete Stichproben, keine physischen Live-Sensoren.|Vitesse absolue maximale sur sept articulations enregistrées par robot Franka. Valeurs issues des états articulaires Isaac Sim. Âge inconnu ; échantillons enregistrés, pas de capteurs physiques en direct.

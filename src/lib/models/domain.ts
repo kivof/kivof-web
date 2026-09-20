@@ -46,6 +46,7 @@ export type Sensor = {
   age_ms?: number | null;
 };
 export type Ontology = {
+  source?: string;
   nodes: { id: string; label: string; type: string }[];
   edges: { source: string; target: string; label: string }[];
 };
