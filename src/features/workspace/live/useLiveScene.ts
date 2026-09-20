@@ -13,6 +13,7 @@ import {
 } from "@/lib/models/liveScene";
 import { liveSessionContext } from "@/lib/models/liveSessionContext";
 import { pollLiveFeed } from "./liveFeed";
+import { followLiveStream } from "./liveStream";
 
 type LiveFailure = "failed" | "cameraError" | "stopError" | "busy" | "expired";
 function liveFailure(error: unknown): LiveFailure {
@@ -32,6 +33,7 @@ export function useLiveScene() {
   const [fps, setFps] = useState(0);
   const [speed, setSpeed] = useState<number | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [visible, setVisible] = useState(true);
   const session = useRef<string | null>(null);
   const mounted = useRef(false);
   const operation = useRef(0);
@@ -138,12 +140,16 @@ export function useLiveScene() {
     };
     window.addEventListener("kivof:live-session", update);
     window.addEventListener("kivof:workspace-changed", refresh);
+    const visibility = () => setVisible(!document.hidden);
+    visibility();
+    document.addEventListener("visibilitychange", visibility);
     return () => {
       mounted.current = false;
       operation.current += 1;
       controller.abort();
       window.removeEventListener("kivof:live-session", update);
       window.removeEventListener("kivof:workspace-changed", refresh);
+      document.removeEventListener("visibilitychange", visibility);
       session.current = null;
     };
   }, [adopt]);
@@ -158,31 +164,40 @@ export function useLiveScene() {
   }, []);
 
   useEffect(() => {
-    if (!activeId) return;
+    if (!activeId || !visible) return;
     const controller = new AbortController();
-    void pollLiveFeed({
-      signal: controller.signal,
-      read: async (signal) =>
-        parseLiveScene(
-          await api(
-            `simulation/live/${activeId}`,
-            undefined,
-            AbortSignal.any([signal, AbortSignal.timeout(10000)]),
+    const poll = () =>
+      pollLiveFeed({
+        signal: controller.signal,
+        read: async (signal) =>
+          parseLiveScene(
+            await api(
+              `simulation/live/${activeId}`,
+              undefined,
+              AbortSignal.any([signal, AbortSignal.timeout(10000)]),
+            ),
           ),
-        ),
+        receive,
+        failure: (failure) => {
+          const reason = liveFailure(failure);
+          setError(reason);
+          if (reason !== "expired") return true;
+          session.current = null;
+          setActiveId(null);
+          setScene((value) => (value ? { ...value, status: "stopped" } : null));
+          return false;
+        },
+      });
+    void followLiveStream({
+      id: activeId,
+      signal: controller.signal,
       receive,
-      failure: (failure) => {
-        const reason = liveFailure(failure);
-        setError(reason);
-        if (reason !== "expired") return true;
-        session.current = null;
-        setActiveId(null);
-        setScene((value) => (value ? { ...value, status: "stopped" } : null));
-        return false;
-      },
+      active: () => session.current === activeId,
+      fallback: poll,
+      failure: (failure) => setError(liveFailure(failure)),
     });
     return () => controller.abort();
-  }, [activeId, receive]);
+  }, [activeId, receive, visible]);
 
   async function start() {
     if (startingRef.current || session.current) return;

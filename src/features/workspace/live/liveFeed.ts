@@ -2,7 +2,10 @@ import type { LiveScene } from "@/lib/models/liveScene";
 
 const MIN_REQUEST_INTERVAL_MS = 125;
 
-function wait(delay: number, signal: AbortSignal): Promise<void> {
+export function waitForLiveFeed(
+  delay: number,
+  signal: AbortSignal,
+): Promise<void> {
   return new Promise((resolve) => {
     const finish = () => {
       clearTimeout(timer);
@@ -22,7 +25,7 @@ export async function pollLiveFeed({
   failure,
   visible = () => !document.hidden,
   now = () => performance.now(),
-  pause = wait,
+  pause = waitForLiveFeed,
 }: {
   signal: AbortSignal;
   read: (signal: AbortSignal) => Promise<LiveScene>;
