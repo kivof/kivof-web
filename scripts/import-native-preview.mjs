@@ -1,8 +1,9 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const input = process.argv[2];
+const fullPreviewPath = process.argv[3];
 if (!input)
   throw new Error("Pass a verified local native-scene result JSON file");
 const raw = await readFile(input);
@@ -43,6 +44,43 @@ for (const frame of run.evidence.frames) {
   const width = bytes.readUInt32BE(16);
   const height = bytes.readUInt32BE(20);
   if (width < 1 || height < 1 || width > 4096 || height > 4096) continue;
+  candidates.push({ frame, bytes, sha256, width, height });
+}
+if (fullPreviewPath) {
+  const frame = run.evidence.native_preview;
+  if (
+    frame?.source !== "isaac-sim" ||
+    frame.media_type !== "image/png" ||
+    typeof frame.sha256 !== "string" ||
+    !/^[a-f0-9]{64}$/.test(frame.sha256) ||
+    !Number.isFinite(frame.simulation_time_s) ||
+    frame.simulation_time_s < 0
+  )
+    throw new Error(
+      "A native preview receipt is required for the explicit local PNG",
+    );
+  const info = await stat(fullPreviewPath);
+  if (!info.isFile() || info.size < 33 || info.size > 8 * 1024 * 1024)
+    throw new Error("Local native PNG exceeds the import bound");
+  const bytes = await readFile(fullPreviewPath);
+  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  const width = bytes.readUInt32BE(16);
+  const height = bytes.readUInt32BE(20);
+  if (
+    sha256 !== frame.sha256 ||
+    !bytes
+      .subarray(0, 8)
+      .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) ||
+    width !== frame.width ||
+    height !== frame.height ||
+    width < 1 ||
+    height < 1 ||
+    width > 4096 ||
+    height > 4096
+  )
+    throw new Error(
+      "Local native PNG does not match its recorded checksum and dimensions",
+    );
   candidates.push({ frame, bytes, sha256, width, height });
 }
 candidates.sort(
