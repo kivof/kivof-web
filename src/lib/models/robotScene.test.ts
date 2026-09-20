@@ -5,6 +5,7 @@ import {
   isaacFrames,
   nativeSceneTaskUnqualified,
   robotState,
+  robotStates,
 } from "./robotScene";
 
 test("native scene rejects untrusted media and requires actual Isaac provenance", () => {
@@ -38,6 +39,44 @@ test("native scene rejects untrusted media and requires actual Isaac provenance"
     }).length,
     0,
   );
+});
+
+test("native inspector retains each recorded arm and rejects malformed or duplicate identities", () => {
+  const primary = {
+    model: "Franka Panda",
+    joint_names: ["panda_joint1", "panda_joint2"],
+  };
+  const robots = Array.from({ length: 8 }, (_, i) => ({
+    id: `franka-${i}`,
+    model: "Franka Panda",
+    joint_positions_rad: [i, 0],
+    joint_velocities_rad_s: [0.000001, 0],
+  }));
+  const run = {
+    source: "isaac-sim",
+    evidence: { robot: primary, robots },
+  } as unknown as Run;
+  const states = robotStates(run);
+  assert.equal(states.length, 8);
+  assert.equal(states[7].id, "franka-7");
+  assert.equal(states[7].positions[0], 7);
+  assert.equal(states[7].velocities[0], 0.000001);
+  assert.equal(
+    robotStates({
+      ...run,
+      evidence: {
+        robot: primary,
+        robots: [
+          robots[0],
+          robots[0],
+          { ...robots[1], joint_positions_rad: [Number.NaN, 0] },
+          { ...robots[2], model: "Unmapped model" },
+        ],
+      },
+    }).length,
+    1,
+  );
+  assert.equal(robotStates({ ...run, source: "cpu-simulation" }).length, 0);
 });
 test("robot inspector accepts only aligned finite joint samples", () => {
   const run = {

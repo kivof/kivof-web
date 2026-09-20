@@ -58,6 +58,22 @@
   color: var(--muted);
   font-weight: 400;
 }
+.robotSelector {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+.robotSelector select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  background: var(--bg);
+  color: var(--ink);
+}
 @media (min-width: 70rem) {
   .workbench {
     grid-template-columns: 12rem minmax(0, 1fr) 17rem;

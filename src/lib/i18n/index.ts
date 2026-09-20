@@ -1,5 +1,6 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+recordedRobot|Recorded robot|Robot registrado|Aufgezeichneter Roboter|Robot enregistré
 webLayer|Web interface|Interfaz web|Weboberfläche|Interface web
 backendLayer|Rust backend|Servidor Rust|Rust-Backend|Serveur Rust
 inferenceLayer|Rust inference core|Núcleo de inferencia Rust|Rust-Inferenzkern|Noyau d’inférence Rust

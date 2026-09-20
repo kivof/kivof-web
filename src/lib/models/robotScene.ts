@@ -60,6 +60,37 @@ export function robotState(run: Run | null | undefined) {
   };
 }
 
+export function robotStates(run: Run | null | undefined) {
+  if (run?.source !== "isaac-sim" || !Array.isArray(run.evidence.robots))
+    return [];
+  const primary = run.evidence.robot as Record<string, unknown> | undefined;
+  const seen = new Set<string>();
+  return run.evidence.robots.slice(0, 8).flatMap((item) => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return [];
+    const robot = item as Record<string, unknown>;
+    if (
+      typeof robot.id !== "string" ||
+      !/^franka-[0-7]$/.test(robot.id) ||
+      seen.has(robot.id)
+    )
+      return [];
+    const state = robotState({
+      ...run,
+      evidence: {
+        robot: {
+          ...robot,
+          joint_names:
+            robot.joint_names ??
+            (robot.model === primary?.model ? primary?.joint_names : undefined),
+        },
+      },
+    });
+    if (!state) return [];
+    seen.add(robot.id);
+    return [{ ...state, id: robot.id }];
+  });
+}
+
 export function nativeSceneTaskUnqualified(run: Run | null | undefined) {
   return (
     run?.source === "isaac-sim" &&

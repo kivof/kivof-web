@@ -7,7 +7,7 @@ import { RecordedScene } from "@/components/ui/data-display/RecordedScene/Record
 import { usePreferences } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
 import type { Run } from "@/lib/models/domain";
-import { robotState } from "@/lib/models/robotScene";
+import { robotState, robotStates } from "@/lib/models/robotScene";
 import { RunBadge } from "./Fields";
 import forms from "./PanelFormsStyles.module.css";
 import styles from "./PanelsStyles.module.css";
@@ -22,14 +22,20 @@ export function SimulationPanel({
   latestRun?: Run | null;
   refresh: () => Promise<void>;
 }) {
-  const { t } = usePreferences();
+  const { t, locale } = usePreferences();
   const [scenario, setScenario] = useState("nominal");
   const [engine, setEngine] = useState("isaac");
   const [busy, setBusy] = useState(false);
   const [run, setRun] = useState<Run | null>(null);
   const [error, setError] = useState(false);
+  const [selectedRobot, setSelectedRobot] = useState("");
   const currentRun = run ?? latestRun;
-  const robot = robotState(currentRun);
+  const robots = robotStates(currentRun);
+  const robot =
+    robots.find((item) => item.id === selectedRobot) ??
+    robots[0] ??
+    robotState(currentRun);
+  const number = new Intl.NumberFormat(locale, { maximumSignificantDigits: 5 });
   async function start() {
     setBusy(true);
     setError(false);
@@ -105,6 +111,25 @@ export function SimulationPanel({
         </div>
         <aside className={stageStyles.inspector}>
           <h2>{t.robotState}</h2>
+          {robots.length > 1 && (
+            <label className={stageStyles.robotSelector}>
+              {t.recordedRobot}
+              <select
+                value={
+                  robots.find((item) => item.id === selectedRobot)?.id ??
+                  robots[0].id
+                }
+                onChange={(event) => setSelectedRobot(event.target.value)}
+              >
+                {robots.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    Franka {number.format(Number(item.id.slice(7)) + 1)} ·{" "}
+                    {item.model}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           {robot ? (
             <>
               <strong>{robot.model}</strong>
@@ -119,9 +144,15 @@ export function SimulationPanel({
                 <tbody>
                   {robot.names.map((name, i) => (
                     <tr key={name}>
-                      <td>{name}</td>
-                      <td>{robot.positions[i]?.toFixed(4)}</td>
-                      <td>{robot.velocities[i]?.toFixed(4) ?? "—"}</td>
+                      <td title={name}>
+                        {t.joint} {number.format(i + 1)}
+                      </td>
+                      <td>{number.format(robot.positions[i])}</td>
+                      <td>
+                        {robot.velocities[i] === undefined
+                          ? "—"
+                          : number.format(robot.velocities[i])}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
