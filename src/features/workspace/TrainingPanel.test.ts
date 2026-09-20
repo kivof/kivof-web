@@ -54,7 +54,9 @@ test("training lifecycle rejects executable routes and invalid authority claims"
 });
 
 test("native transition training preserves simulated provenance without weakening physical guards", () => {
-  const sourceId = "81292f07-1111-4222-a333-123456789abc";
+  const sourceId =
+    "c6f54dfa41e1ab4f796e44f8819d9bfb681f6bcb36838ff737ff1f1dec46a7fc";
+  const rolloutId = "81292f07-1111-4222-a333-123456789abc";
   const request = {
     algorithm: "franka-transition-head",
     dataset: "isaac-franka-rollout-v1",
@@ -76,6 +78,16 @@ test("native transition training preserves simulated provenance without weakenin
     output,
   };
   assert.equal(trainingJob(job)?.data_origin, "simulated");
+  for (const source_run_id of [
+    rolloutId,
+    sourceId.slice(1),
+    `${sourceId}0`,
+    `g${sourceId.slice(1)}`,
+  ])
+    assert.equal(
+      trainingJob({ ...job, request: { ...request, source_run_id } }),
+      null,
+    );
   assert.equal(trainingJob({ ...job, data_origin: "synthetic" }), null);
   assert.equal(
     trainingJob({ ...job, request: { ...request, source_run_id: "../other" } }),
@@ -102,7 +114,7 @@ test("native transition training preserves simulated provenance without weakenin
     physical_execution: false,
     evidence: {
       native_scene_passed: true,
-      rollout: { source: "isaac-sim", id: sourceId, sha256: "a".repeat(64) },
+      rollout: { source: "isaac-sim", id: rolloutId, sha256: "a".repeat(64) },
     },
   } as unknown as Run;
   assert.equal(trainingSource(run), true);
@@ -111,7 +123,17 @@ test("native transition training preserves simulated provenance without weakenin
   assert.equal(
     trainingSource({
       ...run,
-      evidence: { ...run.evidence, rollout: { id: sourceId } },
+      evidence: { ...run.evidence, rollout: { id: rolloutId } },
+    }),
+    false,
+  );
+  assert.equal(
+    trainingSource({
+      ...run,
+      evidence: {
+        ...run.evidence,
+        rollout: { source: "isaac-sim", id: sourceId, sha256: "a".repeat(64) },
+      },
     }),
     false,
   );

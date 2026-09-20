@@ -59,7 +59,7 @@ export function trainingJob(value: unknown): Job | null {
     native &&
     (request.dataset !== "isaac-franka-rollout-v1" ||
       typeof request.source_run_id !== "string" ||
-      !uuid.test(request.source_run_id))
+      !/^[a-f0-9]{64}$/i.test(request.source_run_id))
   )
     return null;
   if (job.data_origin !== (native ? "simulated" : "synthetic")) return null;
