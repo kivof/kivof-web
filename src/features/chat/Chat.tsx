@@ -174,7 +174,7 @@ export function Chat({ compact = false }: { compact?: boolean }) {
             aria-label={t.message}
             placeholder={t.placeholder}
             maxLength={12000}
-            rows={3}
+            rows={2}
           />
           <div className={styles.toolbar}>
             <button

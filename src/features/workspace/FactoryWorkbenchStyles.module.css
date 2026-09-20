@@ -1,0 +1,397 @@
+.workbench {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  min-height: 42rem;
+}
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  padding: 0.55rem 0.7rem;
+  background: var(--panel);
+  min-width: 0;
+}
+.zone {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+.zone > svg {
+  color: var(--accent);
+}
+.zone small,
+.zone strong {
+  display: block;
+}
+.zone small {
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+.zone strong {
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+.ticks {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  align-self: stretch;
+}
+.ticks button {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  flex: 1;
+  min-width: 3.5rem;
+  padding: 0.3rem 0.5rem;
+  position: relative;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+.ticks i {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--muted);
+  margin-bottom: 0.45rem;
+}
+.ticks button[data-active="true"] {
+  border: 1px solid var(--accent);
+  background: var(--accentSoft);
+  color: var(--ink);
+}
+.ticks button[data-active="true"] i {
+  background: var(--accent);
+}
+.ticks span {
+  display: block;
+  max-width: 7rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.leftDock,
+.rightDock {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  min-width: 0;
+}
+.panel {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--raised) 85%, transparent),
+    color-mix(in srgb, var(--panel) 90%, transparent)
+  );
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  overflow: hidden;
+}
+.panel h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.71rem;
+  font-weight: 500;
+  padding: 0.55rem 0.65rem;
+}
+.panel h2 svg {
+  padding: 0.15rem;
+  box-sizing: content-box;
+  background: var(--accent);
+  color: var(--onAccent);
+  border-radius: 0.15rem;
+}
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  border-top: 1px solid var(--line);
+  margin: 0 0.5rem;
+  padding: 0.55rem 0.15rem;
+}
+.stat > svg {
+  color: var(--muted);
+}
+.stat small {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+.stat strong {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 500;
+}
+.indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-left: auto;
+}
+.minimap {
+  position: relative;
+  height: 7.5rem;
+  margin: 0.2rem 0.6rem 0.5rem;
+  background:
+    repeating-linear-gradient(
+      30deg,
+      transparent 0 24px,
+      var(--line) 25px,
+      transparent 26px
+    ),
+    repeating-linear-gradient(
+      150deg,
+      transparent 0 24px,
+      var(--line) 25px,
+      transparent 26px
+    );
+  overflow: hidden;
+}
+.minimap div {
+  width: 6rem;
+  height: 3.4rem;
+  background: var(--accentSoft);
+  border: 2px solid var(--accent);
+  transform: rotate(30deg) skew(-20deg);
+  position: absolute;
+  left: calc(50% - 3rem);
+  top: 2rem;
+  box-shadow: 0 0.5rem 0 color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.minimap span {
+  position: absolute;
+  font: 0.53rem var(--fontMono);
+  bottom: 0.8rem;
+  left: calc(50% - 1.2rem);
+}
+.caption {
+  display: block;
+  padding: 0 0.65rem 0.65rem;
+  font-size: 0.52rem;
+  color: var(--muted);
+}
+.dial {
+  position: relative;
+  max-width: 13rem;
+  margin: auto;
+  padding: 0 0.5rem 0.5rem;
+}
+.dial svg {
+  display: block;
+  width: 100%;
+}
+.arcTrack,
+.arc {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 9;
+}
+.arc {
+  stroke: var(--accent);
+}
+.ticksLine {
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+.dial strong {
+  position: absolute;
+  inset: auto 0 1.55rem;
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 400;
+  letter-spacing: -0.06em;
+}
+.dial small {
+  display: block;
+  text-align: center;
+  font-size: 0.54rem;
+  color: var(--muted);
+}
+.stage {
+  position: relative;
+  background:
+    radial-gradient(
+      ellipse at 50% 55%,
+      color-mix(in srgb, var(--raised) 90%, transparent),
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      30deg,
+      transparent 0 32px,
+      color-mix(in srgb, var(--line) 30%, transparent) 33px,
+      transparent 34px
+    ),
+    repeating-linear-gradient(
+      150deg,
+      transparent 0 32px,
+      color-mix(in srgb, var(--line) 30%, transparent) 33px,
+      transparent 34px
+    );
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 28rem;
+}
+.stage > figure {
+  width: 100%;
+  background: transparent;
+}
+.stage > figure > svg {
+  min-height: 26rem;
+}
+.stage > figure > figcaption {
+  font-size: 0.55rem;
+  position: absolute;
+  bottom: 3.5rem;
+  left: 0;
+  max-width: 85%;
+}
+.stageMeta {
+  position: absolute;
+  z-index: 1;
+  inset: 1rem 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.stageMeta > span:last-child {
+  font: 0.52rem var(--fontMono);
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+.stageBottom {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 85%, transparent);
+}
+.stageBottom > span {
+  font-size: 0.55rem;
+  color: var(--muted);
+}
+.stageBottom i {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  margin-right: 0.4rem;
+}
+.stageBottom a,
+.inspect {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.64rem;
+  color: var(--accent);
+}
+.runStatus {
+  padding: 0.4rem 0.65rem;
+  display: grid;
+  gap: 0.6rem;
+}
+.runStatus strong {
+  font-size: 0.77rem;
+  font-weight: 500;
+}
+.runStatus code {
+  font: 0.52rem var(--fontMono);
+  overflow-wrap: anywhere;
+  color: var(--muted);
+}
+.rightDock dl {
+  padding: 0.5rem 0.65rem;
+  gap: 0.3rem;
+}
+.rightDock dl > div {
+  grid-template-columns: 1fr;
+  gap: 0.2rem;
+  font-size: 0.6rem;
+  padding: 0.3rem 0;
+}
+.rightDock dd {
+  font-size: 0.54rem;
+}
+.inspect {
+  padding: 0.7rem;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+}
+.empty {
+  padding: 1rem 0.7rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+@media (min-width: 48rem) {
+  .workbench {
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+  }
+  .timeline {
+    grid-column: 1 / -1;
+  }
+  .rightDock {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 76rem) {
+  .workbench {
+    grid-template-columns: 12rem minmax(0, 1fr) 14rem;
+    grid-template-rows: 3.6rem minmax(36rem, calc(100dvh - 12rem));
+  }
+  .timeline {
+    grid-column: 1 / -1;
+  }
+  .rightDock {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+    max-height: calc(100dvh - 12rem);
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+  .leftDock {
+    max-height: calc(100dvh - 12rem);
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+}
+@media (max-width: 47.99rem) {
+  .timeline {
+    flex-wrap: wrap;
+  }
+  .timeline > span {
+    display: none;
+  }
+  .ticks {
+    order: 3;
+    flex-basis: 100%;
+  }
+  .leftDock {
+    grid-template-columns: 1fr 1fr;
+  }
+  .leftDock > section:nth-child(2) {
+    display: none;
+  }
+  .stage {
+    min-height: 24rem;
+  }
+  .stage > figure > svg {
+    min-height: 23rem;
+  }
+}

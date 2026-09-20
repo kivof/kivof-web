@@ -44,6 +44,7 @@ export function Workspace({
   const state = useWorkspace();
   const router = useRouter();
   const [menu, setMenu] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   async function logout() {
     await api("auth/logout", {});
     router.replace("/login");
@@ -118,9 +119,25 @@ export function Workspace({
               {state.connected ? t.connected : t.disconnected}
             </Badge>
             <Preferences />
+            {section !== "chat" && (
+              <button
+                type="button"
+                className={styles.iconButton}
+                aria-label={t.chat}
+                title={t.chat}
+                aria-expanded={chatOpen}
+                onClick={() => setChatOpen(!chatOpen)}
+              >
+                <Icon name={chatOpen ? "close" : "chat"} size={18} />
+              </button>
+            )}
           </div>
         </header>
-        <div className={styles.contentGrid} data-chat={section === "chat"}>
+        <div
+          className={styles.contentGrid}
+          data-chat={section === "chat"}
+          data-chat-open={chatOpen}
+        >
           <main className={styles.main}>
             {state.error ? (
               <div className={styles.empty} role="alert">

@@ -270,3 +270,130 @@
     max-width: 62rem;
   }
 }
+
+/* Reference workbench: compact navigation keeps the operational stage primary. */
+.header {
+  min-height: 3.1rem;
+  padding: 0.35rem 1rem;
+  background: var(--panel);
+}
+.iconButton {
+  width: 2.1rem;
+  height: 2.1rem;
+}
+.main {
+  padding: 1rem;
+}
+.pageTitle {
+  margin-bottom: 0.8rem;
+}
+.pageTitle h1 {
+  font-size: 1.15rem;
+  margin: 0.25rem 0;
+  letter-spacing: -0.025em;
+}
+.pageTitle span {
+  font-size: 0.51rem;
+}
+.contentGrid[data-chat="true"] .chatDock {
+  min-height: calc(100dvh - 3.1rem);
+}
+@media (min-width: 60rem) {
+  .workspace {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+  }
+  .sidebar {
+    padding: 1rem 0.65rem;
+    background: var(--bg);
+    border-color: var(--line);
+  }
+  .brand {
+    margin: 0.2rem auto 1.5rem;
+  }
+  .brand > span {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 0.25rem;
+    font-size: 1.3rem;
+  }
+  .brand b,
+  .org,
+  .sidebar nav a > span,
+  .authority p,
+  .sideBottom button > span:not(.avatar),
+  .sideBottom button > svg {
+    display: none;
+  }
+  .sidebar nav {
+    gap: 0.8rem;
+  }
+  .sidebar nav a {
+    min-height: 2.5rem;
+    width: 2.5rem;
+    padding: 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    justify-content: center;
+  }
+  .sidebar nav a[aria-current="page"] {
+    background: var(--raised);
+    color: var(--ink);
+    border-color: var(--muted);
+    box-shadow: 0 0 1rem #95ff1f18;
+  }
+  .sidebar nav a[aria-current="page"] svg {
+    color: var(--accent);
+  }
+  .sideBottom {
+    padding-top: 1rem;
+  }
+  .authority {
+    padding: 0.6rem;
+    border: 0;
+  }
+  .sideBottom > a {
+    width: 2.5rem;
+    justify-content: center;
+    font-size: 0;
+    padding: 0.7rem 0;
+  }
+  .sideBottom > button {
+    justify-content: center;
+  }
+  .header {
+    padding: 0.35rem 1rem;
+  }
+  .main {
+    padding: 1rem;
+  }
+  .contentGrid,
+  .contentGrid[data-chat="true"] {
+    display: block;
+    min-height: calc(100dvh - 3.1rem);
+  }
+  .chatDock {
+    display: none;
+  }
+  .contentGrid[data-chat-open="true"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 22rem;
+  }
+  .contentGrid[data-chat-open="true"] .chatDock {
+    display: block;
+    height: calc(100dvh - 3.1rem);
+    position: sticky;
+    top: 0;
+  }
+  .contentGrid[data-chat="true"] .chatDock {
+    height: calc(100dvh - 3.1rem);
+    max-width: 46rem;
+  }
+}
+@media (max-width: 59.99rem) {
+  .contentGrid[data-chat-open="true"] .chatDock {
+    display: block;
+    position: fixed;
+    inset: 3.1rem 0 0;
+    z-index: 9;
+  }
+}

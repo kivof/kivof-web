@@ -247,3 +247,26 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.intro {
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+}
+.cardHeader {
+  padding: 0.7rem 0.8rem;
+}
+.metrics {
+  gap: 0.5rem;
+}
+.metrics article {
+  padding: 0.75rem;
+}
+.metrics strong {
+  font-size: 1.7rem;
+}
+.tableWrap td {
+  padding: 0.75rem 0.8rem;
+}
+.tableWrap th {
+  padding: 0.65rem 0.8rem;
+}
