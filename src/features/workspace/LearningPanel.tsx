@@ -7,6 +7,7 @@ import { api } from "@/lib/api/client";
 import { Fields } from "./Fields";
 import styles from "./LearningStyles.module.css";
 import { actionSequence, imageData, vector } from "./learningInput";
+import { TrainingPanel } from "./TrainingPanel";
 
 type ImageInput = { name: string; data: string };
 export function LearningPanel() {
@@ -103,6 +104,38 @@ export function LearningPanel() {
       await refresh();
     }
   }
+  const tabs = (
+    <div className={styles.tabs}>
+      <button
+        type="button"
+        data-active={mode === "policy"}
+        onClick={() => setMode("policy")}
+      >
+        {t.policy}
+      </button>
+      <button
+        type="button"
+        data-active={mode === "world"}
+        onClick={() => setMode("world")}
+      >
+        {t.world}
+      </button>
+      <button
+        type="button"
+        data-active={mode === "training"}
+        onClick={() => setMode("training")}
+      >
+        {t.training}
+      </button>
+    </div>
+  );
+  if (mode === "training")
+    return (
+      <>
+        {tabs}
+        <TrainingPanel />
+      </>
+    );
   return (
     <>
       <p className={styles.intro}>{t.learningBody}</p>
@@ -114,22 +147,7 @@ export function LearningPanel() {
         </div>
       </div>
       <form className={styles.form} onSubmit={submit}>
-        <div className={styles.tabs}>
-          <button
-            type="button"
-            data-active={mode === "policy"}
-            onClick={() => setMode("policy")}
-          >
-            {t.policy}
-          </button>
-          <button
-            type="button"
-            data-active={mode === "world"}
-            onClick={() => setMode("world")}
-          >
-            {t.world}
-          </button>
-        </div>
+        {tabs}
         {mode === "policy" && (
           <div className={styles.row}>
             <label>

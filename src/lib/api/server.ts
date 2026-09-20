@@ -15,12 +15,15 @@ const routes: Record<string, string[]> = {
   chat: ["GET", "POST", "DELETE"],
   learning: ["GET"],
   "learning/policy": ["POST"],
+  "learning/training": ["GET", "POST"],
   "learning/world-model": ["POST"],
   "realtime/session": ["POST"],
 };
 export function allowedRoute(path: string, method: string) {
   return (
     routes[path]?.includes(method) ||
+    ((method === "GET" || method === "DELETE") &&
+      /^learning\/training\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
     (method === "GET" && /^chat\/[a-zA-Z0-9_-]{1,128}\/image$/.test(path)) ||
     (method === "DELETE" && /^labels\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
     (method === "GET" && /^runs\/[a-zA-Z0-9_-]{1,128}$/.test(path))
