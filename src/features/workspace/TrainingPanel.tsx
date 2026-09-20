@@ -6,6 +6,8 @@ import { api } from "@/lib/api/client";
 import type { Run } from "@/lib/models/domain";
 import { Fields } from "./Fields";
 import styles from "./LearningStyles.module.css";
+import { liveLabels } from "./live/liveLabels";
+import { prepareNativeTask } from "./live/prepareNativeTask";
 import { RawRecord } from "./RawRecord";
 import { recordNumber, recordObject } from "./recordPresentation";
 import { TrainingActivity } from "./TrainingActivity";
@@ -192,6 +194,7 @@ export function TrainingPanel({ runs = [] }: { runs?: Run[] }) {
     setBusy(true);
     setError("");
     try {
+      await prepareNativeTask();
       const job = trainingJob(
         await api("learning/training", {
           algorithm: recipe,
@@ -238,6 +241,7 @@ export function TrainingPanel({ runs = [] }: { runs?: Run[] }) {
         lossLabel={t.loss}
       />
       <form className={styles.form} onSubmit={start}>
+        <p className={styles.intro}>{liveLabels(locale).handoff}</p>
         <label>
           {t.trainingRecipe}
           <select

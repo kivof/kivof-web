@@ -2,6 +2,8 @@ import type { Locale } from "@/lib/i18n";
 
 const labels = {
   en: {
+    handoff:
+      "Starting this GPU task stops your active live view first. It starts only after the stop is confirmed.",
     speed: "Simulation speed",
     session:
       "Your live session stays available when you switch workspace pages. Stop it here when finished; idle sessions expire automatically.",
@@ -47,6 +49,8 @@ const labels = {
     replay: "Recorded run",
   },
   es: {
+    handoff:
+      "Esta tarea de GPU detiene primero tu vista en vivo. Solo se inicia cuando se confirma la parada.",
     speed: "Velocidad de simulación",
     session:
       "La sesión en vivo sigue disponible al cambiar de página. Detenla aquí al terminar; las sesiones inactivas caducan automáticamente.",
@@ -93,6 +97,8 @@ const labels = {
     replay: "Ejecución grabada",
   },
   de: {
+    handoff:
+      "Diese GPU-Aufgabe beendet zuerst Ihre aktive Live-Ansicht. Sie startet erst nach bestätigtem Stopp.",
     speed: "Simulationsgeschwindigkeit",
     session:
       "Die Live-Sitzung bleibt beim Seitenwechsel verfügbar. Hier nach Abschluss beenden; inaktive Sitzungen laufen automatisch ab.",
@@ -140,6 +146,8 @@ const labels = {
     replay: "Aufgezeichneter Lauf",
   },
   fr: {
+    handoff:
+      "Cette tâche GPU arrête d’abord votre vue en direct. Elle démarre uniquement après confirmation de l’arrêt.",
     speed: "Vitesse de simulation",
     session:
       "La session reste disponible entre les pages. Arrêtez-la ici après utilisation ; les sessions inactives expirent automatiquement.",

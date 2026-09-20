@@ -9,6 +9,8 @@ import type { Run } from "@/lib/models/domain";
 import { robotState, robotStates } from "@/lib/models/robotScene";
 import { RunBadge } from "./Fields";
 import { LiveScene } from "./live/LiveScene";
+import { liveLabels } from "./live/liveLabels";
+import { prepareNativeTask } from "./live/prepareNativeTask";
 import forms from "./PanelFormsStyles.module.css";
 import styles from "./PanelsStyles.module.css";
 import { CapabilitySummary } from "./RecordEvidence";
@@ -23,6 +25,7 @@ export function SimulationPanel({
   refresh: () => Promise<void>;
 }) {
   const { t, locale } = usePreferences();
+  const live = liveLabels(locale);
   const [scenario, setScenario] = useState("nominal");
   const [engine, setEngine] = useState("isaac");
   const [busy, setBusy] = useState(false);
@@ -40,6 +43,7 @@ export function SimulationPanel({
     setBusy(true);
     setError(false);
     try {
+      if (engine === "isaac") await prepareNativeTask();
       const result = await api<Run | { run: Run }>("runs", {
         scenario,
         engine,
@@ -95,6 +99,9 @@ export function SimulationPanel({
             </button>
           </div>
           <p className={styles.footnote}>{t.simNote}</p>
+          {engine === "isaac" && (
+            <p className={styles.footnote}>{live.handoff}</p>
+          )}
           {error && (
             <p role="alert" className={styles.empty}>
               {engine === "isaac" ? t.isaacUnavailable : t.error}
