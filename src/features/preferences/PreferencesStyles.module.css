@@ -1,0 +1,22 @@
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.controls select,
+.controls button {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radiusSmall);
+  min-height: 2.5rem;
+  padding: 0.4rem 0.55rem;
+}
+.controls button {
+  display: grid;
+  place-items: center;
+  min-width: 2.5rem;
+}
+.controls select {
+  font-size: 0.75rem;
+  font-weight: 700;
+}

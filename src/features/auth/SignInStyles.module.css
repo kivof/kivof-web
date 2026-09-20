@@ -1,0 +1,134 @@
+.page {
+  min-height: 100dvh;
+  padding: 1.2rem;
+}
+.page header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80rem;
+  margin: auto;
+}
+.page header > a {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+.page header > a svg {
+  transform: rotate(180deg);
+}
+.layout {
+  display: grid;
+  max-width: 75rem;
+  margin: 3rem auto;
+  gap: 3rem;
+  align-items: center;
+}
+.visual {
+  display: none;
+}
+.formPanel {
+  max-width: 26rem;
+  width: 100%;
+  margin: auto;
+  padding: 1.5rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.mark {
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--onAccent);
+  height: 2.7rem;
+  width: 2.7rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  border-radius: 0.6rem;
+  margin-bottom: 2rem;
+}
+.formPanel h2 {
+  font-size: 1.7rem;
+  font-weight: 550;
+  letter-spacing: -0.04em;
+}
+.formPanel > p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0.6rem 0 1.6rem;
+}
+.formPanel form {
+  display: grid;
+  gap: 1rem;
+}
+.formPanel label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.formPanel input {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  padding: 0.7rem;
+  width: 100%;
+  min-height: 2.8rem;
+}
+.formPanel button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 3rem;
+  background: var(--accent);
+  color: var(--onAccent);
+  border: 0;
+  border-radius: 0.4rem;
+  padding: 0.7rem 1rem;
+  margin: 0.4rem 0;
+}
+.formPanel small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.65rem;
+  margin-top: 1rem;
+}
+.error {
+  color: var(--danger);
+  font-size: 0.75rem;
+}
+@media (min-width: 60rem) {
+  .page {
+    padding: 2rem;
+  }
+  .layout {
+    grid-template-columns: 1.2fr 1fr;
+    margin-top: 5rem;
+  }
+  .visual {
+    display: block;
+  }
+  .visual > span {
+    font: 0.7rem var(--fontMono);
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  .visual h1 {
+    font-size: 3.2rem;
+    line-height: 1.08;
+    letter-spacing: -0.06em;
+    margin: 1rem 0 2rem;
+    max-width: 30rem;
+  }
+  .visual p {
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .formPanel {
+    padding: 2rem;
+  }
+}

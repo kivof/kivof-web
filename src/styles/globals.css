@@ -1,0 +1,130 @@
+@import "tailwindcss";
+:root {
+  color-scheme: light;
+  --bg: #f0f2ed;
+  --panel: #fbfcf8;
+  --raised: #e7ebe2;
+  --ink: #18241d;
+  --muted: #536157;
+  --line: #c9d1c3;
+  --accent: #346800;
+  --accentSoft: #d7f7b5;
+  --onAccent: #fff;
+  --danger: #ac302c;
+  --warning: #915f00;
+  --shadow: 0 1rem 3rem #18351b10;
+  --radius: 0.9rem;
+  --radiusSmall: 0.5rem;
+  --font: sans-serif;
+  --fontMono: ui-monospace, SFMono-Regular, monospace;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101813;
+  --panel: #18231c;
+  --raised: #243229;
+  --ink: #eef3e8;
+  --muted: #a6b4a4;
+  --line: #354439;
+  --accent: #b0ed6e;
+  --accentSoft: #334a25;
+  --onAccent: #17240f;
+  --danger: #ff9287;
+  --warning: #f4c474;
+  --shadow: 0 1rem 3rem #0003;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #101813;
+    --panel: #18231c;
+    --raised: #243229;
+    --ink: #eef3e8;
+    --muted: #a6b4a4;
+    --line: #354439;
+    --accent: #b0ed6e;
+    --accentSoft: #334a25;
+    --onAccent: #17240f;
+    --danger: #ff9287;
+    --warning: #f4c474;
+    --shadow: 0 1rem 3rem #0003;
+  }
+}
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font);
+  --font-mono: var(--fontMono);
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 0.18rem solid var(--accent);
+  outline-offset: 0.2rem;
+}
+::selection {
+  background: var(--accentSoft);
+}
+svg {
+  flex-shrink: 0;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+img {
+  max-width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none;
+    transition: none;
+    scroll-behavior: auto;
+  }
+}

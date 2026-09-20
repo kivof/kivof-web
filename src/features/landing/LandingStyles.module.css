@@ -1,0 +1,243 @@
+.page {
+  max-width: 100rem;
+  margin: auto;
+  padding: 0 1.2rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--line);
+  gap: 1rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1.7rem;
+  font-weight: 750;
+  letter-spacing: -0.08em;
+}
+.brand > span:first-child {
+  background: var(--accent);
+  color: var(--onAccent);
+  font-size: 1rem;
+  letter-spacing: -0.1em;
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 0.4rem;
+}
+.brandDot {
+  color: var(--accent);
+  margin-left: -0.45rem;
+}
+.header nav {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.header nav > a:first-child {
+  display: none;
+  font-size: 0.8rem;
+}
+.smallButton,
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--accent);
+  color: var(--onAccent);
+  padding: 0.8rem 1.1rem;
+  border-radius: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+.hero {
+  display: grid;
+  gap: 3rem;
+  padding: 4rem 0;
+}
+.eyebrow {
+  font: 0.65rem var(--fontMono);
+  letter-spacing: 0.15em;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  color: var(--muted);
+}
+.eyebrow > span {
+  height: 0.45rem;
+  width: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.hero h1 {
+  font-size: clamp(2.65rem, 5.5vw, 5.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.065em;
+  font-weight: 550;
+  margin: 1.7rem 0;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.heroCopy > p {
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 31rem;
+  color: var(--muted);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 1.9rem 0;
+  flex-wrap: wrap;
+}
+.actions > a:last-child {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.trust {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+.heroVisual {
+  align-self: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  background: var(--panel);
+}
+.visualBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 1rem;
+  font: 0.65rem var(--fontMono);
+  border-bottom: 1px solid var(--line);
+}
+.flow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  padding: 1rem;
+  border-top: 1px solid var(--line);
+}
+.flow > div {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+}
+.flow > div > span {
+  font-family: var(--fontMono);
+  color: var(--accent);
+}
+.flow svg {
+  margin-left: auto;
+  color: var(--muted);
+}
+.features {
+  display: grid;
+  gap: 1.5rem;
+  padding: 2.5rem 0 4rem;
+  border-top: 1px solid var(--line);
+}
+.featureNumber {
+  font: 0.7rem var(--fontMono);
+  color: var(--accent);
+  margin-bottom: 1.4rem;
+}
+.features h2 {
+  font-size: 1.15rem;
+  font-weight: 550;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.8rem;
+}
+.features p {
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 28rem;
+}
+.control {
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background: var(--panel);
+}
+.control h2 {
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+  margin: 0.7rem 0;
+}
+.control p {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.page footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+.page footer > span:first-child {
+  font-size: 1.15rem;
+  color: var(--ink);
+  font-weight: 700;
+}
+.page footer > span:last-child {
+  font-family: var(--fontMono);
+}
+@media (min-width: 48rem) {
+  .page {
+    padding: 0 2.5rem;
+  }
+  .header nav > a:first-child {
+    display: block;
+  }
+  .features {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .features article {
+    padding-right: 2rem;
+  }
+  .features article + article {
+    border-left: 1px solid var(--line);
+    padding-left: 2rem;
+  }
+  .flow {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 70rem) {
+  .hero {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 2.8rem;
+    padding: 5.5rem 0;
+  }
+  .page {
+    padding: 0 4rem;
+  }
+}
