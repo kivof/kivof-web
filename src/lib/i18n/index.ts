@@ -35,6 +35,8 @@ robotState|Recorded robot state|Estado registrado del robot|Aufgezeichneter Robo
 joint|Joint|Articulación|Gelenk|Articulation
 position|Position|Posición|Position|Position
 velocity|Velocity|Velocidad|Geschwindigkeit|Vitesse
+zoomIn|Zoom in|Acercar|Vergrößern|Agrandir
+zoomOut|Zoom out|Alejar|Verkleinern|Réduire
 language|Language|Idioma|Sprache|Langue
 light|Light mode|Modo claro|Heller Modus|Mode clair
 dark|Dark mode|Modo oscuro|Dunkler Modus|Mode sombre

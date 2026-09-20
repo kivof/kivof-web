@@ -179,7 +179,7 @@ export function Chat({ compact = false }: { compact?: boolean }) {
               <Icon name="image" size={16} />
               <span>
                 {t.image}
-                <small>{t.generatedImage}</small>
+                <small>{t.generated}</small>
               </span>
             </button>
           </fieldset>
