@@ -1,1 +1,16 @@
-{"name":"Kivof Physical AI","short_name":"Kivof","start_url":"/","display":"standalone","background_color":"#101813","theme_color":"#18231c","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]}
+{
+  "name": "Kivof Physical AI",
+  "short_name": "Kivof",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101813",
+  "theme_color": "#18231c",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
