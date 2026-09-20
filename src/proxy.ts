@@ -1,14 +1,19 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { canonicalPageUrl } from "@/lib/api/canonicalOrigin";
 import { config as settings } from "@/lib/config";
 export function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-  const endpoint = settings().realtime;
+  const configuration = settings();
+  const endpoint = configuration.realtime;
   const connect = endpoint ? ` ${new URL(endpoint).origin}` : "";
   const csp = `default-src 'self'; script-src 'self' 'nonce-${nonce}' 'strict-dynamic'; style-src 'self' 'nonce-${nonce}'; style-src-attr 'none'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'${connect}; media-src 'self' blob:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; report-uri /api/csp-report; report-to csp;`;
   const headers = new Headers(request.headers);
   headers.set("x-nonce", nonce);
   headers.set("Content-Security-Policy", csp);
-  const response = NextResponse.next({ request: { headers } });
+  const canonical = canonicalPageUrl(request, configuration.origin);
+  const response = canonical
+    ? NextResponse.redirect(canonical, 307)
+    : NextResponse.next({ request: { headers } });
   response.headers.set("Content-Security-Policy", csp);
   response.headers.set("Cache-Control", "no-store");
   response.headers.set("Reporting-Endpoints", 'csp="/api/csp-report"');
