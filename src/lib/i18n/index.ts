@@ -1,5 +1,9 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+reportedValues|Reported sensor values|Valores de sensores disponibles|Gemeldete Sensorwerte|Valeurs de capteurs disponibles
+validQuality|Records with valid quality|Registros con calidad válida|Datensätze mit gültiger Qualität|Enregistrements de qualité valide
+derivedTelemetry|Derived from these records|Derivado de estos registros|Aus diesen Datensätzen abgeleitet|Calculé à partir de ces enregistrements
+recordedAge|Recorded age|Antigüedad registrada|Aufgezeichnetes Alter|Ancienneté enregistrée
 notAdvertised|Not advertised by controller|No anunciado por el controlador|Vom Controller nicht gemeldet|Non annoncé par le contrôleur
 recordedStep|Recorded step|Paso registrado|Aufgezeichneter Schritt|Étape enregistrée
 sourceRecord|Full source record|Registro fuente completo|Vollständiger Quelldatensatz|Enregistrement source complet

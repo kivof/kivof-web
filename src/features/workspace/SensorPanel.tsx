@@ -30,6 +30,57 @@ export function SensorPanel({ sensors }: { sensors: Sensor[] }) {
             }
           />
         ))}
+        {sensors.map((sensor) => (
+          <TelemetryGauge
+            key={`${sensor.id}-age`}
+            label={`${t[sensor.id] ?? sensor.name} · ${t.recordedAge}`}
+            value={
+              typeof sensor.age_ms === "number" &&
+              Number.isFinite(sensor.age_ms) &&
+              sensor.age_ms >= 0
+                ? new Intl.NumberFormat(locale, {
+                    maximumFractionDigits: 1,
+                  }).format(sensor.age_ms)
+                : "—"
+            }
+            unit="ms"
+            quality={t[sensor.quality] ?? sensor.quality}
+            source={t[sensor.source] ?? sensor.source}
+            available={
+              typeof sensor.age_ms === "number" &&
+              Number.isFinite(sensor.age_ms) &&
+              sensor.age_ms >= 0
+            }
+          />
+        ))}
+        {[
+          [
+            "reportedValues",
+            sensors.filter(
+              (sensor) =>
+                typeof sensor.value === "number" &&
+                Number.isFinite(sensor.value),
+            ).length,
+          ],
+          [
+            "validQuality",
+            sensors.filter((sensor) => sensor.quality === "valid").length,
+          ],
+        ].map(([key, count]) => (
+          <TelemetryGauge
+            key={key}
+            label={t[key]}
+            value={
+              sensors.length
+                ? new Intl.NumberFormat(locale).format(Number(count))
+                : "—"
+            }
+            unit={`/ ${sensors.length}`}
+            quality={t.readOnly}
+            source={t.derivedTelemetry}
+            available={sensors.length > 0}
+          />
+        ))}
       </div>
       <section className={styles.card}>
         <div className={styles.tableWrap}>

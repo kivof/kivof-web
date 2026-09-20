@@ -42,6 +42,7 @@ export type Sensor = {
   quality: string;
   source: string;
   last_seen: string | null;
+  age_ms?: number | null;
 };
 export type Ontology = {
   nodes: { id: string; label: string; type: string }[];

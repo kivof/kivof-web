@@ -6,6 +6,7 @@ import type { Overview, Run } from "@/lib/models/domain";
 import { FactoryWorkbench } from "./FactoryWorkbench";
 import { RunsPanel } from "./RunsPanel";
 import { fieldValue, geometryPoints, stepLabel } from "./recordPresentation";
+import { SensorPanel } from "./SensorPanel";
 import { SimulationPanel } from "./SimulationPanel";
 
 const run: Run = {
@@ -126,4 +127,25 @@ test("simulation exposes stale observations and distinguishes configured from ve
   assert.match(html, /Physical execution/);
   assert.match(html, /Disabled/);
   assert.doesNotMatch(html, /&quot;configured&quot;/);
+});
+
+test("sensor density uses recorded values and ages without inventing additional devices", () => {
+  const sensors = [0, 1, 2].map((index) => ({
+    id: `sensor-${index}`,
+    name: `Sensor ${index}`,
+    kind: "synthetic-contact-proxy",
+    unit: "N",
+    value: index === 0 ? 0.8 : null,
+    quality: index === 0 ? "valid" : "disconnected",
+    source: "cpu-simulation",
+    last_seen: null,
+    age_ms: index === 0 ? 12 : null,
+  }));
+  const html = renderToStaticMarkup(<SensorPanel sensors={sensors} />);
+  assert.equal((html.match(/<article/g) ?? []).length, 8);
+  assert.match(html, /Reported sensor values/);
+  assert.match(html, /Records with valid quality/);
+  assert.match(html, /Derived from these records/);
+  assert.match(html, /Recorded age/);
+  assert.doesNotMatch(html, /Sensor 3|Live age/);
 });
