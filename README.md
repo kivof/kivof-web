@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# kivof-web
 
-## Getting Started
+Kivof's browser workspace for simulation evidence, robot operations, data review and provider-backed conversation.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Use Bun 1.4.2 and Node 24. Install with `bun install --frozen-lockfile`, copy `.env.example` to `.env`, configure the backend and application origins, and run `bun run dev`. Use `bun run build && bun run start` for strict-CSP browser verification; development debug tooling may require policies that production deliberately disallows.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Every application variable is read through `src/lib/config.ts`. `BACKEND_URL`, `BACKEND_WS_URL` and `APP_ORIGIN` are runtime addresses. `REALTIME_CALL_URL` must match the configured provider's HTTPS WebRTC calls endpoint. `SESSION_COOKIE_SECURE=true` is required on HTTPS deployments. Set it to false only for local HTTP. `KIVOF_SURFACE=product` selects the main product. The backend provisions demo credentials; no password is embedded in this application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The frontend uses CSS Modules and shared semantic tokens in `src/styles/globals.css`. Reusable UI components are local to this repository. Translations are in `src/lib/i18n` and the deck locale modules. Offline caching stores only the explicit public offline page, never authenticated responses.
 
-## Learn More
+## Commands
 
-To learn more about Next.js, take a look at the following resources:
+- `bun run lint`
+- `bun run test`
+- `bun run build`
+- `bun run start`
+- `git config core.hooksPath .githooks` enables the required Gitleaks pre-commit hook.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Containers
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Build independently with `container build --tag kivof-web:local .` or `docker build --tag kivof-web:local .`. The image runs Gitleaks, lint, unit tests and dependency audit before creating Next.js standalone output. It runs as the non-root Node user. Local Compose uses this directory as its complete build context; set `WEB_IMAGE_TAG` before `docker compose up --build --wait`.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Health endpoint: `/api/health`. Main routes: `/`, `/login`, `/workspace`, `/workspace/runs`, `/workspace/sensors`, `/workspace/ontology`, `/workspace/labels`, `/workspace/simulation`, `/workspace/chat`, and `/deck/JO202609190900`.
