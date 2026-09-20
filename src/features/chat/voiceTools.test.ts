@@ -60,6 +60,10 @@ test("tool allowlist rejects injected actions, invalid JSON and foreign fields w
     ["control_live_simulation", '{"action":"move_motor"}'],
     ["control_live_simulation", '{"action":"start","physical_execution":true}'],
     ["control_live_simulation", '{"action":"stop","session_id":"../another"}'],
+    [
+      "control_live_simulation",
+      '{"action":"start","session_id":"81292f07-1111-4222-a333-123456789abc"}',
+    ],
     ["read_workspace_context", '{"tenant":"another"}'],
     ["read_workspace_context", "not-json"],
     ["read_workspace_context", "[]"],
@@ -128,5 +132,115 @@ test("cancelled responses and partial function arguments never execute", async (
     ...response(),
     type: "response.function_call_arguments.delta",
   });
+  await handler(response());
   assert.equal(executions, 0);
+});
+
+test("concurrent responses serialize controls and a repeated event cannot replay a pending mutation", async () => {
+  let calls = 0,
+    active = 0,
+    maximum = 0;
+  const handler = voiceToolHandler({
+    active: () => true,
+    send: () => {},
+    changed: () => {},
+    execute: async () => {
+      calls += 1;
+      active += 1;
+      maximum = Math.max(maximum, active);
+      await Promise.resolve();
+      active -= 1;
+      return { ok: true };
+    },
+  });
+  await Promise.all([
+    handler(
+      response("control_live_simulation", '{"action":"start"}', "call_1"),
+    ),
+    handler(
+      response("control_live_simulation", '{"action":"start"}', "call_1"),
+    ),
+    handler(response("control_live_simulation", '{"action":"stop"}', "call_2")),
+  ]);
+  assert.equal(calls, 2);
+  assert.equal(maximum, 1);
+});
+
+test("new user speech suppresses a late follow-up and prevents queued old controls", async () => {
+  let resolve: (value: unknown) => void = () => {};
+  const pending = new Promise((done) => {
+    resolve = done;
+  });
+  let calls = 0;
+  const sent: Record<string, unknown>[] = [];
+  const handler = voiceToolHandler({
+    active: () => true,
+    changed: () => {},
+    send: (value) => sent.push(value),
+    execute: async () => {
+      calls += 1;
+      return pending;
+    },
+  });
+  const first = handler(response());
+  await Promise.resolve();
+  const second = handler(
+    response("control_live_simulation", '{"action":"start"}', "call_2"),
+  );
+  await handler({ type: "input_audio_buffer.speech_started" });
+  resolve({ ok: true });
+  await Promise.all([first, second]);
+  assert.equal(calls, 1);
+  assert.ok(sent.every((item) => item.type !== "response.create"));
+  assert.match(JSON.stringify(sent), /superseded_by_user/);
+});
+
+test("cancelled response IDs are blocked even if cancellation omitted its partial outputs", async () => {
+  let calls = 0;
+  const handler = voiceToolHandler({
+    active: () => true,
+    send: () => {},
+    changed: () => {},
+    execute: async () => {
+      calls += 1;
+    },
+  });
+  await handler({
+    type: "response.done",
+    response: { id: "response-1", status: "cancelled", output: [] },
+  });
+  const value = response();
+  await handler({
+    ...value,
+    response: { ...value.response, id: "response-1" },
+  });
+  assert.equal(calls, 0);
+});
+
+test("the session call budget remains bounded and never executes overflow mutations", async () => {
+  let calls = 0;
+  const handler = voiceToolHandler({
+    active: () => true,
+    send: () => {},
+    changed: () => {},
+    execute: async () => {
+      calls += 1;
+      return { ok: true };
+    },
+  });
+  for (let index = 0; index < 128; index++)
+    await handler(response("read_workspace_context", "{}", `call_${index}`));
+  await assert.rejects(
+    handler(
+      response("control_live_simulation", '{"action":"start"}', "overflow"),
+    ),
+    /voice_tool_limit_reached/,
+  );
+  await assert.rejects(
+    handler(
+      response("control_live_simulation", '{"action":"start"}', "another"),
+    ),
+    /voice_tool_limit_reached/,
+  );
+  assert.equal(calls, 128);
 });
