@@ -122,7 +122,39 @@ print|Print deck|Imprimir presentación|Präsentation drucken|Imprimer
 slide|Slide|Diapositiva|Folie|Diapositive
 footer|Built for the THEKER challenge · HackSpain 2026|Para el reto THEKER · HackSpain 2026|Für die THEKER-Challenge · HackSpain 2026|Pour le défi THEKER · HackSpain 2026
 proof|Harness Forge|Harness Forge|Harness Forge|Harness Forge
-sessionOnly|Conversation is kept for this open workspace session.|La conversación se conserva durante esta sesión abierta.|Das Gespräch bleibt für diese geöffnete Sitzung erhalten.|La conversation reste disponible pendant cette session ouverte.
+sessionOnly|Conversation is saved to this workspace. Voice captions stay in this session.|La conversación se guarda. Los subtítulos de voz quedan en esta sesión.|Gespräche werden gespeichert. Sprachtexte bleiben in dieser Sitzung.|La conversation est enregistrée. Les sous-titres vocaux restent dans cette session.
+clearHistory|Clear visible conversation; the audit record is retained.|Borrar conversación visible; se conserva la auditoría.|Sichtbares Gespräch löschen; Prüfprotokoll bleibt erhalten.|Effacer la conversation visible ; l’audit est conservé.
+imageLoading|Loading saved image…|Cargando imagen guardada…|Gespeichertes Bild laden…|Chargement de l’image enregistrée…
+modelUnavailable|The configured model is unavailable or its output was rejected.|El modelo no está disponible o su respuesta fue rechazada.|Das Modell ist nicht verfügbar oder seine Ausgabe wurde abgelehnt.|Le modèle est indisponible ou sa réponse a été rejetée.
+rateLimited|Request limit reached. Please retry later.|Límite de solicitudes. Reintenta más tarde.|Anfragelimit erreicht. Später erneut versuchen.|Limite atteinte. Réessayez plus tard.
+reviewed|Consistency reviewed · not physical verification|Coherencia revisada · no verificación física|Konsistenz geprüft · keine physische Verifizierung|Cohérence vérifiée · pas de vérification physique
+learning|Model lab|Laboratorio de modelos|Modelllabor|Laboratoire de modèles
+learningBody|Submit your own observations to a configured VLA or world model. Predictions carry no motor authority.|Envía tus observaciones a un modelo VLA o de mundo configurado. Las predicciones no autorizan movimiento.|Eigene Beobachtungen an ein VLA- oder Weltmodell senden. Vorhersagen haben keine Bewegungsfreigabe.|Envoyez vos observations à un VLA ou modèle du monde configuré. Les prédictions n’autorisent aucun mouvement.
+policy|VLA policy|Política VLA|VLA-Policy|Politique VLA
+world|World model|Modelo del mundo|Weltmodell|Modèle du monde
+provider|Provider|Proveedor|Anbieter|Fournisseur
+instruction|Task instruction|Instrucción de tarea|Aufgabenanweisung|Instruction de tâche
+embodiment|Robot embodiment|Configuración robótica|Roboterkonfiguration|Configuration robotique
+state|Joint state (comma-separated)|Estado articular (separado por comas)|Gelenkzustand (kommagetrennt)|État articulaire (séparé par virgules)
+cameraImages|Camera images (PNG/JPEG, up to 3)|Imágenes de cámara (PNG/JPEG, hasta 3)|Kamerabilder (PNG/JPEG, bis zu 3)|Images caméra (PNG/JPEG, 3 maximum)
+imageLimit|Each encoded image must be below 128 KiB. Upload your own observations.|Cada imagen codificada debe ser menor de 128 KiB. Sube tus observaciones.|Jedes codierte Bild muss unter 128 KiB sein. Eigene Beobachtungen hochladen.|Chaque image encodée doit être inférieure à 128 Kio. Importez vos observations.
+frame|Reference frame|Marco de referencia|Referenzrahmen|Repère de référence
+units|Units|Unidades|Einheiten|Unités
+calibration|Calibration version|Versión de calibración|Kalibrierungsversion|Version de calibration
+age|Recorded observation age (ms)|Antigüedad registrada (ms)|Aufgezeichnetes Beobachtungsalter (ms)|Ancienneté enregistrée (ms)
+recordedInput|Uploaded images are recorded inputs. An age field does not establish live freshness.|Las imágenes son entradas registradas. La edad no demuestra actualidad en vivo.|Hochgeladene Bilder sind Aufzeichnungen. Eine Altersangabe belegt keine Live-Aktualität.|Les images importées sont enregistrées. L’âge saisi ne prouve pas une fraîcheur en direct.
+predict|Request prediction|Solicitar predicción|Vorhersage anfordern|Demander une prédiction
+prediction|Prediction|Predicción|Vorhersage|Prédiction
+hypothesis|Hypothesis|Hipótesis|Hypothese|Hypothèse
+unavailable|Unavailable|No disponible|Nicht verfügbar|Indisponible
+learningHistory|Model request history|Historial de solicitudes|Modellanfragen|Historique des demandes
+actionDimensions|Action dimensions|Dimensiones de acción|Aktionsdimensionen|Dimensions d’action
+actions|Action sequence (JSON, optional)|Secuencia de acciones (JSON, opcional)|Aktionsfolge (JSON, optional)|Séquence d’actions (JSON, facultative)
+seed|Seed|Semilla|Startwert|Graine
+domain|Domain|Dominio|Domäne|Domaine
+noMotor|No motor authority · no verified physical outcome|Sin autoridad motora · sin resultado físico verificado|Keine Bewegungsfreigabe · kein verifiziertes physisches Ergebnis|Aucune autorité motrice · aucun résultat physique vérifié
+withdraw|Withdraw annotation|Retirar anotación|Annotation zurückziehen|Retirer l’annotation
+withdrawn|Withdrawn|Retirada|Zurückgezogen|Retirée
 operator|Demo operator|Operador de demo|Demo-Bediener|Opérateur démo
 readOnly|Inspection view|Vista de inspección|Inspektionsansicht|Vue d’inspection
 refresh|Refresh evidence|Actualizar evidencias|Nachweise aktualisieren|Actualiser les preuves
