@@ -12,6 +12,7 @@ type Job = {
   output?: Record<string, unknown>;
   data_origin: string;
   motor_authority: false;
+  verified_physical_outcome: false;
   request?: Record<string, unknown>;
 };
 const active = new Set(["queued", "running", "cancelling"]);
@@ -30,9 +31,21 @@ export function trainingJob(value: unknown): Job | null {
     !/^[a-zA-Z0-9_-]{1,128}$/.test(job.id) ||
     !statuses.has(String(job.status)) ||
     job.motor_authority !== false ||
+    job.verified_physical_outcome !== false ||
     job.data_origin !== "synthetic"
   )
     return null;
+  if (job.output != null) {
+    if (typeof job.output !== "object" || Array.isArray(job.output))
+      return null;
+    const output = job.output as Record<string, unknown>;
+    if (
+      output.motor_authority !== false ||
+      output.verified_physical_outcome !== false ||
+      output.data_origin !== "synthetic"
+    )
+      return null;
+  }
   return job as Job;
 }
 export function TrainingPanel() {

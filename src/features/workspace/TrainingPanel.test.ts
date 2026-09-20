@@ -17,6 +17,37 @@ test("training lifecycle rejects executable routes and invalid authority claims"
   };
   assert.equal(trainingJob(record)?.status, "queued");
   assert.equal(trainingJob({ ...record, motor_authority: true }), null);
+  assert.equal(
+    trainingJob({ ...record, verified_physical_outcome: true }),
+    null,
+  );
+  assert.equal(
+    trainingJob({ ...record, verified_physical_outcome: undefined }),
+    null,
+  );
+  const output = {
+    motor_authority: false,
+    verified_physical_outcome: false,
+    data_origin: "synthetic",
+  };
+  assert.equal(trainingJob({ ...record, output })?.status, "queued");
+  assert.equal(
+    trainingJob({ ...record, output: { ...output, motor_authority: true } }),
+    null,
+  );
+  assert.equal(
+    trainingJob({
+      ...record,
+      output: { ...output, verified_physical_outcome: true },
+    }),
+    null,
+  );
+  assert.equal(
+    trainingJob({ ...record, output: { ...output, data_origin: "physical" } }),
+    null,
+  );
+  assert.equal(trainingJob({ ...record, output: {} }), null);
+  assert.equal(trainingJob({ ...record, output: [] }), null);
   assert.equal(trainingJob({ ...record, status: "deployed" }), null);
   assert.equal(trainingJob({ ...record, id: "../secrets" }), null);
 });
