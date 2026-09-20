@@ -71,7 +71,7 @@ export function LiveScene({ run, title }: { run?: Run | null; title: string }) {
           <button
             type="button"
             className={styles.primary}
-            disabled={live.starting}
+            disabled={live.starting || live.stopping}
             onClick={() => {
               if (active) void live.stop();
               else void live.start();

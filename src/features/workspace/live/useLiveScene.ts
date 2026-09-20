@@ -19,6 +19,7 @@ function liveFailure(error: unknown): LiveFailure {
 export function useLiveScene() {
   const [scene, setScene] = useState<LiveScene | null>(null);
   const [starting, setStarting] = useState(false);
+  const [stopping, setStopping] = useState(false);
   const [error, setError] = useState<LiveFailure | null>(null);
   const [age, setAge] = useState(0);
   const [fps, setFps] = useState(0);
@@ -127,17 +128,23 @@ export function useLiveScene() {
   }
 
   async function stop() {
+    if (stopping) return;
     operation.current += 1;
     const id = session.current;
-    session.current = null;
     pendingCamera.current = null;
     setError(null);
-    setScene((value) => (value ? { ...value, status: "stopped" } : null));
     if (!id) return;
+    setStopping(true);
     try {
       await api(`simulation/live/${id}`, undefined, undefined, "DELETE");
+      if (session.current === id) {
+        session.current = null;
+        setScene((value) => (value ? { ...value, status: "stopped" } : null));
+      }
     } catch {
       if (mounted.current) setError("stopError");
+    } finally {
+      if (mounted.current) setStopping(false);
     }
   }
 
@@ -166,5 +173,5 @@ export function useLiveScene() {
       cameraBusy.current = false;
     }
   }, []);
-  return { scene, starting, error, age, fps, start, stop, camera };
+  return { scene, starting, stopping, error, age, fps, start, stop, camera };
 }
