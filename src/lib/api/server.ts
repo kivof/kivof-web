@@ -23,6 +23,8 @@ const routes: Record<string, string[]> = {
   "learning/training": ["GET", "POST"],
   "learning/world-model": ["POST"],
   "realtime/session": ["POST"],
+  "assistant/context": ["GET"],
+  "assistant/tools": ["POST"],
   "simulation/live": ["POST"],
 };
 export function allowedRoute(path: string, method: string) {

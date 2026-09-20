@@ -71,6 +71,14 @@ test("authenticated history and model routes are precisely allowlisted", () => {
   assert.equal(allowedRoute("learning/policy/shell", "POST"), false);
 });
 
+test("assistant context and tool routes allow only the intended methods", () => {
+  assert.equal(allowedRoute("assistant/context", "GET"), true);
+  assert.equal(allowedRoute("assistant/context", "POST"), false);
+  assert.equal(allowedRoute("assistant/tools", "POST"), true);
+  assert.equal(allowedRoute("assistant/tools", "GET"), false);
+  assert.equal(allowedRoute("assistant/tools/execute", "POST"), false);
+});
+
 test("BFF preserves bounded idempotency keys without trusting caller authorization", () => {
   const incoming = new Headers({
     "idempotency-key": "native-run-123",

@@ -56,6 +56,8 @@ export function useChat(locale: string) {
       );
       const reply = parseReply(raw);
       if (!controller.signal.aborted)
+        window.dispatchEvent(new Event("kivof:workspace-changed"));
+      if (!controller.signal.aborted)
         setTurns((previous) => [
           ...previous,
           { id: reply.id, role: "assistant", content: reply.answer, reply },
