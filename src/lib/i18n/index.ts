@@ -3,6 +3,38 @@ const rows = `
 robot-camera|Robot camera|Cámara del robot|Roboterkamera|Caméra du robot
 robot-contact|Contact sensor|Sensor de contacto|Kontaktsensor|Capteur de contact
 factory-vibration|Factory vibration|Vibración de fábrica|Fabrikvibration|Vibrations de l’usine
+training|Training|Entrenamiento|Training|Entraînement
+trainingBody|Run a bounded native SmolVLA adapter training job on the approved synthetic fixture dataset.|Ejecuta un entrenamiento nativo y acotado del adaptador SmolVLA con el conjunto sintético aprobado.|Begrenztes natives SmolVLA-Adaptertraining mit dem freigegebenen synthetischen Datensatz ausführen.|Lancez un entraînement natif borné de l’adaptateur SmolVLA sur le jeu synthétique approuvé.
+syntheticTraining|Synthetic fixture data · no physical qualification|Datos sintéticos · sin cualificación física|Synthetische Testdaten · keine physische Qualifikation|Données synthétiques · aucune qualification physique
+trainingSteps|Training steps|Pasos de entrenamiento|Trainingsschritte|Étapes d’entraînement
+startTraining|Start training job|Iniciar entrenamiento|Trainingsauftrag starten|Lancer l’entraînement
+cancelTraining|Cancel job|Cancelar tarea|Auftrag abbrechen|Annuler la tâche
+trainingJobs|Training jobs|Tareas de entrenamiento|Trainingsaufträge|Tâches d’entraînement
+trainingUnavailable|The configured training worker is unavailable.|El trabajador de entrenamiento no está disponible.|Der konfigurierte Trainingsdienst ist nicht verfügbar.|Le service d’entraînement configuré est indisponible.
+dataset|Dataset|Conjunto de datos|Datensatz|Jeu de données
+loss|Recorded loss|Pérdida registrada|Aufgezeichneter Verlust|Perte enregistrée
+jobId|Job ID|ID de tarea|Auftrags-ID|ID de tâche
+modelRevision|Model revision|Revisión del modelo|Modellrevision|Révision du modèle
+checkpoint|Checkpoint SHA-256|SHA-256 del punto de control|Prüfpunkt SHA-256|SHA-256 du point de contrôle
+parametersChanged|Parameters changed|Parámetros modificados|Parameter geändert|Paramètres modifiés
+yes|Yes|Sí|Ja|Oui
+no|No|No|Nein|Non
+queued|Queued|En cola|In Warteschlange|En attente
+cancelling|Cancelling|Cancelando|Wird abgebrochen|Annulation en cours
+cancelled|Cancelled|Cancelado|Abgebrochen|Annulé
+completed|Completed|Completado|Abgeschlossen|Terminé
+chatActions|Approved skills|Habilidades aprobadas|Freigegebene Fähigkeiten|Compétences approuvées
+explainSkill|Explain evidence|Explicar evidencias|Nachweise erklären|Expliquer les preuves
+nativeFrame|Recorded native camera frame|Fotograma nativo registrado|Aufgezeichnetes natives Kamerabild|Image native enregistrée
+recordedFrames|Recorded frames|Fotogramas registrados|Aufgezeichnete Bilder|Images enregistrées
+engine|Simulation engine|Motor de simulación|Simulationssystem|Moteur de simulation
+cpuEngine|CPU cable simulation|Simulación de cable en CPU|CPU-Kabelsimulation|Simulation du câble sur CPU
+isaacEngine|Isaac Sim · native factory scene|Isaac Sim · escena nativa de fábrica|Isaac Sim · native Fabrikszene|Isaac Sim · scène native d’usine
+isaacUnavailable|Isaac Sim did not return a qualified scene. Check the worker and required license approval.|Isaac Sim no devolvió una escena cualificada. Comprueba el servicio y la aprobación de licencia.|Isaac Sim hat keine qualifizierte Szene geliefert. Dienst und erforderliche Lizenzfreigabe prüfen.|Isaac Sim n’a pas renvoyé de scène qualifiée. Vérifiez le service et l’acceptation de licence.
+robotState|Recorded robot state|Estado registrado del robot|Aufgezeichneter Roboterzustand|État enregistré du robot
+joint|Joint|Articulación|Gelenk|Articulation
+position|Position|Posición|Position|Position
+velocity|Velocity|Velocidad|Geschwindigkeit|Vitesse
 language|Language|Idioma|Sprache|Langue
 light|Light mode|Modo claro|Heller Modus|Mode clair
 dark|Dark mode|Modo oscuro|Dunkler Modus|Mode sombre
