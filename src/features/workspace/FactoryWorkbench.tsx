@@ -2,13 +2,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import type { Overview } from "@/lib/models/domain";
-import { isaacFrames } from "@/lib/models/robotScene";
 import styles from "./FactoryWorkbenchStyles.module.css";
 import { Fields, RunBadge } from "./Fields";
+import { LiveScene } from "./live/LiveScene";
 import { StepSummary, VerificationSummary } from "./RecordEvidence";
 import { stepLabel } from "./recordPresentation";
 
@@ -130,15 +129,7 @@ export function FactoryWorkbench({ overview }: { overview: Overview }) {
         </section>
       </aside>
       <div className={styles.stage}>
-        <div className={styles.stageMeta}>
-          <Badge>
-            {isaacFrames(run).length
-              ? `${t.simulated} · ${t.replay}`
-              : t.recordedPreview}
-          </Badge>
-          <span>HARNESS FORGE</span>
-        </div>
-        <RecordedScene run={run} title={t.sceneTitle} />
+        <LiveScene run={run} title={t.sceneTitle} />
         <div className={styles.stageBottom}>
           <span>
             <i />

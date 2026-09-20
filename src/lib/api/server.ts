@@ -1,6 +1,11 @@
 import type { NextRequest } from "next/server";
 import { config } from "@/lib/config";
-import { ApiError, boundedText, jsonObject } from "./boundary";
+import {
+  ApiError,
+  boundedText,
+  jsonObject,
+  upstreamErrorCode,
+} from "./boundary";
 
 const routes: Record<string, string[]> = {
   "auth/login": ["POST"],
@@ -18,10 +23,15 @@ const routes: Record<string, string[]> = {
   "learning/training": ["GET", "POST"],
   "learning/world-model": ["POST"],
   "realtime/session": ["POST"],
+  "simulation/live": ["POST"],
 };
 export function allowedRoute(path: string, method: string) {
   return (
     routes[path]?.includes(method) ||
+    ((method === "GET" || method === "DELETE") &&
+      /^simulation\/live\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
+    (method === "POST" &&
+      /^simulation\/live\/[a-zA-Z0-9_-]{1,128}\/camera$/.test(path)) ||
     ((method === "GET" || method === "DELETE") &&
       /^learning\/training\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
     (method === "GET" && /^chat\/[a-zA-Z0-9_-]{1,128}\/image$/.test(path)) ||
@@ -68,19 +78,10 @@ export async function proxyRequest(request: NextRequest, path: string) {
     signal: AbortSignal.any([request.signal, AbortSignal.timeout(180_000)]),
   });
   if (!upstream.ok) {
-    const safeCodes = [
-      "unauthorized",
-      "invalid_request",
-      "rate_limited",
-      "model_unavailable_or_output_rejected",
-      "provider_unavailable",
-      "review_rejected",
-    ];
     const errorBody = await boundedText(upstream, 4096);
     let code = upstream.status === 401 ? "unauthorized" : "request_failed";
     try {
-      const candidate = JSON.parse(errorBody).error;
-      if (safeCodes.includes(candidate)) code = candidate;
+      code = upstreamErrorCode(JSON.parse(errorBody)) ?? code;
     } catch {
       code = "request_failed";
     }

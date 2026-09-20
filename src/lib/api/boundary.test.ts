@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { ApiError, boundedText, jsonObject, safeError } from "./boundary";
+import {
+  ApiError,
+  boundedText,
+  jsonObject,
+  safeError,
+  upstreamErrorCode,
+} from "./boundary";
 import { allowedRoute, upstreamHeaders } from "./server";
 
 test("bounded response rejects overflow", async () => {
@@ -18,6 +24,43 @@ test("unknown errors never expose provider text", () => {
     status: 502,
     code: "service_unavailable",
   });
+});
+
+test("safe failure codes support the backend error envelope without exposing its message", () => {
+  assert.equal(
+    upstreamErrorCode({
+      error: { code: "live_worker_busy", message: "private diagnostic" },
+    }),
+    "live_worker_busy",
+  );
+  assert.equal(
+    upstreamErrorCode({ error: "provider_unavailable" }),
+    "provider_unavailable",
+  );
+  assert.equal(
+    upstreamErrorCode({
+      error: { code: "private_secret", message: "private diagnostic" },
+    }),
+    undefined,
+  );
+  assert.equal(
+    upstreamErrorCode({ error: "<script>unsafe</script>" }),
+    undefined,
+  );
+});
+
+test("live simulation routes constrain methods and session paths", () => {
+  assert.equal(allowedRoute("simulation/live", "POST"), true);
+  assert.equal(allowedRoute("simulation/live", "GET"), false);
+  assert.equal(allowedRoute("simulation/live/scene-1", "GET"), true);
+  assert.equal(allowedRoute("simulation/live/scene-1", "DELETE"), true);
+  assert.equal(allowedRoute("simulation/live/scene-1/camera", "POST"), true);
+  for (const path of [
+    "simulation/live/../camera",
+    "simulation/live/x/execute",
+    "simulation/live/x?secret=y",
+  ])
+    assert.equal(allowedRoute(path, "POST"), false);
 });
 
 test("authenticated history and model routes are precisely allowlisted", () => {

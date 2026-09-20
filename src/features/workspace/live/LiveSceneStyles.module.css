@@ -1,0 +1,190 @@
+.viewer {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--panel);
+  color: var(--ink);
+  overflow: hidden;
+}
+.viewer[data-expanded="true"] {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  border-radius: 0;
+  overflow: auto;
+}
+.toolbar,
+.toolbar > div,
+.controls,
+.robots,
+.footer,
+.inspector header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.toolbar {
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.toolbar strong {
+  font-size: 0.85rem;
+}
+.viewer button {
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  padding: 0.5rem 0.65rem;
+  background: var(--raised);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+}
+.viewer button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.viewer button:focus-visible,
+.surface:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.viewer .primary {
+  background: var(--accent);
+  color: var(--onAccent);
+  font-weight: 600;
+}
+.layout {
+  display: grid;
+  min-width: 0;
+}
+.canvasColumn {
+  min-width: 0;
+}
+.surface {
+  position: relative;
+  width: 100%;
+  outline: none;
+}
+.surface[data-enabled="true"] {
+  cursor: grab;
+  touch-action: none;
+}
+.surface[data-enabled="true"]:active {
+  cursor: grabbing;
+}
+.surface > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+}
+.surface > figure {
+  border: 0;
+}
+.markers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.marker {
+  cursor: pointer;
+  outline: none;
+}
+.marker circle {
+  fill: var(--panel);
+  fill-opacity: 0.8;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.marker text {
+  fill: var(--accent);
+  font: 600 1.25rem var(--fontMono);
+  pointer-events: none;
+}
+.marker[data-selected="true"] circle,
+.marker:focus-visible circle {
+  fill: var(--accent);
+  fill-opacity: 1;
+  stroke-width: 4;
+}
+.marker[data-selected="true"] text,
+.marker:focus-visible text {
+  fill: var(--onAccent);
+}
+.controls,
+.robots {
+  padding: 0.5rem 0.75rem;
+}
+.controls button {
+  min-width: 2.75rem;
+  min-height: 2.5rem;
+}
+.robots button[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.help,
+.notice {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.notice {
+  background: var(--raised);
+  color: var(--ink);
+}
+.footer {
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 0.75rem;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+.inspector {
+  padding: 0.75rem;
+  border-top: 1px solid var(--line);
+  min-width: 0;
+}
+.inspector header {
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+.inspector table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+.inspector th,
+.inspector td {
+  padding: 0.4rem 0.2rem;
+  text-align: right;
+  border-bottom: 1px solid var(--line);
+}
+.inspector th:first-child {
+  text-align: left;
+}
+.inspector caption {
+  padding: 0.65rem 0;
+  text-align: left;
+  color: var(--muted);
+}
+@media (min-width: 60rem) {
+  .layout:has(.inspector) {
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 28%);
+  }
+  .inspector {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+  .viewer[data-expanded="true"] .canvasColumn {
+    max-width: min(68vw, 78vh);
+    margin: 0 auto;
+  }
+}

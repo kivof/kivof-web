@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import { usePreferences } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
 import type { Run } from "@/lib/models/domain";
 import { robotState, robotStates } from "@/lib/models/robotScene";
 import { RunBadge } from "./Fields";
+import { LiveScene } from "./live/LiveScene";
 import forms from "./PanelFormsStyles.module.css";
 import styles from "./PanelsStyles.module.css";
 import { CapabilitySummary } from "./RecordEvidence";
@@ -57,7 +57,7 @@ export function SimulationPanel({
       <p className={styles.intro}>{t.simBody}</p>
       <section className={stageStyles.workbench}>
         <div className={stageStyles.stage}>
-          <RecordedScene run={currentRun} title={t.sceneTitle} />
+          <LiveScene run={currentRun} title={t.sceneTitle} />
         </div>
         <div className={stageStyles.controls}>
           <h2>{t.simulation}</h2>

@@ -35,3 +35,27 @@ export function safeError(error: unknown) {
     ? { status: error.status, code: error.code }
     : { status: 502, code: "service_unavailable" };
 }
+
+export function upstreamErrorCode(value: unknown): string | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const envelope = (value as Record<string, unknown>).error;
+  const code =
+    typeof envelope === "string"
+      ? envelope
+      : envelope && typeof envelope === "object"
+        ? (envelope as Record<string, unknown>).code
+        : undefined;
+  const allowed = [
+    "unauthorized",
+    "invalid_request",
+    "rate_limited",
+    "model_unavailable_or_output_rejected",
+    "provider_unavailable",
+    "review_rejected",
+    "live_worker_busy",
+    "live_session_expired",
+    "live_unavailable",
+    "live_output_rejected",
+  ];
+  return typeof code === "string" && allowed.includes(code) ? code : undefined;
+}
