@@ -8,6 +8,7 @@ import { usePreferences } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
 import type { Run } from "@/lib/models/domain";
 import { Fields, RunBadge } from "./Fields";
+import forms from "./PanelFormsStyles.module.css";
 import styles from "./PanelsStyles.module.css";
 export function SimulationPanel({
   capabilities,
@@ -39,7 +40,7 @@ export function SimulationPanel({
       <p className={styles.intro}>{t.simBody}</p>
       <section className={styles.card}>
         <RobotScene title={t.sceneTitle} caption={t.sceneCaption} />
-        <div className={styles.simControls}>
+        <div className={forms.simControls}>
           <label>
             {t.scenario}
             <select
@@ -66,7 +67,7 @@ export function SimulationPanel({
           </p>
         )}
         {run && (
-          <div className={styles.result}>
+          <div className={forms.result}>
             <RunBadge run={run} />
             <Link href={`/workspace/runs/${run.id}`}>{t.inspect} →</Link>
           </div>

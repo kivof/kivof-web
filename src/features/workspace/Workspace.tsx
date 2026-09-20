@@ -11,6 +11,7 @@ import {
 } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
 import { type Section, sections } from "@/lib/models/domain";
+import { LearningPanel } from "./LearningPanel";
 import {
   GraphPanel,
   LabelPanel,
@@ -29,6 +30,7 @@ const icons: Record<Section, IconName> = {
   ontology: "graph",
   labels: "tag",
   simulation: "cube",
+  learning: "bolt",
   chat: "chat",
 };
 export function Workspace({
@@ -167,6 +169,7 @@ export function Workspace({
                     refresh={state.refresh}
                   />
                 )}
+                {section === "learning" && <LearningPanel />}
                 {section === "simulation" && (
                   <SimulationPanel
                     capabilities={state.overview.capabilities}

@@ -48,6 +48,7 @@ export type Ontology = {
   edges: { source: string; target: string; label: string }[];
 };
 export type Label = {
+  status?: string;
   id: string;
   run_id: string;
   label: string;
@@ -61,6 +62,7 @@ export const sections = [
   "ontology",
   "labels",
   "simulation",
+  "learning",
   "chat",
 ] as const;
 export type Section = (typeof sections)[number];

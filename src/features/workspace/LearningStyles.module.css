@@ -1,0 +1,129 @@
+.intro {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+.notice {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background: var(--accentSoft);
+  border-radius: 0.6rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.notice strong {
+  font-size: 0.75rem;
+}
+.notice p {
+  font-size: 0.7rem;
+  margin-top: 0.3rem;
+}
+.form {
+  display: grid;
+  gap: 1rem;
+  max-width: 48rem;
+  background: var(--panel);
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.form label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+}
+.form input,
+.form select,
+.form textarea {
+  padding: 0.65rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  width: 100%;
+  min-height: 2.7rem;
+  min-width: 0;
+}
+.form textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+.form small {
+  color: var(--muted);
+  font-size: 0.64rem;
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+.tabs button {
+  padding: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: var(--bg);
+  font-size: 0.75rem;
+}
+.tabs button[data-active="true"] {
+  background: var(--accentSoft);
+  color: var(--accent);
+}
+.imageRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.imageRow img {
+  height: 4rem;
+  width: 5rem;
+  object-fit: cover;
+  border-radius: 0.4rem;
+  border: 1px solid var(--line);
+}
+.imageRow label {
+  flex: 1;
+}
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: var(--accent);
+  color: var(--onAccent);
+  font-size: 0.8rem;
+}
+.error {
+  color: var(--danger);
+  font-size: 0.7rem;
+}
+.historyTitle {
+  font-size: 1rem;
+  margin: 2rem 0 1rem;
+}
+.record {
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+  background: var(--panel);
+}
+.record summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+@media (min-width: 40rem) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}

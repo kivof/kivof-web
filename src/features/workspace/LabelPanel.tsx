@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
 import type { Label, Run } from "@/lib/models/domain";
+import forms from "./PanelFormsStyles.module.css";
 import styles from "./PanelsStyles.module.css";
 export function LabelPanel({
   runs,
@@ -38,10 +39,24 @@ export function LabelPanel({
       setBusy(false);
     }
   }
+  async function withdraw(id: string) {
+    try {
+      await api(
+        `labels/${encodeURIComponent(id)}`,
+        undefined,
+        undefined,
+        "DELETE",
+      );
+      await refresh();
+      setMessage(t.withdrawn);
+    } catch {
+      setMessage(t.error);
+    }
+  }
   return (
     <>
       <p className={styles.intro}>{t.labelBody}</p>
-      <form className={styles.form} onSubmit={submit}>
+      <form className={forms.form} onSubmit={submit}>
         <label>
           {t.selectRun}
           <select
@@ -84,8 +99,16 @@ export function LabelPanel({
       <section className={styles.card}>
         {labels.length ? (
           labels.map((item) => (
-            <div className={styles.annotation} key={item.id}>
+            <div className={forms.annotation} key={item.id}>
               <Badge>{item.label}</Badge>
+              {item.status !== "withdrawn" && (
+                <button type="button" onClick={() => void withdraw(item.id)}>
+                  {t.withdraw}
+                </button>
+              )}
+              {item.status === "withdrawn" && (
+                <Badge tone="warning">{t.withdrawn}</Badge>
+              )}
               <p>{item.note}</p>
               <Link href={`/workspace/runs/${item.run_id}`}>{item.run_id}</Link>
             </div>
