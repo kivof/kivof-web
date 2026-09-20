@@ -24,7 +24,7 @@ export function SimulationPanel({
 }) {
   const { t } = usePreferences();
   const [scenario, setScenario] = useState("nominal");
-  const [engine, setEngine] = useState("cpu");
+  const [engine, setEngine] = useState("isaac");
   const [busy, setBusy] = useState(false);
   const [run, setRun] = useState<Run | null>(null);
   const [error, setError] = useState(false);
