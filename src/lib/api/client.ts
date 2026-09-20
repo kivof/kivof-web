@@ -6,7 +6,12 @@ export async function api<T = Record<string, unknown>>(
 ): Promise<T> {
   const response = await fetch(`/api/${path}`, {
     method: method ?? (body === undefined ? "GET" : "POST"),
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(path === "runs" && body !== undefined
+        ? { "idempotency-key": crypto.randomUUID() }
+        : {}),
+    },
     body: body === undefined ? undefined : JSON.stringify(body),
     credentials: "same-origin",
     cache: "no-store",

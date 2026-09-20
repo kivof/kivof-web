@@ -36,6 +36,17 @@ export function verifyOrigin(request: Request) {
   if (origin !== new URL(expected).origin)
     throw new ApiError(403, "origin_rejected");
 }
+export function upstreamHeaders(incoming: Headers, token?: string) {
+  const headers = new Headers({ "Content-Type": "application/json" });
+  if (token) headers.set("Authorization", `Bearer ${token}`);
+  const key = incoming.get("idempotency-key");
+  if (key !== null) {
+    if (!/^[\x21-\x7e]{1,128}$/.test(key))
+      throw new ApiError(400, "invalid_request");
+    headers.set("idempotency-key", key);
+  }
+  return headers;
+}
 export async function proxyRequest(request: NextRequest, path: string) {
   const settings = config();
   if (!allowedRoute(path, request.method)) throw new ApiError(404, "not_found");
@@ -48,8 +59,7 @@ export async function proxyRequest(request: NextRequest, path: string) {
       ? undefined
       : await boundedText(request, settings.maxBodyBytes);
   if (body) jsonObject(JSON.parse(body));
-  const headers = new Headers({ "Content-Type": "application/json" });
-  if (token) headers.set("Authorization", `Bearer ${token}`);
+  const headers = upstreamHeaders(request.headers, token);
   const upstream = await fetch(`${settings.backend}/v1/${path}`, {
     method: request.method,
     headers,
