@@ -24,4 +24,6 @@ The frontend uses CSS Modules and shared semantic tokens in `src/styles/globals.
 
 Build independently with `container build --tag kivof-web:local .` or `docker build --tag kivof-web:local .`. The image runs Gitleaks, lint, unit tests and dependency audit before creating Next.js standalone output. It runs as the non-root Node user. Local Compose uses this directory as its complete build context; set `WEB_IMAGE_TAG` before `docker compose up --build --wait`.
 
-Health endpoint: `/api/health`. Main routes: `/`, `/login`, `/workspace`, `/workspace/runs`, `/workspace/sensors`, `/workspace/ontology`, `/workspace/labels`, `/workspace/simulation`, `/workspace/chat`, and `/deck/JO202609190900`.
+Health endpoint: `/api/health`. Main routes: `/`, `/login`, `/workspace`, `/workspace/runs`, `/workspace/sensors`, `/workspace/ontology`, `/workspace/labels`, `/workspace/simulation`, `/workspace/chat`, `/workspace/learning`, and `/deck/JO202609190900`.
+
+Production build copies public assets and static chunks into `.next/standalone`. `bun run start` loads `.env` when present and serves that complete standalone build with Node 24. Run a new build before restarting after source changes.
