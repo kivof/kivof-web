@@ -3,11 +3,11 @@
   "dataOrigin": "simulated",
   "preview": true,
   "physicalOutcomeVerified": false,
-  "url": "/native/factory-a94e5c205bdec3ea.png",
-  "sha256": "a94e5c205bdec3ea723e2b76675ca4edcc2eb9042c60ed458bbd3a97eda344ca",
-  "sourceReceiptSha256": "ab5ffaac23f7a2be0d26a8261502c1d9734f6c00687bd9aa171364812e4a2aae",
-  "width": 640,
-  "height": 360,
+  "url": "/native/factory-cb144f0b722a70e2.png",
+  "sha256": "cb144f0b722a70e2aec711f1e5b3cd51590d540f10e69bb233439fc172347047",
+  "sourceReceiptSha256": "7393d35d91a752fa6a16ae2290574a23d93cdb1d55fd690dca5139fc19e127bc",
+  "width": 1280,
+  "height": 1152,
   "simulationTime": 9.466667160391808,
-  "recordedAt": "2026-09-20T04:21:06.597730+00:00"
+  "recordedAt": "2026-09-20T09:06:27.683973+00:00"
 }
