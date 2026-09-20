@@ -180,3 +180,49 @@
   font: 0.6rem var(--fontMono);
   color: var(--accent);
 }
+.activity {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.activitySummary {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+.activity h2 {
+  font-size: 1rem;
+}
+.activity p,
+.activity a,
+.activity output {
+  font-size: 0.75rem;
+}
+.activity p {
+  color: var(--muted);
+}
+.activity output {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+.activity progress {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.activity a {
+  color: var(--accent);
+}
+@media (min-width: 50rem) {
+  .activity:has(figure) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

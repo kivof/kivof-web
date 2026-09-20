@@ -8,6 +8,7 @@ import { Fields } from "./Fields";
 import styles from "./LearningStyles.module.css";
 import { RawRecord } from "./RawRecord";
 import { recordNumber, recordObject } from "./recordPresentation";
+import { TrainingActivity } from "./TrainingActivity";
 
 type Job = {
   id: string;
@@ -85,40 +86,56 @@ export function trainingJob(value: unknown): Job | null {
 }
 export function TrainingPanel({ runs = [] }: { runs?: Run[] }) {
   const { t, locale } = usePreferences();
-  const [recipe, setRecipe] = useState("smolvla-adapter");
+  const [recipe, setRecipe] = useState("franka-transition-head");
   const [sourceRunId, setSourceRunId] = useState("");
   const native = recipe === "franka-transition-head";
-  const sourceRuns = runs.filter(trainingSource);
+  const sourceRuns = runs
+    .filter(trainingSource)
+    .sort(
+      (left, right) =>
+        Date.parse(right.started_at) - Date.parse(left.started_at),
+    );
   const selectedSource = sourceRunId || sourceRuns[0]?.id || "";
   const [steps, setSteps] = useState(4);
   const [seed, setSeed] = useState(42);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const monitored = jobs.find(
+    (job) =>
+      job.request?.algorithm === recipe &&
+      (!native || job.request.source_run_id === selectedSource),
+  );
   const pending = jobs
     .filter((job) => active.has(job.status))
     .map((job) => job.id)
     .join(",");
   useEffect(() => {
     const controller = new AbortController();
-    void api<{ items: unknown[] }>(
-      "learning/training",
-      undefined,
-      controller.signal,
-    )
-      .then((result) =>
-        setJobs(
-          (Array.isArray(result.items) ? result.items : [])
-            .map(trainingJob)
-            .filter((job): job is Job => job !== null)
-            .slice(0, 20),
-        ),
+    const refresh = () =>
+      void api<{ items: unknown[] }>(
+        "learning/training",
+        undefined,
+        controller.signal,
       )
-      .catch((e) => {
-        if (!controller.signal.aborted)
-          setError(e instanceof Error ? e.message : "request_failed");
-      });
-    return () => controller.abort();
+        .then((result) =>
+          setJobs(
+            (Array.isArray(result.items) ? result.items : [])
+              .map(trainingJob)
+              .filter((job): job is Job => job !== null)
+              .slice(0, 20),
+          ),
+        )
+        .catch((e) => {
+          if (!controller.signal.aborted)
+            setError(e instanceof Error ? e.message : "request_failed");
+        });
+    refresh();
+    window.addEventListener("kivof:workspace-changed", refresh);
+    return () => {
+      controller.abort();
+      window.removeEventListener("kivof:workspace-changed", refresh);
+    };
   }, []);
   useEffect(() => {
     if (!pending) return;
@@ -212,6 +229,14 @@ export function TrainingPanel({ runs = [] }: { runs?: Run[] }) {
       <p className={styles.intro}>
         {native ? t.nativeTrainingBody : t.trainingBody}
       </p>
+      <TrainingActivity
+        native={native}
+        source={sourceRuns.find((run) => run.id === selectedSource)}
+        job={monitored}
+        locale={locale}
+        status={monitored ? t[monitored.status] : undefined}
+        lossLabel={t.loss}
+      />
       <form className={styles.form} onSubmit={start}>
         <label>
           {t.trainingRecipe}
