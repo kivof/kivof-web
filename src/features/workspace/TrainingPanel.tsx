@@ -420,6 +420,7 @@ export function TrainingPanel({ runs = [] }: { runs?: Run[] }) {
                 [t.model]: output.model ?? "—",
                 [t.modelRevision]: output.model_revision ?? "—",
                 [t.trainingSteps]: output.steps_completed ?? 0,
+                trainable_parameters: output.trainable_parameters ?? "—",
                 [t.checkpoint]: checkpoint.sha256 ?? "—",
                 [t.parametersChanged]:
                   typeof checkpoint.parameters_changed === "boolean"
