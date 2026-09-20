@@ -96,22 +96,38 @@
   cursor: pointer;
   outline: none;
 }
-.marker circle {
-  fill: var(--panel);
-  fill-opacity: 0.8;
+.markerHitTarget {
+  fill: transparent;
+  stroke: none;
+  pointer-events: all;
+}
+.markerLink {
   stroke: var(--accent);
-  stroke-width: 2;
+  stroke-width: 1;
+  stroke-opacity: 0.7;
+  pointer-events: none;
+}
+.markerBadge {
+  fill: var(--panel);
+  fill-opacity: 0.9;
+  stroke: var(--accent);
+  stroke-width: 1.5;
 }
 .marker text {
   fill: var(--accent);
-  font: 600 1.25rem var(--fontMono);
+  font: 600 0.875rem var(--fontMono);
   pointer-events: none;
 }
-.marker[data-selected="true"] circle,
-.marker:focus-visible circle {
+.marker[data-selected="true"] .markerBadge,
+.marker:focus-visible .markerBadge {
   fill: var(--accent);
   fill-opacity: 1;
-  stroke-width: 4;
+  stroke-width: 3;
+}
+.marker[data-selected="true"] .markerLink,
+.marker:focus-visible .markerLink {
+  stroke-opacity: 1;
+  stroke-width: 2;
 }
 .marker[data-selected="true"] text,
 .marker:focus-visible text {

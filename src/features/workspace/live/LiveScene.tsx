@@ -153,6 +153,8 @@ export function LiveScene({ run, title }: { run?: Run | null; title: string }) {
                     )
                     .map((item) => {
                       const point = item.screen as [number, number];
+                      const badgeX = point[0] > 0.9 ? -28 : 28;
+                      const badgeY = point[1] < 0.08 ? 12 : -12;
                       return (
                         // biome-ignore lint/a11y/useSemanticElements: SVG screen-space marker supports pointer and keyboard activation.
                         <g
@@ -173,10 +175,23 @@ export function LiveScene({ run, title }: { run?: Run | null; title: string }) {
                             }
                           }}
                         >
-                          <circle r="26" />
-                          <text textAnchor="middle" dominantBaseline="central">
-                            {Number(item.id.slice(7)) + 1}
-                          </text>
+                          <circle className={styles.markerHitTarget} r="32" />
+                          <line
+                            className={styles.markerLink}
+                            x1="0"
+                            y1="0"
+                            x2={badgeX}
+                            y2={badgeY}
+                          />
+                          <g transform={`translate(${badgeX} ${badgeY})`}>
+                            <circle className={styles.markerBadge} r="10" />
+                            <text
+                              textAnchor="middle"
+                              dominantBaseline="central"
+                            >
+                              {Number(item.id.slice(7)) + 1}
+                            </text>
+                          </g>
                         </g>
                       );
                     })}
