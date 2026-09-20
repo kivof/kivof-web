@@ -1,0 +1,80 @@
+.raw {
+  margin: 0.6rem 0.8rem;
+  min-width: 0;
+  font-size: 0.67rem;
+  color: var(--muted);
+}
+.raw summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+.raw pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 28rem;
+  overflow: auto;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  font: 0.62rem / 1.65 var(--fontMono);
+  color: var(--muted);
+  background: var(--bg);
+}
+.geometry {
+  padding: 1rem;
+}
+.geometry svg {
+  display: block;
+  width: 100%;
+  max-height: 18rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: var(--bg);
+}
+.geometry text {
+  font: 11px var(--fontMono);
+  fill: var(--muted);
+}
+.axis {
+  fill: none;
+  stroke: var(--line);
+}
+.cable {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+.guide {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: 3;
+}
+.socket {
+  fill: var(--ink);
+}
+.geometry figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+.geometry figcaption i {
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin: 0 0.3rem 0 0.65rem;
+}
+.cableKey {
+  background: var(--accent);
+}
+.guideKey {
+  border: 1px solid var(--muted);
+  border-radius: 50%;
+}
+.socketKey {
+  background: var(--ink);
+}

@@ -5,9 +5,11 @@ import { Icon } from "@/components/ui/data-display/Icon/Icon";
 import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
-import type { Overview, Run } from "@/lib/models/domain";
+import type { Overview } from "@/lib/models/domain";
 import styles from "./FactoryWorkbenchStyles.module.css";
 import { Fields, RunBadge } from "./Fields";
+import { StepSummary, VerificationSummary } from "./RecordEvidence";
+import { stepLabel } from "./recordPresentation";
 
 export function FactoryWorkbench({ overview }: { overview: Overview }) {
   const { t, locale } = usePreferences();
@@ -34,28 +36,25 @@ export function FactoryWorkbench({ overview }: { overview: Overview }) {
           </span>
         </div>
         <nav className={styles.ticks} aria-label={t.latestRun}>
-          {(run?.steps.length
-            ? run.steps.slice(0, 6)
-            : [null, null, null, null]
-          ).map((step, i) => (
-            <button
-              type="button"
-              key={step ? String(step.stage ?? step.name ?? i) : `empty-${i}`}
-              disabled={!step}
-              data-active={selected === i && Boolean(step)}
-              onClick={() => setSelected(i)}
-              title={
-                step ? String(step.stage ?? step.name ?? t.inspect) : t.noRuns
-              }
-            >
-              <i />
-              <span>
-                {step
-                  ? String(step.stage ?? step.name ?? `${t.runs} ${i + 1}`)
-                  : "—"}
-              </span>
-            </button>
-          ))}
+          {(run?.steps.length ? run.steps : [null, null, null, null]).map(
+            (step, i) => (
+              <button
+                type="button"
+                key={
+                  step
+                    ? String(step.phase ?? step.stage ?? step.name ?? i)
+                    : `empty-${i}`
+                }
+                disabled={!step}
+                data-active={selected === i && Boolean(step)}
+                onClick={() => setSelected(i)}
+                title={step ? stepLabel(step, t, locale) : t.noRuns}
+              >
+                <i />
+                <span>{step ? stepLabel(step, t, locale) : "—"}</span>
+              </button>
+            ),
+          )}
         </nav>
         <Badge>{run ? (t[run.source] ?? run.source) : t.noRuns}</Badge>
       </div>
@@ -186,13 +185,24 @@ export function FactoryWorkbench({ overview }: { overview: Overview }) {
             <p className={styles.empty}>{t.noRuns}</p>
           )}
         </section>
-        <section className={styles.panel}>
+        <section className={styles.panel} aria-label={t.verification}>
           <h2>
             <Icon name="shield" size={16} />
             {t.verification}
           </h2>
           {run ? (
-            <Fields values={selectedStep(run, selected)} />
+            <VerificationSummary value={run.verification} compact />
+          ) : (
+            <p className={styles.empty}>{t.noData}</p>
+          )}
+        </section>
+        <section className={styles.panel} aria-label={t.recordedStep}>
+          <h2>
+            <Icon name="activity" size={16} />
+            {t.recordedStep}
+          </h2>
+          {run?.steps[selected] ? (
+            <StepSummary value={run.steps[selected]} />
           ) : (
             <p className={styles.empty}>{t.noData}</p>
           )}
@@ -200,8 +210,4 @@ export function FactoryWorkbench({ overview }: { overview: Overview }) {
       </aside>
     </section>
   );
-}
-
-function selectedStep(run: Run, selected: number) {
-  return run.steps[selected] ?? run.verification;
 }

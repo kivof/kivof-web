@@ -8,9 +8,10 @@ import { usePreferences } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
 import type { Run } from "@/lib/models/domain";
 import { robotState } from "@/lib/models/robotScene";
-import { Fields, RunBadge } from "./Fields";
+import { RunBadge } from "./Fields";
 import forms from "./PanelFormsStyles.module.css";
 import styles from "./PanelsStyles.module.css";
+import { CapabilitySummary } from "./RecordEvidence";
 import stageStyles from "./SimulationStageStyles.module.css";
 export function SimulationPanel({
   capabilities,
@@ -77,11 +78,13 @@ export function SimulationPanel({
                 onChange={(e) => setScenario(e.target.value)}
                 disabled={busy}
               >
-                {["nominal", "occlusion", "force_spike"].map((key) => (
-                  <option key={key} value={key}>
-                    {t[key]}
-                  </option>
-                ))}
+                {["nominal", "occlusion", "force_spike", "stale_sensor"].map(
+                  (key) => (
+                    <option key={key} value={key}>
+                      {t[key]}
+                    </option>
+                  ),
+                )}
               </select>
             </label>
             <button type="button" onClick={() => void start()} disabled={busy}>
@@ -137,7 +140,7 @@ export function SimulationPanel({
         <div className={styles.cardHeader}>
           <h2>{t.capabilities}</h2>
         </div>
-        <Fields values={capabilities} />
+        <CapabilitySummary value={capabilities} />
       </section>
     </>
   );

@@ -80,6 +80,7 @@
 .rightDock {
   display: grid;
   align-content: start;
+  grid-auto-rows: max-content;
   gap: 0.7rem;
   min-width: 0;
 }

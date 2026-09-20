@@ -7,6 +7,14 @@ import { usePreferences } from "@/features/preferences/Preferences";
 import type { Run } from "@/lib/models/domain";
 import { Fields, RunBadge } from "./Fields";
 import styles from "./PanelsStyles.module.css";
+import { RawRecord } from "./RawRecord";
+import {
+  CableEvidence,
+  ObservationSummary,
+  StepSummary,
+  VerificationSummary,
+} from "./RecordEvidence";
+import { recordNumber, stepLabel } from "./recordPresentation";
 export function RunsPanel({ runs, runId }: { runs: Run[]; runId?: string }) {
   const { t, locale } = usePreferences();
   const run = runs.find((item) => item.id === runId);
@@ -21,23 +29,27 @@ export function RunsPanel({ runs, runId }: { runs: Run[]; runId?: string }) {
         <div className={styles.provenance}>
           <Badge>{t[run.data_origin] ?? run.data_origin}</Badge>
           <Badge>{t[run.view_mode] ?? run.view_mode}</Badge>
-          <Badge>{run.source}</Badge>
+          <Badge>{t[run.source] ?? run.source}</Badge>
           <code>{run.id}</code>
         </div>
         <section className={styles.card}>
           <div className={styles.cardHeader}>
             <h2>{t.verification}</h2>
           </div>
-          <Fields values={run.verification} />
+          <VerificationSummary value={run.verification} />
         </section>
-        {(["metrics", "evidence"] as const).map((key) => (
-          <section key={key} className={styles.card}>
-            <div className={styles.cardHeader}>
-              <h2>{t[key]}</h2>
-            </div>
-            <Fields values={run[key]} />
-          </section>
-        ))}
+        <section className={styles.card}>
+          <div className={styles.cardHeader}>
+            <h2>{t.metrics}</h2>
+          </div>
+          <Fields values={run.metrics} />
+        </section>
+        <section className={styles.card}>
+          <div className={styles.cardHeader}>
+            <h2>{t.cableGeometry}</h2>
+          </div>
+          <CableEvidence evidence={run.evidence} />
+        </section>
         {(["steps", "observations"] as const).map((key) => (
           <section key={key} className={styles.card}>
             <div className={styles.cardHeader}>
@@ -46,13 +58,23 @@ export function RunsPanel({ runs, runId }: { runs: Run[]; runId?: string }) {
             {run[key]?.map((item, i) => (
               <details key={JSON.stringify(item) + i} className={styles.detail}>
                 <summary>
-                  {String(item.stage ?? item.name ?? item.type ?? i + 1)}
+                  {key === "steps"
+                    ? stepLabel(item, t, locale)
+                    : `${t.observations} ${recordNumber(Number(item.sequence ?? i) + 1, locale)} · ${recordNumber(item.sensor_time_s, locale, "s")} · ${t[String(item.quality)] ?? t.unknown}`}
                 </summary>
-                <Fields values={item} />
+                {key === "steps" ? (
+                  <>
+                    <StepSummary value={item} />
+                    <RawRecord value={item} />
+                  </>
+                ) : (
+                  <ObservationSummary value={item} />
+                )}
               </details>
             ))}
           </section>
         ))}
+        <RawRecord value={run} />
       </div>
     );
   return (

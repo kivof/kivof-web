@@ -1,5 +1,83 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+notAdvertised|Not advertised by controller|No anunciado por el controlador|Vom Controller nicht gemeldet|Non annoncé par le contrôleur
+recordedStep|Recorded step|Paso registrado|Aufgezeichneter Schritt|Étape enregistrée
+sourceRecord|Full source record|Registro fuente completo|Vollständiger Quelldatensatz|Enregistrement source complet
+sourceMetadata|Technical source metadata|Metadatos técnicos de origen|Technische Quellmetadaten|Métadonnées techniques de source
+finalResult|Final result|Resultado final|Endergebnis|Résultat final
+passed|Checks passed|Comprobaciones superadas|Prüfungen bestanden|Contrôles réussis
+independent|Independent result check|Comprobación independiente|Unabhängige Ergebnisprüfung|Contrôle indépendant du résultat
+guide_occupancy|Occupied guides|Guías ocupadas|Belegte Führungen|Guides occupés
+position_error_m|Position error|Error de posición|Positionsfehler|Erreur de position
+yaw_error_rad|Orientation error|Error de orientación|Orientierungsfehler|Erreur d’orientation
+released|Plug released|Conector liberado|Stecker losgelassen|Connecteur relâché
+retained_seconds|Retention after release|Retención tras soltar|Haltedauer nach Loslassen|Maintien après relâchement
+positionTolerance|Position tolerance|Tolerancia de posición|Positionstoleranz|Tolérance de position
+orientationTolerance|Orientation tolerance|Tolerancia de orientación|Orientierungstoleranz|Tolérance d’orientation
+retentionRequirement|Required retention|Retención requerida|Erforderliche Haltedauer|Maintien requis
+error_code|Diagnostic code|Código de diagnóstico|Diagnosecode|Code de diagnostic
+complete_cycles|Completed cycles|Ciclos completados|Abgeschlossene Zyklen|Cycles terminés
+started_cycles|Started cycles|Ciclos iniciados|Gestartete Zyklen|Cycles démarrés
+human_interventions|Human interventions|Intervenciones humanas|Menschliche Eingriffe|Interventions humaines
+recovery_count|Recovery attempts|Intentos de recuperación|Wiederherstellungsversuche|Tentatives de récupération
+simulation_duration_s|Simulation duration|Duración simulada|Simulationsdauer|Durée simulée
+wall_duration_ms|Processing time|Tiempo de procesamiento|Verarbeitungszeit|Temps de traitement
+final_max_link_stretch_error_ratio|Final cable stretch error|Error final de estiramiento|Finaler Kabellängenfehler|Erreur finale d’étirement
+peak_link_stretch_error_ratio|Peak cable stretch error|Error máximo de estiramiento|Maximaler Kabellängenfehler|Erreur maximale d’étirement
+phase|Phase|Fase|Phase|Phase
+simulation_time_s|Simulation time|Tiempo simulado|Simulationszeit|Temps simulé
+sensor_time_s|Sensor time|Tiempo del sensor|Sensorzeit|Temps du capteur
+grasp|Grasp|Agarrar|Greifen|Saisir
+route_guide_1|Guide 1|Guía 1|Führung 1|Guide 1
+route_guide_2|Guide 2|Guía 2|Führung 2|Guide 2
+route_guide_3|Guide 3|Guía 3|Führung 3|Guide 3
+align|Align|Alinear|Ausrichten|Aligner
+insert|Insert|Insertar|Einstecken|Insérer
+release_and_settle|Release & settle|Soltar y estabilizar|Loslassen und stabilisieren|Relâcher et stabiliser
+reobserve|Observe again|Observar de nuevo|Erneut beobachten|Observer à nouveau
+controller_completed|Controller step finished|Paso del controlador terminado|Controllerschritt beendet|Étape du contrôleur terminée
+stopped|Stopped|Detenido|Gestoppt|Arrêté
+recovered|Recovered|Recuperado|Wiederhergestellt|Rétabli
+stale_sensor|Stale sensor observation|Observación de sensor caducada|Veraltete Sensorbeobachtung|Observation capteur périmée
+valid|Valid|Válido|Gültig|Valide
+stale|Stale|Caducado|Veraltet|Périmé
+invalid|Invalid|No válido|Ungültig|Invalide
+data_origin|Data origin|Origen de datos|Datenherkunft|Origine des données
+view_mode|Presentation|Presentación|Darstellung|Présentation
+started_at|Started|Inicio|Beginn|Début
+finished_at|Finished|Fin|Ende|Fin
+received_at|Received|Recepción|Empfangen|Réception
+sequence|Sequence|Secuencia|Sequenz|Séquence
+age_ms|Recorded age|Antigüedad registrada|Aufgezeichnetes Alter|Ancienneté enregistrée
+max_skew_ms|Maximum clock skew|Desfase máximo de reloj|Maximale Zeitabweichung|Décalage temporel maximal
+calibration_version|Calibration reference|Referencia de calibración|Kalibrierungsreferenz|Référence de calibration
+calibration_valid|Calibration accepted by gate|Calibración aceptada por el control|Kalibrierung von Prüfung akzeptiert|Calibration acceptée par le contrôle
+clock_domain|Clock domain|Dominio de reloj|Zeitbasis|Domaine temporel
+fusion|Observation alignment|Alineación de observaciones|Beobachtungsabgleich|Alignement des observations
+motor_authority|Motor authority|Autoridad motora|Bewegungsfreigabe|Autorité motrice
+confidence|Confidence|Confianza|Konfidenz|Confiance
+available|Available|Disponible|Verfügbar|Disponible
+disabled|Disabled|Desactivado|Deaktiviert|Désactivé
+configuredUnverified|Configured · not verified|Configurado · sin verificar|Konfiguriert · nicht verifiziert|Configuré · non vérifié
+verified|Verified in this runtime|Verificado en este entorno|In dieser Laufzeit verifiziert|Vérifié dans cet environnement
+physicalExecution|Physical execution|Ejecución física|Physische Ausführung|Exécution physique
+readinessNote|Configuration describes availability. It does not qualify a model or authorize robot motion.|La configuración describe disponibilidad. No cualifica modelos ni autoriza movimiento.|Konfiguration beschreibt Verfügbarkeit. Sie qualifiziert kein Modell und erlaubt keine Roboterbewegung.|La configuration décrit la disponibilité. Elle ne qualifie aucun modèle et n’autorise aucun mouvement.
+cableGeometry|Recorded cable geometry|Geometría registrada del cable|Aufgezeichnete Kabelgeometrie|Géométrie enregistrée du câble
+geometryCaption|X/Z projection of recorded simulation coordinates · metres|Proyección X/Z de coordenadas simuladas registradas · metros|X/Z-Projektion aufgezeichneter Simulationskoordinaten · Meter|Projection X/Z des coordonnées simulées enregistrées · mètres
+cable|Cable|Cable|Kabel|Câble
+guides|Guides|Guías|Führungen|Guides
+socket|Socket|Conector hembra|Buchse|Prise
+cable_nominal_length_m|Nominal cable length|Longitud nominal del cable|Nennlänge des Kabels|Longueur nominale du câble
+fixed_step_s|Simulation step|Paso de simulación|Simulationsschritt|Pas de simulation
+recipe|Assembly recipe|Receta de montaje|Montagerezept|Recette d’assemblage
+simulator|Simulation implementation|Implementación del simulador|Simulationsimplementierung|Implémentation du simulateur
+limits|Declared limitations|Limitaciones declaradas|Deklarierte Grenzen|Limites déclarées
+geometryUnavailable|No recorded cable coordinates are available.|No hay coordenadas registradas del cable.|Keine aufgezeichneten Kabelkoordinaten verfügbar.|Aucune coordonnée enregistrée du câble disponible.
+cpu-simulation|CPU simulation|Simulación CPU|CPU-Simulation|Simulation CPU
+isaac-sim|Isaac Sim|Isaac Sim|Isaac Sim|Isaac Sim
+rgb-d-pose-proxy|Simulated camera pose proxy|Proxy simulado de pose de cámara|Simulierter Kameraposen-Proxy|Proxy simulé de pose caméra
+synthetic-contact-proxy|Synthetic contact proxy|Proxy de contacto sintético|Synthetischer Kontakt-Proxy|Proxy de contact synthétique
+synthetic-vibration|Synthetic vibration|Vibración sintética|Synthetische Vibration|Vibration synthétique
 robot-camera|Robot camera|Cámara del robot|Roboterkamera|Caméra du robot
 robot-contact|Contact sensor|Sensor de contacto|Kontaktsensor|Capteur de contact
 factory-vibration|Factory vibration|Vibración de fábrica|Fabrikvibration|Vibrations de l’usine

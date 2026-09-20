@@ -2,15 +2,26 @@
 "use client";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
-import { printable, type Run } from "@/lib/models/domain";
+import type { Run } from "@/lib/models/domain";
 import styles from "./PanelsStyles.module.css";
+import { RawRecord } from "./RawRecord";
+import { fieldValue, translated } from "./recordPresentation";
 export function Fields({ values }: { values: Record<string, unknown> }) {
+  const { t, locale } = usePreferences();
   return (
     <dl className={styles.fields}>
       {Object.entries(values).map(([key, value]) => (
         <div key={key}>
-          <dt>{key.replaceAll("_", " ")}</dt>
-          <dd>{printable(value)}</dd>
+          <dt>{translated(key, t)}</dt>
+          <dd>
+            {value != null &&
+            typeof value === "object" &&
+            key !== "guide_occupancy" ? (
+              <RawRecord value={value} label={t.sourceMetadata} />
+            ) : (
+              fieldValue(key, value, locale, t)
+            )}
+          </dd>
         </div>
       ))}
     </dl>
