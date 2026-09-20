@@ -149,3 +149,27 @@ test("sensor density uses recorded values and ages without inventing additional 
   assert.match(html, /Recorded age/);
   assert.doesNotMatch(html, /Sensor 3|Live age/);
 });
+
+test("native telemetry keeps eight actual robot values without invented age panels", () => {
+  const sensors = Array.from({ length: 8 }, (_, index) => ({
+    id: `franka-${index}-joints`,
+    name: "Worker label",
+    kind: "isaac-joint-velocity",
+    unit: "rad/s",
+    value: 0.000001,
+    quality: "valid",
+    source: "isaac-sim",
+    last_seen: null,
+    age_ms: null,
+  }));
+  const html = renderToStaticMarkup(<SensorPanel sensors={sensors} />);
+  assert.equal((html.match(/<article/g) ?? []).length, 8);
+  assert.match(html, /Franka 8 · Joint speed/);
+  assert.match(html, /Maximum recorded joint speed/);
+  assert.match(html, /Observation age is unknown/);
+  assert.match(html, /0.000001/);
+  assert.doesNotMatch(
+    html,
+    /Recorded age|Derived from these records|Worker label/,
+  );
+});

@@ -1,5 +1,8 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+jointSpeed|Joint speed|Velocidad articular|Gelenkgeschwindigkeit|Vitesse articulaire
+isaac-joint-velocity|Maximum recorded joint speed|Velocidad articular máxima registrada|Maximale aufgezeichnete Gelenkgeschwindigkeit|Vitesse articulaire maximale enregistrée
+nativeSensorBody|Maximum absolute speed across seven recorded joints for each Franka robot. Values come from Isaac Sim articulation states. Observation age is unknown; these are recorded samples, not live physical sensors.|Velocidad absoluta máxima de siete articulaciones registradas por robot Franka. Valores del estado articular de Isaac Sim. Antigüedad desconocida; son muestras registradas, no sensores físicos en vivo.|Maximale absolute Geschwindigkeit aus sieben aufgezeichneten Gelenken je Franka-Roboter. Werte stammen aus Isaac-Sim-Gelenkzuständen. Beobachtungsalter unbekannt; aufgezeichnete Stichproben, keine physischen Live-Sensoren.|Vitesse absolue maximale sur sept articulations enregistrées par robot Franka. Valeurs issues des états articulaires Isaac Sim. Âge inconnu ; échantillons enregistrés, pas de capteurs physiques en direct.
 trainingRecipe|Training recipe|Receta de entrenamiento|Trainingsrezept|Recette d’entraînement
 smolTrainingRecipe|SmolVLA output head|Cabeza de salida SmolVLA|SmolVLA-Ausgabekopf|Tête de sortie SmolVLA
 nativeTrainingRecipe|Franka joint transition predictor|Predictor de transición articular Franka|Franka-Gelenkübergangsmodell|Prédicteur de transitions articulaires Franka
