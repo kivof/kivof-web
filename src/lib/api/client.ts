@@ -1,3 +1,5 @@
+import { normalizeRunResponse } from "@/lib/models/runRecord";
+
 export async function api<T = Record<string, unknown>>(
   path: string,
   body?: unknown,
@@ -22,5 +24,5 @@ export async function api<T = Record<string, unknown>>(
     throw new Error(
       typeof data.error === "string" ? data.error : "request_failed",
     );
-  return data as T;
+  return normalizeRunResponse(path, data) as T;
 }
