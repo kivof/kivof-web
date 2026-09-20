@@ -19,6 +19,7 @@ export type Run = {
   verification: { passed?: boolean; [key: string]: unknown };
   data_origin: string;
   view_mode: string;
+  physical_execution?: boolean;
 };
 export type Overview = {
   product: string;

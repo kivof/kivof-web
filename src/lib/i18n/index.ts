@@ -1,5 +1,24 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+trainingRecipe|Training recipe|Receta de entrenamiento|Trainingsrezept|Recette d’entraînement
+smolTrainingRecipe|SmolVLA output head|Cabeza de salida SmolVLA|SmolVLA-Ausgabekopf|Tête de sortie SmolVLA
+nativeTrainingRecipe|Franka joint transition predictor|Predictor de transición articular Franka|Franka-Gelenkübergangsmodell|Prédicteur de transitions articulaires Franka
+nativeTrainingBody|Train a small 967-parameter predictor from recorded Isaac Sim joint transitions. Seven joint dimensions, simulated diagnostic motion, separate validation data. This does not train a grasp policy, qualify task performance or promote a model automatically.|Entrena un predictor de 967 parámetros con transiciones articulares registradas en Isaac Sim. Siete dimensiones, movimiento diagnóstico simulado y datos de validación separados. No entrena una política de agarre, cualifica tareas ni promueve modelos automáticamente.|Kleinen Prädiktor mit 967 Parametern aus aufgezeichneten Isaac-Sim-Gelenkübergängen trainieren. Sieben Gelenkdimensionen, simulierte Diagnosebewegung und getrennte Validierungsdaten. Kein Training einer Greif-Policy, keine Aufgabenqualifikation und keine automatische Modellfreigabe.|Entraînez un petit prédicteur de 967 paramètres sur des transitions articulaires enregistrées dans Isaac Sim. Sept dimensions, mouvement diagnostique simulé et validation séparée. Aucune politique de préhension, qualification de tâche ou promotion automatique.
+nativeTrainingOrigin|Recorded Isaac Sim transitions · diagnostic predictor only|Transiciones registradas en Isaac Sim · solo predictor diagnóstico|Aufgezeichnete Isaac-Sim-Übergänge · nur Diagnoseprädiktor|Transitions Isaac Sim enregistrées · prédicteur diagnostique uniquement
+sourceRun|Source run|Ejecución de origen|Quelllauf|Exécution source
+noTrainingRollouts|No owned run has an available Isaac training rollout yet.|Ninguna ejecución propia tiene aún un registro Isaac disponible para entrenar.|Noch kein eigener Lauf mit verfügbarem Isaac-Trainingsdatensatz.|Aucune exécution détenue ne possède encore de données Isaac pour l’entraînement.
+training_scope|Training scope|Alcance del entrenamiento|Trainingsumfang|Périmètre d’entraînement
+joint_state_transition_predictor|Joint state transition prediction|Predicción de transiciones articulares|Vorhersage von Gelenkzustandsübergängen|Prédiction des transitions d’état articulaire
+rollout_id|Recorded trajectory ID|ID de trayectoria registrada|ID der aufgezeichneten Trajektorie|ID de trajectoire enregistrée
+rollout_sha256|Trajectory SHA-256|SHA-256 de la trayectoria|Trajektorie SHA-256|SHA-256 de trajectoire
+robot_model|Robot model|Modelo de robot|Robotermodell|Modèle de robot
+joint_dimensions|Joint dimensions|Dimensiones articulares|Gelenkdimensionen|Dimensions articulaires
+robot_count|Recorded robots|Robots registrados|Aufgezeichnete Roboter|Robots enregistrés
+samples|Recorded samples|Muestras registradas|Aufgezeichnete Stichproben|Échantillons enregistrés
+transitions|Recorded transitions|Transiciones registradas|Aufgezeichnete Übergänge|Transitions enregistrées
+training_transitions|Training transitions|Transiciones de entrenamiento|Trainingsübergänge|Transitions d’entraînement
+validation_transitions|Validation transitions|Transiciones de validación|Validierungsübergänge|Transitions de validation
+validation_loss|Validation loss|Pérdida de validación|Validierungsverlust|Perte de validation
 nativeTaskUnqualified|Native scene verified · task unqualified|Escena nativa verificada · tarea no cualificada|Native Szene verifiziert · Aufgabe nicht qualifiziert|Scène native vérifiée · tâche non qualifiée
 AUTONOMOUS_TASK_NOT_QUALIFIED|Autonomous cable task is not qualified|Tarea autónoma de cableado no cualificada|Autonome Kabelaufgabe nicht qualifiziert|Tâche autonome de câblage non qualifiée
 reportedValues|Reported sensor values|Valores de sensores disponibles|Gemeldete Sensorwerte|Valeurs de capteurs disponibles

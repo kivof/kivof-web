@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
+import type { Run } from "@/lib/models/domain";
 import { Fields } from "./Fields";
 import styles from "./LearningStyles.module.css";
+import { RawRecord } from "./RawRecord";
+import { recordNumber, recordObject } from "./recordPresentation";
 
 type Job = {
   id: string;
@@ -23,6 +26,21 @@ const statuses = new Set([
   "cancelled",
   "unavailable",
 ]);
+const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
+export function trainingSource(run: Run) {
+  const rollout = recordObject(run.evidence.rollout);
+  return (
+    run.source === "isaac-sim" &&
+    run.data_origin === "simulated" &&
+    run.physical_execution === false &&
+    run.evidence.native_scene_passed === true &&
+    rollout.source === "isaac-sim" &&
+    typeof rollout.id === "string" &&
+    uuid.test(rollout.id) &&
+    typeof rollout.sha256 === "string" &&
+    /^[a-f0-9]{64}$/i.test(rollout.sha256)
+  );
+}
 export function trainingJob(value: unknown): Job | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const job = value as Record<string, unknown>;
@@ -32,7 +50,23 @@ export function trainingJob(value: unknown): Job | null {
     !statuses.has(String(job.status)) ||
     job.motor_authority !== false ||
     job.verified_physical_outcome !== false ||
-    job.data_origin !== "synthetic"
+    !["synthetic", "simulated"].includes(String(job.data_origin))
+  )
+    return null;
+  const request = recordObject(job.request);
+  const native = request.algorithm === "franka-transition-head";
+  if (
+    native &&
+    (request.dataset !== "isaac-franka-rollout-v1" ||
+      typeof request.source_run_id !== "string" ||
+      !uuid.test(request.source_run_id))
+  )
+    return null;
+  if (job.data_origin !== (native ? "simulated" : "synthetic")) return null;
+  if (
+    !native &&
+    request.algorithm != null &&
+    request.algorithm !== "smolvla-adapter"
   )
     return null;
   if (job.output != null) {
@@ -42,14 +76,20 @@ export function trainingJob(value: unknown): Job | null {
     if (
       output.motor_authority !== false ||
       output.verified_physical_outcome !== false ||
-      output.data_origin !== "synthetic"
+      output.data_origin !== job.data_origin ||
+      (native && output.prediction_only !== true)
     )
       return null;
   }
   return job as Job;
 }
-export function TrainingPanel() {
-  const { t } = usePreferences();
+export function TrainingPanel({ runs = [] }: { runs?: Run[] }) {
+  const { t, locale } = usePreferences();
+  const [recipe, setRecipe] = useState("smolvla-adapter");
+  const [sourceRunId, setSourceRunId] = useState("");
+  const native = recipe === "franka-transition-head";
+  const sourceRuns = runs.filter(trainingSource);
+  const selectedSource = sourceRunId || sourceRuns[0]?.id || "";
   const [steps, setSteps] = useState(4);
   const [seed, setSeed] = useState(42);
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -131,15 +171,17 @@ export function TrainingPanel() {
       seed > 4294967295
     )
       return;
+    if (native && !sourceRuns.some((run) => run.id === selectedSource)) return;
     setBusy(true);
     setError("");
     try {
       const job = trainingJob(
         await api("learning/training", {
-          algorithm: "smolvla-adapter",
-          dataset: "synthetic-harness-v1",
+          algorithm: recipe,
+          dataset: native ? "isaac-franka-rollout-v1" : "synthetic-harness-v1",
           steps,
           seed,
+          ...(native ? { source_run_id: selectedSource } : {}),
         }),
       );
       if (!job) throw new Error("invalid_response");
@@ -167,15 +209,55 @@ export function TrainingPanel() {
   }
   return (
     <section className={styles.training}>
-      <p className={styles.intro}>{t.trainingBody}</p>
+      <p className={styles.intro}>
+        {native ? t.nativeTrainingBody : t.trainingBody}
+      </p>
       <form className={styles.form} onSubmit={start}>
         <label>
-          {t.dataset}
-          <select value="synthetic-harness-v1" disabled>
-            <option value="synthetic-harness-v1">synthetic-harness-v1</option>
+          {t.trainingRecipe}
+          <select
+            value={recipe}
+            onChange={(event) => setRecipe(event.target.value)}
+            disabled={busy || Boolean(pending)}
+          >
+            <option value="smolvla-adapter">{t.smolTrainingRecipe}</option>
+            <option value="franka-transition-head">
+              {t.nativeTrainingRecipe}
+            </option>
           </select>
-          <small>{t.syntheticTraining}</small>
         </label>
+        <label>
+          {t.dataset}
+          <select
+            value={native ? "isaac-franka-rollout-v1" : "synthetic-harness-v1"}
+            disabled
+          >
+            <option value="synthetic-harness-v1">synthetic-harness-v1</option>
+            <option value="isaac-franka-rollout-v1">
+              isaac-franka-rollout-v1
+            </option>
+          </select>
+          <small>{native ? t.nativeTrainingOrigin : t.syntheticTraining}</small>
+        </label>
+        {native && (
+          <label>
+            {t.sourceRun}
+            <select
+              value={selectedSource}
+              required
+              onChange={(event) => setSourceRunId(event.target.value)}
+            >
+              <option value="">{t.selectRun}</option>
+              {sourceRuns.map((run) => (
+                <option key={run.id} value={run.id}>
+                  {new Date(run.started_at).toLocaleString(locale)} ·{" "}
+                  {run.id.slice(0, 8)}
+                </option>
+              ))}
+            </select>
+            {!sourceRuns.length && <small>{t.noTrainingRollouts}</small>}
+          </label>
+        )}
         <div className={styles.row}>
           <label>
             {t.trainingSteps}
@@ -203,7 +285,11 @@ export function TrainingPanel() {
         <button
           className={styles.submit}
           type="submit"
-          disabled={busy || Boolean(pending)}
+          disabled={
+            busy ||
+            Boolean(pending) ||
+            (native && !sourceRuns.some((run) => run.id === selectedSource))
+          }
         >
           {busy ? t.running : t.startTraining}
         </button>
@@ -220,6 +306,8 @@ export function TrainingPanel() {
       {!jobs.length && <p className={styles.intro}>{t.noData}</p>}
       {jobs.map((job) => {
         const output = job.output ?? {};
+        const isNative = job.request?.algorithm === "franka-transition-head";
+        const provenance = recordObject(output.provenance);
         const metrics =
           output.metrics && typeof output.metrics === "object"
             ? (output.metrics as Record<string, unknown>)
@@ -235,12 +323,27 @@ export function TrainingPanel() {
           output.checkpoint && typeof output.checkpoint === "object"
             ? (output.checkpoint as Record<string, unknown>)
             : {};
-        const maximum = Math.max(...loss, 0.000001);
-        const minimum = Math.min(...loss, 0);
+        const validationValues = metrics.validation_loss ?? metrics.val_loss;
+        const validationLoss = (
+          Array.isArray(validationValues)
+            ? validationValues
+            : typeof validationValues === "number"
+              ? [validationValues]
+              : []
+        )
+          .filter(
+            (value): value is number =>
+              typeof value === "number" && Number.isFinite(value),
+          )
+          .slice(0, 20);
+        const maximum = Math.max(...loss, ...validationLoss, 0.000001);
+        const minimum = Math.min(...loss, ...validationLoss, 0);
         return (
           <article className={styles.trainingJob} key={job.id}>
             <header>
-              <strong>SmolVLA · {t.training}</strong>
+              <strong>
+                {isNative ? t.nativeTrainingRecipe : t.smolTrainingRecipe}
+              </strong>
               <Badge
                 tone={
                   job.status === "completed"
@@ -263,7 +366,8 @@ export function TrainingPanel() {
               )}
             </header>
             <p className={styles.jobOrigin}>
-              {t.syntheticTraining} · {t.noMotor}
+              {isNative ? t.nativeTrainingOrigin : t.syntheticTraining} ·{" "}
+              {t.noMotor}
             </p>
             {loss.length > 0 && (
               <figure className={styles.loss}>
@@ -283,11 +387,31 @@ export function TrainingPanel() {
                     stroke="var(--accent)"
                     strokeWidth="2"
                   />
+                  {!!validationLoss.length && (
+                    <polyline
+                      points={validationLoss
+                        .map(
+                          (value, i) =>
+                            `${20 + (i * 600) / Math.max(1, validationLoss.length - 1)},${145 - ((value - minimum) / Math.max(maximum - minimum, 0.000001)) * 125}`,
+                        )
+                        .join(" ")}
+                      fill="none"
+                      stroke="var(--warning)"
+                      strokeWidth="2"
+                      strokeDasharray="5 4"
+                    />
+                  )}
                 </svg>
                 <div>
-                  <span>{loss[0]?.toPrecision(5)}</span>
-                  <span>{loss.at(-1)?.toPrecision(5)}</span>
+                  <span>{recordNumber(loss[0], locale)}</span>
+                  <span>{recordNumber(loss.at(-1), locale)}</span>
                 </div>
+                {!!validationLoss.length && (
+                  <figcaption>
+                    {t.validation_loss} ·{" "}
+                    {recordNumber(validationLoss.at(-1), locale)}
+                  </figcaption>
+                )}
               </figure>
             )}
             <Fields
@@ -304,8 +428,25 @@ export function TrainingPanel() {
                       : t.no
                     : "—",
                 [t.source]: job.data_origin,
+                ...(isNative
+                  ? {
+                      [t.sourceRun]: job.request?.source_run_id,
+                      training_scope: output.training_scope,
+                      rollout_id: provenance.rollout_id,
+                      rollout_sha256: provenance.rollout_sha256,
+                      robot_model: provenance.robot_model,
+                      joint_dimensions: provenance.joint_dimensions,
+                      robot_count: provenance.robot_count,
+                      samples: provenance.sample_count,
+                      transitions: provenance.transition_count,
+                      training_transitions: provenance.training_transitions,
+                      validation_transitions: provenance.validation_transitions,
+                      validation_loss: validationLoss.at(-1),
+                    }
+                  : {}),
               }}
             />
+            <RawRecord value={job} />
           </article>
         );
       })}

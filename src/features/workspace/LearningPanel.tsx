@@ -4,13 +4,14 @@ import { Icon } from "@/components/ui/data-display/Icon/Icon";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import { api } from "@/lib/api/client";
+import type { Run } from "@/lib/models/domain";
 import { Fields } from "./Fields";
 import styles from "./LearningStyles.module.css";
 import { actionSequence, imageData, vector } from "./learningInput";
 import { TrainingPanel } from "./TrainingPanel";
 
 type ImageInput = { name: string; data: string };
-export function LearningPanel() {
+export function LearningPanel({ runs = [] }: { runs?: Run[] }) {
   const { t } = usePreferences();
   const [mode, setMode] = useState("policy");
   const [provider, setProvider] = useState("lerobot");
@@ -133,7 +134,7 @@ export function LearningPanel() {
     return (
       <>
         {tabs}
-        <TrainingPanel />
+        <TrainingPanel runs={runs} />
       </>
     );
   return (

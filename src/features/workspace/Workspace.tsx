@@ -186,7 +186,7 @@ export function Workspace({
                     refresh={state.refresh}
                   />
                 )}
-                {section === "learning" && <LearningPanel />}
+                {section === "learning" && <LearningPanel runs={state.runs} />}
                 {section === "simulation" && (
                   <SimulationPanel
                     capabilities={state.overview.capabilities}

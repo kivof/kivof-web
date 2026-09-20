@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { allowedRoute } from "@/lib/api/server";
-import { trainingJob } from "./TrainingPanel";
+import type { Run } from "@/lib/models/domain";
+import { trainingJob, trainingSource } from "./TrainingPanel";
 
 test("training lifecycle rejects executable routes and invalid authority claims", () => {
   assert.equal(allowedRoute("learning/training", "POST"), true);
@@ -50,4 +51,68 @@ test("training lifecycle rejects executable routes and invalid authority claims"
   assert.equal(trainingJob({ ...record, output: [] }), null);
   assert.equal(trainingJob({ ...record, status: "deployed" }), null);
   assert.equal(trainingJob({ ...record, id: "../secrets" }), null);
+});
+
+test("native transition training preserves simulated provenance without weakening physical guards", () => {
+  const sourceId = "81292f07-1111-4222-a333-123456789abc";
+  const request = {
+    algorithm: "franka-transition-head",
+    dataset: "isaac-franka-rollout-v1",
+    source_run_id: sourceId,
+  };
+  const output = {
+    data_origin: "simulated",
+    prediction_only: true,
+    motor_authority: false,
+    verified_physical_outcome: false,
+  };
+  const job = {
+    id: "training-1",
+    status: "running",
+    data_origin: "simulated",
+    motor_authority: false,
+    verified_physical_outcome: false,
+    request,
+    output,
+  };
+  assert.equal(trainingJob(job)?.data_origin, "simulated");
+  assert.equal(trainingJob({ ...job, data_origin: "synthetic" }), null);
+  assert.equal(
+    trainingJob({ ...job, request: { ...request, source_run_id: "../other" } }),
+    null,
+  );
+  assert.equal(
+    trainingJob({
+      ...job,
+      request: { ...request, algorithm: "smolvla-adapter" },
+    }),
+    null,
+  );
+  assert.equal(
+    trainingJob({ ...job, output: { ...output, prediction_only: false } }),
+    null,
+  );
+  assert.equal(
+    trainingJob({ ...job, output: { ...output, motor_authority: true } }),
+    null,
+  );
+  const run = {
+    source: "isaac-sim",
+    data_origin: "simulated",
+    physical_execution: false,
+    evidence: {
+      native_scene_passed: true,
+      rollout: { source: "isaac-sim", id: sourceId, sha256: "a".repeat(64) },
+    },
+  } as unknown as Run;
+  assert.equal(trainingSource(run), true);
+  assert.equal(trainingSource({ ...run, physical_execution: true }), false);
+  assert.equal(trainingSource({ ...run, source: "cpu-simulation" }), false);
+  assert.equal(
+    trainingSource({
+      ...run,
+      evidence: { ...run.evidence, rollout: { id: sourceId } },
+    }),
+    false,
+  );
 });
