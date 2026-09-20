@@ -64,3 +64,21 @@ test("voice teardown stops every track and releases playback", () => {
   assert.equal(paused, 1);
   assert.equal(player.srcObject, null);
 });
+
+test("empty voice transcriptions do not create blank chat bubbles", () => {
+  for (const transcript of ["", "  ", "\n\t"])
+    assert.equal(
+      transcriptEvent({
+        type: "conversation.item.input_audio_transcription.completed",
+        transcript,
+      }),
+      null,
+    );
+  assert.deepEqual(
+    transcriptEvent({
+      type: "response.output_audio_transcript.done",
+      transcript: "  measured state  ",
+    }),
+    { role: "assistant", text: "measured state" },
+  );
+});

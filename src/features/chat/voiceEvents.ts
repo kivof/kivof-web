@@ -5,13 +5,15 @@ export function transcriptEvent(
   const event = value as Record<string, unknown>;
   if (typeof event.transcript !== "string" || event.transcript.length > 20000)
     return null;
+  const text = event.transcript.trim();
+  if (!text) return null;
   if (event.type === "conversation.item.input_audio_transcription.completed")
-    return { role: "user", text: event.transcript };
+    return { role: "user", text };
   if (
     event.type === "response.output_audio_transcript.done" ||
     event.type === "response.audio_transcript.done"
   )
-    return { role: "assistant", text: event.transcript };
+    return { role: "assistant", text };
   return null;
 }
 export function releaseVoice(
