@@ -18,11 +18,11 @@ function Visual({ slide }: { slide: Slide }) {
     <div className={styles.visual}>
       {slide.visual === "layers"
         ? [
-            "Web",
-            "Rust backend",
+            t.webLayer,
+            t.backendLayer,
             "OpenClaw",
-            "Rust inference core",
-            "Local controller",
+            t.inferenceLayer,
+            t.controllerLayer,
           ].map((label, i) => (
             <div key={label}>
               <span>0{i + 1}</span>

@@ -1,5 +1,9 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+webLayer|Web interface|Interfaz web|Weboberfläche|Interface web
+backendLayer|Rust backend|Servidor Rust|Rust-Backend|Serveur Rust
+inferenceLayer|Rust inference core|Núcleo de inferencia Rust|Rust-Inferenzkern|Noyau d’inférence Rust
+controllerLayer|Local controller|Controlador local|Lokaler Controller|Contrôleur local
 trainable_parameters|Trainable parameters|Parámetros entrenables|Trainierbare Parameter|Paramètres entraînables
 recordedPreview|Recorded factory preview|Vista previa de fábrica registrada|Aufgezeichnete Fabrikvorschau|Aperçu d’usine enregistré
 recordedPreviewBody|Shared recorded Isaac scene with eight Franka robots. This preview is separate from the selected run; it is not a live camera or a qualified autonomous task.|Escena Isaac compartida con ocho robots Franka. Esta vista previa es independiente de la ejecución seleccionada; no es una cámara en vivo ni una tarea autónoma cualificada.|Gemeinsame aufgezeichnete Isaac-Szene mit acht Franka-Robotern. Diese Vorschau gehört nicht zum ausgewählten Lauf; keine Live-Kamera und keine qualifizierte autonome Aufgabe.|Scène Isaac enregistrée partagée avec huit robots Franka. Cet aperçu est distinct de l’exécution sélectionnée ; ni caméra en direct ni tâche autonome qualifiée.
