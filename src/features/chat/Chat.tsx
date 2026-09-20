@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnswerBlocks } from "@/components/ui/data-display/AnswerBlocks/AnswerBlocks";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
 import { usePreferences } from "@/features/preferences/Preferences";
+import { ChatImage } from "./ChatImage";
 import styles from "./ChatStyles.module.css";
 import { useChat } from "./useChat";
 export function Chat({ compact = false }: { compact?: boolean }) {
@@ -32,9 +33,9 @@ export function Chat({ compact = false }: { compact?: boolean }) {
         </div>
         <button
           type="button"
-          title={t.clear}
+          title={t.clearHistory}
           aria-label={t.clear}
-          onClick={state.clear}
+          onClick={() => void state.clear()}
         >
           <Icon name="plus" size={18} />
         </button>
@@ -84,21 +85,14 @@ export function Chat({ compact = false }: { compact?: boolean }) {
                     evidence={turn.reply.evidence}
                     copy={t}
                   />
-                  {turn.reply.image && (
-                    <figure className={styles.image}>
-                      {/* biome-ignore lint/performance/noImgElement: In-memory generated image is already validated and cannot use the optimization proxy. */}
-                      <img
-                        src={`data:${turn.reply.image.mime_type};base64,${turn.reply.image.data}`}
-                        alt={t.generated}
-                      />
-                      <figcaption>{t.generated}</figcaption>
-                      <a
-                        download="kivof-illustration.png"
-                        href={`data:${turn.reply.image.mime_type};base64,${turn.reply.image.data}`}
-                      >
-                        {t.export}
-                      </a>
-                    </figure>
+                  {(turn.reply.image || turn.imageId) && (
+                    <ChatImage
+                      image={turn.reply.image}
+                      imageId={turn.imageId}
+                    />
+                  )}
+                  {turn.reply.reviewed && (
+                    <p className={styles.reviewed}>{t.reviewed}</p>
                   )}
                   {turn.reply.summary.length > 0 && (
                     <details className={styles.reasoning}>
@@ -139,7 +133,11 @@ export function Chat({ compact = false }: { compact?: boolean }) {
         )}
         {state.error && (
           <p role="alert" className={styles.error}>
-            {t.error}
+            {state.error === "model_unavailable_or_output_rejected"
+              ? t.modelUnavailable
+              : state.error === "rate_limited"
+                ? t.rateLimited
+                : t.error}
           </p>
         )}
         <div ref={bottom} />
@@ -232,7 +230,7 @@ export function Chat({ compact = false }: { compact?: boolean }) {
               <button
                 className={styles.send}
                 type="submit"
-                disabled={!input.trim() || !state.model}
+                disabled={!input.trim() || !state.model || state.loading}
                 title={t.send}
                 aria-label={t.send}
               >

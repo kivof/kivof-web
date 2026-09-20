@@ -14,6 +14,7 @@ export type Reply = {
   components: ChatComponent[];
   evidence: Evidence[];
   summary: string[];
+  reviewed?: boolean;
   image?: { data: string; mime_type: string };
 };
 export type Turn = {
@@ -22,6 +23,7 @@ export type Turn = {
   content: string;
   reply?: Reply;
   voice?: boolean;
+  imageId?: string;
 };
 export function parseReply(raw: unknown): Reply {
   if (!raw || typeof raw !== "object" || Array.isArray(raw))
@@ -50,6 +52,11 @@ export function parseReply(raw: unknown): Reply {
     ),
     summary: array(value.summary ?? [], 12, 0).map((item) => text(item, 2000)),
     image,
+    reviewed:
+      (value.verification as Record<string, unknown> | undefined)?.accepted ===
+        true &&
+      (value.verification as Record<string, unknown> | undefined)
+        ?.physical_verification === false,
   };
 }
 export function parseModels(raw: unknown) {

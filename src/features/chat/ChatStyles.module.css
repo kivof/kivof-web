@@ -267,3 +267,9 @@
 .chat[data-compact="false"] .messages {
   padding: 2rem max(1rem, 5%);
 }
+
+.reviewed {
+  color: var(--accent);
+  font-size: 0.65rem;
+  margin-top: 0.7rem;
+}
