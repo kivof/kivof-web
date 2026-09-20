@@ -1,5 +1,7 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+nativeTaskUnqualified|Native scene verified · task unqualified|Escena nativa verificada · tarea no cualificada|Native Szene verifiziert · Aufgabe nicht qualifiziert|Scène native vérifiée · tâche non qualifiée
+AUTONOMOUS_TASK_NOT_QUALIFIED|Autonomous cable task is not qualified|Tarea autónoma de cableado no cualificada|Autonome Kabelaufgabe nicht qualifiziert|Tâche autonome de câblage non qualifiée
 reportedValues|Reported sensor values|Valores de sensores disponibles|Gemeldete Sensorwerte|Valeurs de capteurs disponibles
 validQuality|Records with valid quality|Registros con calidad válida|Datensätze mit gültiger Qualität|Enregistrements de qualité valide
 derivedTelemetry|Derived from these records|Derivado de estos registros|Aus diesen Datensätzen abgeleitet|Calculé à partir de ces enregistrements

@@ -59,3 +59,15 @@ export function robotState(run: Run | null | undefined) {
         : [],
   };
 }
+
+export function nativeSceneTaskUnqualified(run: Run | null | undefined) {
+  return (
+    run?.source === "isaac-sim" &&
+    run.status === "failed" &&
+    run.evidence.native_scene_passed === true &&
+    run.verification.passed === false &&
+    run.verification.independent === true &&
+    run.verification.error_code === "AUTONOMOUS_TASK_NOT_QUALIFIED" &&
+    isaacFrames(run).length > 0
+  );
+}

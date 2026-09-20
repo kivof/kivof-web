@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import type { Run } from "./domain";
-import { isaacFrames, robotState } from "./robotScene";
+import {
+  isaacFrames,
+  nativeSceneTaskUnqualified,
+  robotState,
+} from "./robotScene";
 
 test("native scene rejects untrusted media and requires actual Isaac provenance", () => {
   const frame = {
@@ -60,5 +64,55 @@ test("robot inspector accepts only aligned finite joint samples", () => {
       },
     }),
     null,
+  );
+});
+
+test("scene readiness never upgrades an unqualified autonomous task or masks another fault", () => {
+  const run = {
+    source: "isaac-sim",
+    status: "failed",
+    evidence: {
+      native_scene_passed: true,
+      frames: [
+        {
+          source: "isaac-sim",
+          media_type: "image/png",
+          simulation_time_s: 1,
+          sha256: "a".repeat(64),
+          data_url: "data:image/png;base64,iVBORw0KGgoAAA==",
+        },
+      ],
+    },
+    verification: {
+      passed: false,
+      independent: true,
+      error_code: "AUTONOMOUS_TASK_NOT_QUALIFIED",
+    },
+  } as unknown as Run;
+  assert.equal(nativeSceneTaskUnqualified(run), true);
+  assert.equal(
+    nativeSceneTaskUnqualified({ ...run, source: "cpu-simulation" }),
+    false,
+  );
+  assert.equal(
+    nativeSceneTaskUnqualified({
+      ...run,
+      evidence: { ...run.evidence, frames: [] },
+    }),
+    false,
+  );
+  assert.equal(
+    nativeSceneTaskUnqualified({
+      ...run,
+      verification: { ...run.verification, passed: true },
+    }),
+    false,
+  );
+  assert.equal(
+    nativeSceneTaskUnqualified({
+      ...run,
+      verification: { ...run.verification, error_code: "FORCE_LIMIT" },
+    }),
+    false,
   );
 });

@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { usePreferences } from "@/features/preferences/Preferences";
 import type { Run } from "@/lib/models/domain";
+import { nativeSceneTaskUnqualified } from "@/lib/models/robotScene";
 import styles from "./PanelsStyles.module.css";
 import { RawRecord } from "./RawRecord";
 import { fieldValue, translated } from "./recordPresentation";
@@ -30,6 +31,8 @@ export function Fields({ values }: { values: Record<string, unknown> }) {
 
 export function RunBadge({ run }: { run: Run }) {
   const { t } = usePreferences();
+  if (nativeSceneTaskUnqualified(run))
+    return <Badge tone="warning">{t.nativeTaskUnqualified}</Badge>;
   return (
     <Badge
       tone={
