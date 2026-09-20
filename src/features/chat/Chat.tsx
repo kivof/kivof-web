@@ -1,6 +1,6 @@
 // biome-ignore-all lint/suspicious/noArrayIndexKey: Immutable result snapshots preserve ordered items without source row IDs.
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { AnswerBlocks } from "@/components/ui/data-display/AnswerBlocks/AnswerBlocks";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
 import { usePreferences } from "@/features/preferences/Preferences";
@@ -11,6 +11,16 @@ export function Chat({ compact = false }: { compact?: boolean }) {
   const { t, locale } = usePreferences();
   const state = useChat(locale);
   const [input, setInput] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuId = useId();
+  useEffect(() => {
+    if (!menuOpen) return;
+    const close = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", close);
+    return () => document.removeEventListener("keydown", close);
+  }, [menuOpen]);
   const bottom = useRef<HTMLDivElement>(null);
   const activeVoice =
     state.voice.phase === "active" || state.voice.phase === "connecting";
@@ -143,6 +153,37 @@ export function Chat({ compact = false }: { compact?: boolean }) {
         <div ref={bottom} />
       </div>
       <div className={styles.composerWrap}>
+        {menuOpen && (
+          <fieldset className={styles.actionMenu} id={menuId}>
+            <legend>{t.chatActions}</legend>
+            <button
+              type="button"
+              onClick={() => {
+                setInput(t.suggest1);
+                setMenuOpen(false);
+              }}
+            >
+              <Icon name="shield" size={16} />
+              <span>
+                {t.explainSkill}
+                <small>{t.evidence}</small>
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setInput(`/image ${input.replace(/^\/image\s*/, "")}`);
+                setMenuOpen(false);
+              }}
+            >
+              <Icon name="image" size={16} />
+              <span>
+                {t.image}
+                <small>{t.generatedImage}</small>
+              </span>
+            </button>
+          </fieldset>
+        )}
         {activeVoice && (
           <output className={styles.voiceStatus}>
             <Icon name="mic" size={15} />
@@ -179,13 +220,13 @@ export function Chat({ compact = false }: { compact?: boolean }) {
           <div className={styles.toolbar}>
             <button
               type="button"
-              title={t.image}
-              aria-label={t.image}
-              onClick={() =>
-                setInput(`/image ${input.replace(/^\/image\s*/, "")}`)
-              }
+              title={t.chatActions}
+              aria-label={t.chatActions}
+              aria-expanded={menuOpen}
+              aria-controls={menuId}
+              onClick={() => setMenuOpen(!menuOpen)}
             >
-              <Icon name="image" size={17} />
+              <Icon name="plus" size={18} />
             </button>
             <button
               type="button"
