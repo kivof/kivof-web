@@ -1,5 +1,5 @@
 import { api } from "@/lib/api/client";
-import { parseLiveScene } from "@/lib/models/liveScene";
+import { confirmLiveStop } from "./liveStop";
 
 type Request = (path: string, method: "GET" | "DELETE") => Promise<unknown>;
 const request: Request = (path, method) =>
@@ -20,8 +20,6 @@ export async function prepareNativeTask(
   if (typeof id !== "string" || !/^[a-zA-Z0-9_-]{1,128}$/.test(id))
     throw new Error("invalid_response");
   const result = await read(`simulation/live/${id}`, "DELETE");
-  const scene = parseLiveScene(result);
-  if (scene.id !== id || scene.status !== "stopped")
-    throw new Error("live_stop_unconfirmed");
+  confirmLiveStop(id, result);
   publish(result);
 }

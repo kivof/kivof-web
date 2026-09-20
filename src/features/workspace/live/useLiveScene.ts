@@ -13,6 +13,7 @@ import {
 } from "@/lib/models/liveScene";
 import { liveSessionContext } from "@/lib/models/liveSessionContext";
 import { pollLiveFeed } from "./liveFeed";
+import { confirmLiveStop } from "./liveStop";
 import { followLiveStream } from "./liveStream";
 
 type LiveFailure = "failed" | "cameraError" | "stopError" | "busy" | "expired";
@@ -234,12 +235,13 @@ export function useLiveScene() {
     if (!id) return;
     setStopping(true);
     try {
-      await api(`simulation/live/${id}`, undefined, undefined, "DELETE");
-      if (session.current === id) {
-        session.current = null;
-        setActiveId(null);
-        setScene((value) => (value ? { ...value, status: "stopped" } : null));
-      }
+      const result = await api(
+        `simulation/live/${id}`,
+        undefined,
+        undefined,
+        "DELETE",
+      );
+      receive(confirmLiveStop(id, result));
     } catch {
       if (mounted.current) setError("stopError");
     } finally {
