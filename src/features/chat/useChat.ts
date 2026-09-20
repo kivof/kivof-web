@@ -1,51 +1,39 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api/client";
-import { parseModels, parseReply, type Turn } from "@/lib/models/chat";
-import { historyTurns } from "./history";
+import { parseReply, type Turn } from "@/lib/models/chat";
+import { useChatStartup } from "./useChatStartup";
 import { useVoice } from "./useVoice";
 export function useChat(locale: string) {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [models, setModels] = useState<{ id: string; label: string }[]>([]);
-  const [model, setModel] = useState("");
-  const [loading, setLoading] = useState(true);
+  const touched = useRef(false);
+  const restore = useCallback((history: Turn[]) => {
+    if (!touched.current) setTurns(history);
+  }, []);
+  const startup = useChatStartup(restore);
   const abort = useRef<AbortController | null>(null);
   const busyRef = useRef(false);
-  const voice = useVoice((role, content) =>
+  const voice = useVoice((role, content) => {
+    touched.current = true;
     setTurns((previous) => [
       ...previous,
       { id: crypto.randomUUID(), role, content, voice: true },
-    ]),
-  );
-  useEffect(() => {
-    let active = true;
-    void Promise.all([
-      api("models").then(parseModels),
-      api("chat").then(historyTurns),
-    ])
-      .then(([catalogue, history]) => {
-        if (!active) return;
-        setModels(catalogue.models);
-        setModel(catalogue.defaultModel);
-        setTurns(history);
-      })
-      .catch(() => {
-        if (active) setError("history_unavailable");
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-    return () => {
-      active = false;
+    ]);
+  });
+  useEffect(
+    () => () => {
       abort.current?.abort();
-    };
-  }, []);
+    },
+    [],
+  );
   async function send(content: string) {
-    if (!content.trim() || busyRef.current || !model || loading) return;
+    if (!content.trim() || busyRef.current || !startup.model || startup.loading)
+      return false;
     const intent = content.startsWith("/image ") ? "image" : "chat";
     const user: Turn = { id: crypto.randomUUID(), role: "user", content };
+    touched.current = true;
     setTurns((previous) => [...previous, user]);
     busyRef.current = true;
     setBusy(true);
@@ -60,7 +48,7 @@ export function useChat(locale: string) {
             role: turn.role,
             content: turn.content.slice(0, 12000).replace(/^\/image\s+/, ""),
           })),
-          model,
+          model: startup.model,
           locale,
           intent,
         },
@@ -72,9 +60,12 @@ export function useChat(locale: string) {
           ...previous,
           { id: reply.id, role: "assistant", content: reply.answer, reply },
         ]);
+      return !controller.signal.aborted;
     } catch (e) {
+      setTurns((previous) => previous.filter((turn) => turn.id !== user.id));
       if (!controller.signal.aborted)
         setError(e instanceof Error ? e.message : "request_failed");
+      return false;
     } finally {
       if (abort.current === controller) {
         busyRef.current = false;
@@ -88,6 +79,7 @@ export function useChat(locale: string) {
     setBusy(false);
   }
   async function clear() {
+    touched.current = true;
     stop();
     voice.stop();
     try {
@@ -102,13 +94,10 @@ export function useChat(locale: string) {
     turns,
     busy,
     error,
-    models,
-    model,
-    setModel,
+    ...startup,
     send,
     stop,
     clear,
     voice,
-    loading,
   };
 }

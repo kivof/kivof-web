@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { AnswerBlocks } from "@/components/ui/data-display/AnswerBlocks/AnswerBlocks";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
 import { usePreferences } from "@/features/preferences/Preferences";
+import { ChatFeedback } from "./ChatFeedback";
 import { ChatImage } from "./ChatImage";
 import styles from "./ChatStyles.module.css";
 import { useChat } from "./useChat";
@@ -30,9 +31,11 @@ export function Chat({ compact = false }: { compact?: boolean }) {
   }, [state.turns.length, state.busy]);
   function submit(e?: React.FormEvent) {
     e?.preventDefault();
-    if (!input.trim() || state.busy || !state.model) return;
-    void state.send(input);
-    setInput("");
+    if (!input.trim() || state.busy || !state.model || state.loading) return;
+    const submitted = input;
+    void state.send(submitted).then((sent) => {
+      if (sent) setInput((current) => (current === submitted ? "" : current));
+    });
   }
   return (
     <div className={styles.chat} data-compact={compact}>
@@ -141,18 +144,10 @@ export function Chat({ compact = false }: { compact?: boolean }) {
             {t.working}
           </p>
         )}
-        {state.error && (
-          <p role="alert" className={styles.error}>
-            {state.error === "model_unavailable_or_output_rejected"
-              ? t.modelUnavailable
-              : state.error === "rate_limited"
-                ? t.rateLimited
-                : t.error}
-          </p>
-        )}
         <div ref={bottom} />
       </div>
       <div className={styles.composerWrap}>
+        <ChatFeedback state={state} locale={locale} copy={t} />
         {menuOpen && (
           <fieldset className={styles.actionMenu} id={menuId}>
             <legend>{t.chatActions}</legend>
