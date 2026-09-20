@@ -11,14 +11,18 @@ export function useCameraControls(
   enabled: boolean,
   initial: Camera,
   send: (value: Camera) => Promise<void>,
+  sessionId?: string,
 ) {
   const surface = useRef<HTMLDivElement>(null);
   const camera = useRef(initial);
   const dragging = useRef(false);
   const ignoreClickUntil = useRef(0);
+  const currentSession = useRef(sessionId);
   useEffect(() => {
-    if (!enabled) camera.current = initial;
-  }, [enabled, initial]);
+    if (!enabled || currentSession.current !== sessionId)
+      camera.current = initial;
+    currentSession.current = sessionId;
+  }, [enabled, initial, sessionId]);
   const update = (value: Camera) => {
     if (!enabled) return;
     camera.current = clampCamera(value);
@@ -40,7 +44,7 @@ export function useCameraControls(
       pending = setTimeout(() => {
         pending = undefined;
         void send(camera.current);
-      }, 160);
+      }, 80);
     };
     const down = (event: PointerEvent) => {
       if (
@@ -76,6 +80,11 @@ export function useCameraControls(
     };
     const up = () => {
       if (dragging.current) ignoreClickUntil.current = performance.now() + 250;
+      if (pending) {
+        clearTimeout(pending);
+        pending = undefined;
+        void send(camera.current);
+      }
       last = null;
       dragging.current = false;
     };

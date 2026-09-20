@@ -2,6 +2,9 @@ import type { Locale } from "@/lib/i18n";
 
 const labels = {
   en: {
+    speed: "Simulation speed",
+    session:
+      "Your live session stays available when you switch workspace pages. Stop it here when finished; idle sessions expire automatically.",
     busy: "The simulator is in use. Stop the other live view or training job, then retry.",
     expired: "The live session expired. Start a new live view.",
     stopped: "Live view stopped",
@@ -44,6 +47,9 @@ const labels = {
     replay: "Recorded run",
   },
   es: {
+    speed: "Velocidad de simulación",
+    session:
+      "La sesión en vivo sigue disponible al cambiar de página. Detenla aquí al terminar; las sesiones inactivas caducan automáticamente.",
     busy: "El simulador está en uso. Detén la otra vista en vivo o el entrenamiento y reintenta.",
     expired: "La sesión en vivo ha caducado. Inicia una nueva vista en vivo.",
     stopped: "Vista en vivo detenida",
@@ -87,6 +93,9 @@ const labels = {
     replay: "Ejecución grabada",
   },
   de: {
+    speed: "Simulationsgeschwindigkeit",
+    session:
+      "Die Live-Sitzung bleibt beim Seitenwechsel verfügbar. Hier nach Abschluss beenden; inaktive Sitzungen laufen automatisch ab.",
     busy: "Der Simulator wird verwendet. Andere Live-Ansicht oder Training beenden und erneut versuchen.",
     expired: "Die Live-Sitzung ist abgelaufen. Eine neue Live-Ansicht starten.",
     stopped: "Live-Ansicht beendet",
@@ -131,6 +140,9 @@ const labels = {
     replay: "Aufgezeichneter Lauf",
   },
   fr: {
+    speed: "Vitesse de simulation",
+    session:
+      "La session reste disponible entre les pages. Arrêtez-la ici après utilisation ; les sessions inactives expirent automatiquement.",
     busy: "Le simulateur est occupé. Arrêtez l’autre vue en direct ou l’entraînement, puis réessayez.",
     expired:
       "La session en direct a expiré. Démarrez une nouvelle vue en direct.",

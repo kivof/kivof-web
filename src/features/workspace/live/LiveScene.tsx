@@ -25,6 +25,7 @@ export function LiveScene({ run, title }: { run?: Run | null; title: string }) {
     enabled,
     scene?.camera ?? DEFAULT_CAMERA,
     live.camera,
+    scene?.id,
   );
   const [selected, setSelected] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
@@ -137,7 +138,7 @@ export function LiveScene({ run, title }: { run?: Run | null; title: string }) {
                   src={scene.frame.data_url}
                   width={scene.frame.width}
                   height={scene.frame.height}
-                  alt={`${labels.live} · ${labels.frame} ${scene.sequence}`}
+                  alt={`${status} · ${labels.frame} ${scene.sequence}`}
                   draggable={false}
                 />
                 <svg
@@ -260,9 +261,16 @@ export function LiveScene({ run, title }: { run?: Run | null; title: string }) {
             {labels.frame} {number.format(scene.sequence)} ·{" "}
             {number.format(live.fps)} {labels.fps} · {labels.age}{" "}
             {number.format(live.age)} s
+            {live.speed !== null && (
+              <>
+                {" "}
+                · {labels.speed} {number.format(live.speed)}×
+              </>
+            )}
           </span>
         )}
       </footer>
+      {active && <p className={styles.help}>{labels.session}</p>}
     </section>
   );
 }

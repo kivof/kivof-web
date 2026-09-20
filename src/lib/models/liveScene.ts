@@ -93,8 +93,10 @@ function parseRobot(value: unknown): LiveRobot {
 }
 function parseFrame(value: unknown): NonNullable<LiveScene["frame"]> {
   const frame = object(value);
+  const mime = frame.mime_type;
+  const encoded = frame.data_base64;
   if (
-    frame.mime_type !== "image/png" ||
+    !["image/png", "image/jpeg"].includes(String(mime)) ||
     !finite(frame.width) ||
     !finite(frame.height) ||
     frame.width < 1 ||
@@ -103,16 +105,23 @@ function parseFrame(value: unknown): NonNullable<LiveScene["frame"]> {
     frame.height > 1920 ||
     typeof frame.sha256 !== "string" ||
     !/^[a-f0-9]{64}$/.test(frame.sha256) ||
-    typeof frame.data_base64 !== "string" ||
-    frame.data_base64.length > 2_000_000 ||
-    !/^iVBORw0KGgo[A-Za-z0-9+/]*={0,2}$/.test(frame.data_base64)
+    typeof encoded !== "string" ||
+    encoded.length > 2_000_000 ||
+    encoded.length % 4 !== 0 ||
+    !/^[A-Za-z0-9+/]+={0,2}$/.test(encoded)
   )
     throw new Error("invalid_live_frame");
+  const signature = mime === "image/png" ? "iVBORw0KGgo" : "/9j/";
+  if (!encoded.startsWith(signature)) throw new Error("invalid_live_frame");
+  if (mime === "image/jpeg") {
+    const bytes = atob(encoded);
+    if (!bytes.endsWith("\xff\xd9")) throw new Error("invalid_live_frame");
+  }
   return {
     width: frame.width,
     height: frame.height,
     sha256: frame.sha256,
-    data_url: `data:image/png;base64,${frame.data_base64}`,
+    data_url: `data:${mime};base64,${encoded}`,
   };
 }
 export function parseLiveScene(value: unknown): LiveScene {

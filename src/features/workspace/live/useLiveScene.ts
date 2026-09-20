@@ -2,10 +2,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api/client";
 import {
+  type FrameSample,
+  liveFrameTiming,
+  sampleLiveFrame,
+} from "@/lib/models/liveFrameTiming";
+import {
   type Camera,
   type LiveScene,
   parseLiveScene,
 } from "@/lib/models/liveScene";
+import { pollLiveFeed } from "./liveFeed";
 
 type LiveFailure = "failed" | "cameraError" | "stopError" | "busy" | "expired";
 function liveFailure(error: unknown): LiveFailure {
@@ -23,83 +29,147 @@ export function useLiveScene() {
   const [error, setError] = useState<LiveFailure | null>(null);
   const [age, setAge] = useState(0);
   const [fps, setFps] = useState(0);
+  const [speed, setSpeed] = useState<number | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const session = useRef<string | null>(null);
   const mounted = useRef(false);
   const operation = useRef(0);
-  const lastFrame = useRef({ sequence: -1, time: 0 });
+  const samples = useRef<FrameSample[]>([]);
   const pendingCamera = useRef<Camera | null>(null);
   const cameraBusy = useRef(false);
   const startingRef = useRef(false);
 
   const receive = useCallback((next: LiveScene) => {
     if (next.id !== session.current || !mounted.current) return;
-    const now = performance.now();
-    const previous = lastFrame.current;
-    if (next.frame && next.sequence > previous.sequence) {
-      if (previous.time) setFps(1000 / (now - previous.time));
-      lastFrame.current = { sequence: next.sequence, time: now };
-      setAge(0);
+    if (next.sequence < (samples.current.at(-1)?.sequence ?? -1)) return;
+    const nextSamples = sampleLiveFrame(samples.current, next, Date.now());
+    if (nextSamples !== samples.current) {
+      samples.current = nextSamples;
+      const timing = liveFrameTiming(nextSamples, Date.now());
+      setFps(timing.fps);
+      setSpeed(timing.speed);
+      setAge(timing.age);
       setError((value) => (value === "failed" ? null : value));
     }
-    setScene(next);
+    setScene((previous) =>
+      previous?.sequence === next.sequence && previous.status === next.status
+        ? previous
+        : next,
+    );
     if (next.status === "failed") setError("failed");
-    if (next.status === "failed" || next.status === "stopped")
+    if (next.status === "failed" || next.status === "stopped") {
       session.current = null;
+      setActiveId(null);
+    }
   }, []);
+
+  const adopt = useCallback(
+    (next: LiveScene) => {
+      if (session.current !== next.id) {
+        operation.current += 1;
+        samples.current = [];
+        pendingCamera.current = null;
+        setFps(0);
+        setSpeed(null);
+        setScene(null);
+      }
+      session.current = next.id;
+      setActiveId(next.id);
+      receive(next);
+    },
+    [receive],
+  );
 
   useEffect(() => {
     mounted.current = true;
-    let cancelled = false;
-    let polling = false;
-    const timer = setInterval(async () => {
-      const id = session.current;
-      if (lastFrame.current.time)
-        setAge((performance.now() - lastFrame.current.time) / 1000);
-      if (!id || polling || document.hidden) return;
-      polling = true;
-      try {
-        const next = parseLiveScene(
-          await api(
-            `simulation/live/${id}`,
-            undefined,
-            AbortSignal.timeout(10000),
-          ),
-        );
-        if (!cancelled && session.current === id) receive(next);
-      } catch (failure) {
-        if (!cancelled && session.current === id) {
-          const reason = liveFailure(failure);
-          setError(reason);
-          if (reason === "expired") {
+    const controller = new AbortController();
+    const refresh = () => {
+      const generation = operation.current;
+      void api<{ current_live_session?: unknown }>(
+        "assistant/context",
+        undefined,
+        controller.signal,
+      )
+        .then(async (context) => {
+          if (controller.signal.aborted || generation !== operation.current)
+            return;
+          const id = context.current_live_session;
+          if (id === null) {
             session.current = null;
+            setActiveId(null);
             setScene((value) =>
               value ? { ...value, status: "stopped" } : null,
             );
+            return;
           }
-        }
-      } finally {
-        polling = false;
+          if (typeof id !== "string" || !/^[a-zA-Z0-9_-]{1,128}$/.test(id))
+            return;
+          const next = parseLiveScene(
+            await api(`simulation/live/${id}`, undefined, controller.signal),
+          );
+          if (!controller.signal.aborted && generation === operation.current)
+            adopt(next);
+        })
+        .catch((failure) => {
+          if (!controller.signal.aborted && session.current)
+            setError(liveFailure(failure));
+        });
+    };
+    refresh();
+    const update = (event: Event) => {
+      try {
+        adopt(parseLiveScene((event as CustomEvent<unknown>).detail));
+      } catch {
+        setError("failed");
       }
-    }, 500);
+    };
+    window.addEventListener("kivof:live-session", update);
+    window.addEventListener("kivof:workspace-changed", refresh);
     return () => {
-      cancelled = true;
       mounted.current = false;
       operation.current += 1;
-      clearInterval(timer);
-      const id = session.current;
+      controller.abort();
+      window.removeEventListener("kivof:live-session", update);
+      window.removeEventListener("kivof:workspace-changed", refresh);
       session.current = null;
-      if (id)
-        void fetch(`/api/simulation/live/${id}`, {
-          method: "DELETE",
-          credentials: "same-origin",
-          keepalive: true,
-        }).catch(() =>
-          console.warn(
-            "Live scene cleanup was not confirmed; idle expiry applies.",
-          ),
-        );
     };
-  }, [receive]);
+  }, [adopt]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const timing = liveFrameTiming(samples.current, Date.now());
+      setAge(timing.age);
+      if (timing.age >= 10) setFps(0);
+    }, 500);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!activeId) return;
+    const controller = new AbortController();
+    void pollLiveFeed({
+      signal: controller.signal,
+      read: async (signal) =>
+        parseLiveScene(
+          await api(
+            `simulation/live/${activeId}`,
+            undefined,
+            AbortSignal.any([signal, AbortSignal.timeout(10000)]),
+          ),
+        ),
+      receive,
+      failure: (failure) => {
+        const reason = liveFailure(failure);
+        setError(reason);
+        if (reason !== "expired") return true;
+        session.current = null;
+        setActiveId(null);
+        setScene((value) => (value ? { ...value, status: "stopped" } : null));
+        return false;
+      },
+    });
+    return () => controller.abort();
+  }, [activeId, receive]);
 
   async function start() {
     if (startingRef.current || session.current) return;
@@ -110,15 +180,15 @@ export function useLiveScene() {
     setScene(null);
     setAge(0);
     setFps(0);
-    lastFrame.current = { sequence: -1, time: 0 };
+    setSpeed(null);
+    samples.current = [];
     try {
       const next = parseLiveScene(await api("simulation/live", {}));
       if (!mounted.current || generation !== operation.current) {
         await api(`simulation/live/${next.id}`, undefined, undefined, "DELETE");
         return;
       }
-      session.current = next.id;
-      receive(next);
+      adopt(next);
     } catch (failure) {
       if (mounted.current) setError(liveFailure(failure));
     } finally {
@@ -139,6 +209,7 @@ export function useLiveScene() {
       await api(`simulation/live/${id}`, undefined, undefined, "DELETE");
       if (session.current === id) {
         session.current = null;
+        setActiveId(null);
         setScene((value) => (value ? { ...value, status: "stopped" } : null));
       }
     } catch {
@@ -173,5 +244,16 @@ export function useLiveScene() {
       cameraBusy.current = false;
     }
   }, []);
-  return { scene, starting, stopping, error, age, fps, start, stop, camera };
+  return {
+    scene,
+    starting,
+    stopping,
+    error,
+    age,
+    fps,
+    speed,
+    start,
+    stop,
+    camera,
+  };
 }

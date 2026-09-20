@@ -56,6 +56,8 @@ export function useWorkspace() {
   }, [router]);
   useEffect(() => {
     void refresh();
+    const changed = () => void refresh();
+    window.addEventListener("kivof:workspace-changed", changed);
     const events = new EventSource("/api/events");
     let timer: ReturnType<typeof setTimeout> | undefined;
     events.addEventListener("telemetry", () => {
@@ -69,6 +71,7 @@ export function useWorkspace() {
     events.addEventListener("status", () => setConnected(false));
     events.onerror = () => setConnected(false);
     return () => {
+      window.removeEventListener("kivof:workspace-changed", changed);
       events.close();
       if (timer) clearTimeout(timer);
     };

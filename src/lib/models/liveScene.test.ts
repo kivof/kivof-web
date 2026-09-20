@@ -52,6 +52,28 @@ test("native live state preserves camera, telemetry and bounded PNG", () => {
   assert.deepEqual(parsed.camera, DEFAULT_CAMERA);
   assert.equal(parsed.robots[3].joint_positions[1], 0.3);
 });
+test("compact JPEG frames require matching media signatures and complete bytes", () => {
+  const data = snapshot();
+  const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 0, 0xff, 0xd9]).toString(
+    "base64",
+  );
+  data.frame.mime_type = "image/jpeg";
+  data.frame.data_base64 = jpeg;
+  assert.equal(
+    parseLiveScene(data).frame?.data_url,
+    `data:image/jpeg;base64,${jpeg}`,
+  );
+  for (const patch of [
+    { mime_type: "image/png" },
+    { mime_type: "image/svg+xml" },
+    { data_base64: "/9j/4AAA" },
+    { data_base64: "iVBORw0KGgo=" },
+    { data_base64: `${jpeg}x` },
+  ])
+    assert.throws(() =>
+      parseLiveScene({ ...data, frame: { ...data.frame, ...patch } }),
+    );
+});
 test("live state rejects forged provenance, arbitrary media, invalid telemetry and duplicate robots", () => {
   for (const patch of [
     { source: "physical" },
