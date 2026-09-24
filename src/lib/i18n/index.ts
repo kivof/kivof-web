@@ -1,5 +1,14 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+stage_image-generator|Generate the requested illustration|Generar la ilustración solicitada|Angeforderte Illustration erzeugen|Générer l’illustration demandée
+executionProgress|Assistant activity|Actividad del asistente|Assistentenaktivität|Activité de l’assistant
+stage_manager|Plan the response|Planificar la respuesta|Antwort planen|Planifier la réponse
+stage_evidence-specialist|Inspect evidence and prepare the answer|Revisar evidencias y preparar la respuesta|Nachweise prüfen und Antwort vorbereiten|Examiner les preuves et préparer la réponse
+stage_verifier|Review the answer against evidence|Verificar la respuesta con las evidencias|Antwort mit Nachweisen abgleichen|Vérifier la réponse avec les preuves
+stage_revision|Revise after review|Revisar tras la verificación|Nach der Prüfung überarbeiten|Réviser après vérification
+stage_outcome-owner|Save the reviewed outcome|Guardar el resultado revisado|Geprüftes Ergebnis speichern|Enregistrer le résultat vérifié
+stageCompleted|Completed|Completado|Abgeschlossen|Terminé
+stageRunning|In progress|En curso|In Bearbeitung|En cours
 factory|Cheese Factory|Cheese Factory|Cheese Factory|Cheese Factory
 factorySceneTitle|Cheese Factory · perception to placement|Cheese Factory · de percepción a colocación|Cheese Factory · Wahrnehmung bis Ablage|Cheese Factory · perception et dépose
 factoryConcept|Conceptual sorting workflow · no recorded measurements|Flujo conceptual de clasificación · sin mediciones registradas|Konzeptioneller Sortierablauf · keine aufgezeichneten Messungen|Processus de tri conceptuel · aucune mesure enregistrée

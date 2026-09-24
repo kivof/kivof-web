@@ -1,12 +1,14 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { type AssistantStage, streamChat } from "@/lib/api/chatStream";
 import { api } from "@/lib/api/client";
-import { parseReply, type Turn } from "@/lib/models/chat";
+import type { Turn } from "@/lib/models/chat";
 import { useChatStartup } from "./useChatStartup";
 import { useVoice } from "./useVoice";
 export function useChat(locale: string) {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [busy, setBusy] = useState(false);
+  const [stages, setStages] = useState<AssistantStage[]>([]);
   const [error, setError] = useState("");
   const touched = useRef(false);
   const restore = useCallback((history: Turn[]) => {
@@ -37,12 +39,12 @@ export function useChat(locale: string) {
     setTurns((previous) => [...previous, user]);
     busyRef.current = true;
     setBusy(true);
+    setStages([]);
     setError("");
     const controller = new AbortController();
     abort.current = controller;
     try {
-      const raw = await api(
-        "chat",
+      const reply = await streamChat(
         {
           messages: [...turns, user].slice(-20).map((turn) => ({
             role: turn.role,
@@ -53,8 +55,14 @@ export function useChat(locale: string) {
           intent,
         },
         controller.signal,
+        (stage) => {
+          if (!controller.signal.aborted)
+            setStages((previous) => [
+              ...previous.filter((item) => item.stage !== stage.stage),
+              stage,
+            ]);
+        },
       );
-      const reply = parseReply(raw);
       if (!controller.signal.aborted)
         window.dispatchEvent(new Event("kivof:workspace-changed"));
       if (!controller.signal.aborted)
@@ -95,6 +103,7 @@ export function useChat(locale: string) {
   return {
     turns,
     busy,
+    stages,
     error,
     ...startup,
     send,

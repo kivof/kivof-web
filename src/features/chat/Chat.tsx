@@ -6,6 +6,7 @@ import { Icon } from "@/components/ui/data-display/Icon/Icon";
 import { usePreferences } from "@/features/preferences/Preferences";
 import { ChatFeedback } from "./ChatFeedback";
 import { ChatImage } from "./ChatImage";
+import { ChatProgress } from "./ChatProgress";
 import styles from "./ChatStyles.module.css";
 import { useChat } from "./useChat";
 export function Chat({ compact = false }: { compact?: boolean }) {
@@ -138,12 +139,7 @@ export function Chat({ compact = false }: { compact?: boolean }) {
             </article>
           ))
         )}
-        {state.busy && (
-          <p className={styles.working}>
-            <Icon name="activity" size={16} />
-            {t.working}
-          </p>
-        )}
+        {state.busy && <ChatProgress stages={state.stages} copy={t} />}
         <div ref={bottom} />
       </div>
       <div className={styles.composerWrap}>

@@ -378,3 +378,34 @@
   --onAccent: #242739;
   background: var(--bg);
 }
+
+.progress {
+  margin: 1rem 0;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+.progress ol {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+.progress li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.progress li > span:first-child {
+  color: var(--accent);
+}
+.progress li small {
+  margin-left: auto;
+  font-size: 0.65rem;
+}
+.progress li[data-status="running"] {
+  color: var(--ink);
+}
