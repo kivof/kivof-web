@@ -1,0 +1,96 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--deck-space-3);
+  padding-bottom: var(--deck-space-3);
+}
+.brand {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.075em;
+}
+.brand > span {
+  color: var(--accent);
+}
+.header > span {
+  display: none;
+  color: var(--muted);
+  font: var(--deck-small) var(--fontMono);
+  letter-spacing: 0.08em;
+}
+.header > div {
+  display: flex;
+  align-items: center;
+  gap: var(--deck-space-1);
+  margin-left: auto;
+}
+.header button,
+.controls > button {
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  border: var(--deck-border);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--deck-space-2);
+  padding-top: var(--deck-space-3);
+}
+.controls > label {
+  min-width: 0;
+}
+.controls > label > span {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.controls select {
+  background: var(--panel);
+  border: var(--deck-border);
+  border-radius: var(--radius);
+  max-width: 14rem;
+  padding: var(--deck-space-2);
+  font-size: 0.8rem;
+}
+.controls > a {
+  display: none;
+  align-items: center;
+  gap: var(--deck-space-3);
+  margin-left: auto;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+.keyboard {
+  display: none;
+  color: var(--muted);
+  font: var(--deck-small) var(--fontMono);
+}
+
+@media (min-width: 60rem) {
+  .header > span {
+    display: block;
+  }
+  .controls {
+    justify-content: start;
+  }
+  .controls select {
+    max-width: 26rem;
+  }
+  .controls > a,
+  .keyboard {
+    display: flex;
+  }
+}
+@media print {
+  .header,
+  .controls {
+    display: none;
+  }
+}

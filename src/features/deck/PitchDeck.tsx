@@ -1,99 +1,114 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { CheeseLine } from "@/components/ui/data-display/CheeseLine/CheeseLine";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
 import {
   Preferences,
   usePreferences,
 } from "@/features/preferences/Preferences";
-import { deckContent, type Slide } from "./content";
+import { startDemoSession } from "@/lib/api/auth";
+import type { Locale } from "@/lib/i18n";
+import { deckContent, deckLabels, type Slide } from "./content";
+import chrome from "./DeckChromeStyles.module.css";
+import { DeckSlide } from "./DeckSlide";
 import styles from "./PitchDeckStyles.module.css";
+import type { DeckLabels } from "./types";
 
-function Visual({ slide }: { slide: Slide }) {
-  const { t } = usePreferences();
-  if (slide.visual === "cell" || slide.visual === "proof")
-    return <CheeseLine copy={t} />;
-  return (
-    <div className={styles.visual}>
-      {slide.visual === "layers"
-        ? [
-            t.webLayer,
-            t.backendLayer,
-            "OpenClaw",
-            t.inferenceLayer,
-            t.controllerLayer,
-          ].map((label, i) => (
-            <div key={label}>
-              <span>0{i + 1}</span>
-              <strong>{label}</strong>
-              <Icon name={i === 4 ? "shield" : "chevron"} />
-            </div>
-          ))
-        : ["flow1", "flow2", "flow3", "flow4"].map((key, i) => (
-            <div key={key}>
-              <span>0{i + 1}</span>
-              <strong>{t[key]}</strong>
-              <Icon name="arrow" />
-            </div>
-          ))}
-    </div>
-  );
+function useDeckNavigation(total: number) {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    function onKey(event: KeyboardEvent) {
+      if (
+        event.target instanceof HTMLElement &&
+        event.target.closest(
+          "input,select,textarea,button,a,[contenteditable=true]",
+        )
+      )
+        return;
+      const change =
+        event.key === "ArrowRight" || event.key === " "
+          ? 1
+          : event.key === "ArrowLeft"
+            ? -1
+            : 0;
+      if (change) {
+        event.preventDefault();
+        setIndex((value) => Math.max(0, Math.min(total - 1, value + change)));
+      }
+      if (event.key === "Home") setIndex(0);
+      if (event.key === "End") setIndex(total - 1);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [total]);
+  return { index, setIndex };
 }
-function DeckSlide({ slide, index }: { slide: Slide; index: number }) {
+export function DeckPages({
+  slides,
+  index,
+  locale,
+  labels,
+  sessionStarted,
+  startWorkspace,
+}: {
+  slides: Slide[];
+  index: number;
+  locale: Locale;
+  labels: DeckLabels;
+  sessionStarted?: boolean;
+  startWorkspace?: () => Promise<void>;
+}) {
   return (
-    <section className={styles.slide}>
-      <div className={styles.copy}>
-        <span className={styles.label}>{slide.label}</span>
-        <h1>{slide.title}</h1>
-        <p>{slide.body}</p>
-        <ul>
-          {slide.points.map((point) => (
-            <li key={point}>
-              <span />
-              {point}
-            </li>
-          ))}
-        </ul>
+    <>
+      <main className={styles.active}>
+        <DeckSlide
+          key={slides[index].id}
+          slide={slides[index]}
+          index={index}
+          total={slides.length}
+          locale={locale}
+          labels={labels}
+          active
+          sessionStarted={sessionStarted}
+          startWorkspace={startWorkspace}
+        />
+      </main>
+      <div className={styles.print} aria-hidden="true">
+        {slides.map((slide, i) => (
+          <DeckSlide
+            key={slide.id}
+            slide={slide}
+            index={i}
+            total={slides.length}
+            locale={locale}
+            labels={labels}
+            active={false}
+          />
+        ))}
       </div>
-      <Visual slide={slide} />
-      <footer>
-        <p>{slide.note}</p>
-        <span>{String(index + 1).padStart(2, "0")} / 08</span>
-      </footer>
-    </section>
+    </>
   );
 }
 export function PitchDeck() {
   const { locale, t } = usePreferences();
-  const [index, setIndex] = useState(0);
+  const slides = deckContent[locale],
+    labels = deckLabels[locale];
+  const { index, setIndex } = useDeckNavigation(slides.length);
   const [error, setError] = useState(false);
-  const slides = deckContent[locale];
-  useEffect(() => {
-    const key = (event: KeyboardEvent) => {
-      if (
-        event.target instanceof HTMLSelectElement ||
-        event.target instanceof HTMLButtonElement ||
-        event.target instanceof HTMLAnchorElement
-      )
-        return;
-      if (event.key === "ArrowRight" || event.key === " ") {
-        event.preventDefault();
-        setIndex((value) => Math.min(value + 1, slides.length - 1));
-      }
-      if (event.key === "ArrowLeft")
-        setIndex((value) => Math.max(value - 1, 0));
-    };
-    window.addEventListener("keydown", key);
-    return () => window.removeEventListener("keydown", key);
-  }, [slides.length]);
+  const [sessionStarted, setSessionStarted] = useState(false);
+  async function startWorkspace() {
+    if (!sessionStarted) {
+      await startDemoSession();
+      setSessionStarted(true);
+    }
+  }
   return (
     <div className={styles.page}>
-      <header>
-        <Link href="/" className={styles.brand}>
-          kivof.
+      <header className={chrome.header}>
+        <Link href="/" className={chrome.brand}>
+          kivof<span>·</span>
         </Link>
-        <span>{t.challengeLabel}</span>
+        <span>{slides[0].label}</span>
         <div>
           <Preferences />
           <button
@@ -118,16 +133,16 @@ export function PitchDeck() {
           </button>
         </div>
       </header>
-      <main className={styles.active}>
-        <DeckSlide slide={slides[index]} index={index} />
-      </main>
-      <div className={styles.print}>
-        {slides.map((slide, i) => (
-          <DeckSlide slide={slide} index={i} key={slide.label} />
-        ))}
-      </div>
+      <DeckPages
+        slides={slides}
+        index={index}
+        locale={locale}
+        labels={labels}
+        sessionStarted={sessionStarted}
+        startWorkspace={startWorkspace}
+      />
       {error && <p role="alert">{t.error}</p>}
-      <nav className={styles.controls} aria-label={t.deck}>
+      <nav className={chrome.controls} aria-label={t.deck}>
         <button
           type="button"
           onClick={() => setIndex((value) => Math.max(value - 1, 0))}
@@ -136,17 +151,21 @@ export function PitchDeck() {
         >
           ←
         </button>
-        <div>
-          {slides.map((slide, i) => (
-            <button
-              type="button"
-              key={slide.label}
-              aria-label={`${t.slide} ${i + 1}`}
-              aria-current={i === index ? "step" : undefined}
-              onClick={() => setIndex(i)}
-            />
-          ))}
-        </div>
+        <label>
+          <span>{labels.jump}</span>
+          <select
+            value={index}
+            onChange={(event) => setIndex(Number(event.target.value))}
+            aria-label={labels.jump}
+          >
+            {slides.map((slide, i) => (
+              <option key={slide.id} value={i}>
+                {String(i + 1).padStart(2, "0")} ·{" "}
+                {slide.title.replaceAll("\n", " ")}
+              </option>
+            ))}
+          </select>
+        </label>
         <button
           type="button"
           onClick={() =>
@@ -157,6 +176,7 @@ export function PitchDeck() {
         >
           →
         </button>
+        <span className={chrome.keyboard}>{labels.keyboard}</span>
         <Link href="/login">
           {t.openDemo}
           <Icon name="arrow" size={17} />

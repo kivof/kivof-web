@@ -1,0 +1,88 @@
+.media {
+  margin: 0;
+}
+.mediaScreen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--deck-deep);
+  border: var(--deck-border);
+  overflow: hidden;
+  border-radius: var(--radiusSmall);
+}
+.mediaScreen > iframe,
+.mediaScreen > img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  border: 0;
+  object-fit: contain;
+}
+.launch {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--deck-space-3);
+  padding: var(--deck-space-4);
+  background: color-mix(in srgb, var(--deck-deep) 45%, transparent);
+}
+.launch button {
+  display: flex;
+  align-items: center;
+  gap: var(--deck-space-4);
+  padding: var(--deck-space-3) var(--deck-space-4);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--deck-signal);
+  color: var(--deck-deep);
+  box-shadow: var(--shadow);
+  font-weight: 600;
+}
+.launch p {
+  background: var(--panel);
+  padding: var(--deck-space-3);
+  border-radius: var(--radiusSmall);
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+.media figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--deck-space-2);
+  margin-top: var(--deck-space-2);
+  font-size: var(--deck-small);
+  color: var(--muted);
+}
+.media figcaption > div {
+  display: flex;
+  gap: var(--deck-space-4);
+}
+.media figcaption a,
+.media figcaption button {
+  color: var(--accent);
+  font-weight: 500;
+}
+.media figcaption button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+
+@media (min-width: 60rem) {
+  .mediaScreen {
+    height: clamp(23rem, 40vw, 39rem);
+    aspect-ratio: auto;
+  }
+}
+@media print {
+  .mediaScreen {
+    height: 31rem;
+  }
+  .media figcaption button {
+    display: none;
+  }
+}
