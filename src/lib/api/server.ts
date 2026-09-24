@@ -12,6 +12,9 @@ const routes: Record<string, string[]> = {
   "auth/me": ["GET"],
   "auth/logout": ["POST"],
   overview: ["GET"],
+  factory: ["GET"],
+  "factory/simulate": ["POST"],
+  "factory/analyze": ["POST"],
   models: ["GET"],
   runs: ["GET", "POST"],
   sensors: ["GET"],
@@ -38,6 +41,7 @@ export function allowedRoute(path: string, method: string) {
       /^learning\/training\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
     (method === "GET" && /^chat\/[a-zA-Z0-9_-]{1,128}\/image$/.test(path)) ||
     (method === "DELETE" && /^labels\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
+    (method === "GET" && /^factory\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
     (method === "GET" && /^runs\/[a-zA-Z0-9_-]{1,128}$/.test(path))
   );
 }

@@ -7,7 +7,7 @@ export default async function Page({
   params: Promise<{ section?: string[] }>;
 }) {
   const parts = (await params).section ?? [];
-  const section = parts[0] ?? "overview";
+  const section = parts[0] ?? "factory";
   if (
     !sections.includes(section as Section) ||
     parts.length > 2 ||

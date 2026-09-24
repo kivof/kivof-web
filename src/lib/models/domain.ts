@@ -59,6 +59,7 @@ export type Label = {
   created_at?: string;
 };
 export const sections = [
+  "factory",
   "overview",
   "runs",
   "sensors",

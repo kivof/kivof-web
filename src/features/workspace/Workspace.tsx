@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Icon, type IconName } from "@/components/ui/data-display/Icon/Icon";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import { Chat } from "@/features/chat/Chat";
+import { FactoryPanel } from "@/features/factory/FactoryPanel";
 import {
   Preferences,
   usePreferences,
@@ -25,6 +26,7 @@ import styles from "./WorkspaceStyles.module.css";
 
 const icons: Record<Section, IconName> = {
   overview: "grid",
+  factory: "cube",
   runs: "activity",
   sensors: "robot",
   ontology: "graph",
@@ -34,7 +36,7 @@ const icons: Record<Section, IconName> = {
   chat: "chat",
 };
 export function Workspace({
-  section = "overview",
+  section = "factory",
   runId,
 }: {
   section?: Section;
@@ -67,7 +69,7 @@ export function Workspace({
           {sections.map((key) => (
             <Link
               key={key}
-              href={key === "overview" ? "/workspace" : `/workspace/${key}`}
+              href={key === "factory" ? "/workspace" : `/workspace/${key}`}
               aria-current={section === key ? "page" : undefined}
               onClick={() => setMenu(false)}
               title={t[key]}
@@ -152,7 +154,7 @@ export function Workspace({
               <>
                 <div className={styles.pageTitle}>
                   <div>
-                    <span>HARNESS FORGE / 01</span>
+                    <span>CHEESE FACTORY / HARNESS FORGE</span>
                     <h1>
                       {section === "overview" ? t.overviewTitle : t[section]}
                     </h1>
@@ -167,6 +169,7 @@ export function Workspace({
                     <Icon name="activity" />
                   </button>
                 </div>
+                {section === "factory" && <FactoryPanel />}
                 {section === "overview" && (
                   <OverviewPanel overview={state.overview} />
                 )}

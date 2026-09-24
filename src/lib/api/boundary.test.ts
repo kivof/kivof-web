@@ -96,3 +96,13 @@ test("BFF preserves bounded idempotency keys without trusting caller authorizati
       ApiError,
     );
 });
+
+test("factory routes isolate analysis from simulation and reject arbitrary actions", () => {
+  assert.equal(allowedRoute("factory", "GET"), true);
+  assert.equal(allowedRoute("factory/simulate", "POST"), true);
+  assert.equal(allowedRoute("factory/analyze", "POST"), true);
+  assert.equal(allowedRoute("factory/record-1", "GET"), true);
+  assert.equal(allowedRoute("factory/execute", "POST"), false);
+  assert.equal(allowedRoute("factory/../secrets", "GET"), false);
+  assert.equal(allowedRoute("factory", "DELETE"), false);
+});
