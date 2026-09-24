@@ -6,8 +6,33 @@ function checkedUrl(value: string | undefined, protocols: string[]) {
   return url.toString().replace(/\/$/, "");
 }
 
+export function checkedFrameOrigins(value: string | undefined): string[] {
+  if (!value) return [];
+  return [
+    ...new Set(
+      value.split(",").map((entry) => {
+        const input = entry.trim();
+        const url = new URL(input);
+        if (
+          !/^https:\/\/[^/?#\\\s]+\/?$/i.test(input) ||
+          url.protocol !== "https:" ||
+          !/^(?:[a-z0-9.-]+|\[[a-f0-9:]+\])$/i.test(url.hostname) ||
+          url.username ||
+          url.password ||
+          url.pathname !== "/" ||
+          url.search ||
+          url.hash
+        )
+          throw new Error("Invalid deck frame origin");
+        return url.origin;
+      }),
+    ),
+  ];
+}
+
 export function config() {
   return {
+    deckFrameOrigins: checkedFrameOrigins(process.env.DECK_FRAME_ORIGINS),
     backend: checkedUrl(process.env.BACKEND_URL, ["http:", "https:"]),
     events: checkedUrl(process.env.BACKEND_WS_URL, ["ws:", "wss:"]),
     origin: checkedUrl(process.env.APP_ORIGIN, ["http:", "https:"]),
