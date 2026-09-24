@@ -106,3 +106,10 @@ test("factory routes isolate analysis from simulation and reject arbitrary actio
   assert.equal(allowedRoute("factory/../secrets", "GET"), false);
   assert.equal(allowedRoute("factory", "DELETE"), false);
 });
+
+test("human factory review is a constrained POST route", () => {
+  assert.equal(allowedRoute("factory/record-1/labels", "POST"), true);
+  assert.equal(allowedRoute("factory/record-1/labels", "DELETE"), false);
+  assert.equal(allowedRoute("factory/record-1/labels", "GET"), false);
+  assert.equal(allowedRoute("factory/../labels", "POST"), false);
+});

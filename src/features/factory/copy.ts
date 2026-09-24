@@ -1,6 +1,19 @@
 import type { Locale } from "@/lib/i18n";
 
 const rows = `
+humanReview|Human label review|Revisión humana de etiquetas|Menschliche Annotationsprüfung|Revue humaine des annotations
+reviewBoundary|Confirm or correct the candidate class. Original predictions and source evidence remain unchanged. Training requires a separate dataset approval.|Confirma o corrige la clase candidata. Se conservan las predicciones y evidencias originales. El entrenamiento requiere aprobar el conjunto de datos por separado.|Kandidatenklasse bestätigen oder korrigieren. Ursprüngliche Vorhersagen und Nachweise bleiben erhalten. Training erfordert eine separate Datensatzfreigabe.|Confirmez ou corrigez la classe candidate. Prédictions et preuves originales sont conservées. L’entraînement exige une approbation distincte du jeu de données.
+reviewedClass|Reviewed class|Clase revisada|Geprüfte Klasse|Classe vérifiée
+reviewNote|Review note|Nota de revisión|Prüfnotiz|Note de revue
+saveReview|Save human review|Guardar revisión humana|Menschliche Prüfung speichern|Enregistrer la revue humaine
+reviewSaved|Review saved. Original prediction preserved.|Revisión guardada. Predicción original conservada.|Prüfung gespeichert. Ursprüngliche Vorhersage erhalten.|Revue enregistrée. Prédiction originale conservée.
+reviewedBy|Reviewed by|Revisado por|Geprüft von|Vérifié par
+sourceGroup|Source group|Grupo de origen|Quellgruppe|Groupe source
+reviewHistory|Review history|Historial de revisiones|Prüfverlauf|Historique des revues
+reviewConflict|This record changed since you started the review. Load the latest record, check your correction and save again.|El registro cambió desde que empezaste. Carga la versión actual, comprueba tu corrección y guarda de nuevo.|Der Datensatz wurde inzwischen geändert. Aktuelle Version laden, Korrektur prüfen und erneut speichern.|Le dossier a changé depuis le début de la revue. Chargez sa version actuelle, vérifiez votre correction et enregistrez à nouveau.
+reloadReview|Load latest record|Cargar versión actual|Aktuellen Datensatz laden|Charger la version actuelle
+reviewCapacity|This record has reached its review limit.|Este registro alcanzó el límite de revisiones.|Der Datensatz hat sein Prüflimit erreicht.|Ce dossier a atteint sa limite de revues.
+reviewError|Review could not be saved. Enter a valid class and a nonempty note of up to 2,000 bytes, then retry.|No se pudo guardar. Selecciona una clase válida y escribe una nota de hasta 2.000 bytes antes de reintentar.|Prüfung konnte nicht gespeichert werden. Gültige Klasse und eine nicht leere Notiz bis 2.000 Byte eingeben und erneut versuchen.|Impossible d’enregistrer la revue. Choisissez une classe valide et une note non vide de 2 000 octets maximum, puis réessayez.
 analyzed|Analyzed|Analizado|Analysiert|Analysé
 held|Held for review|Retenido para revisión|Zur Prüfung zurückgehalten|Suspendu pour revue
 review_required|Review required|Revisión necesaria|Prüfung erforderlich|Revue requise

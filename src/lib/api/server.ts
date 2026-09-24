@@ -33,6 +33,8 @@ const routes: Record<string, string[]> = {
 export function allowedRoute(path: string, method: string) {
   return (
     routes[path]?.includes(method) ||
+    (method === "POST" &&
+      /^factory\/[a-zA-Z0-9_-]{1,128}\/labels$/.test(path)) ||
     ((method === "GET" || method === "DELETE") &&
       /^simulation\/live\/[a-zA-Z0-9_-]{1,128}$/.test(path)) ||
     (method === "POST" &&

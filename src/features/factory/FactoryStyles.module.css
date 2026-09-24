@@ -168,3 +168,40 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.reviewForm {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+.reviewForm label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+}
+.reviewForm textarea {
+  width: 100%;
+  resize: vertical;
+}
+.reviewForm button {
+  justify-self: start;
+}
+.reviewForm output {
+  color: var(--accent);
+}
+.reviewSummary {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: var(--raised);
+  border-radius: var(--radiusSmall);
+}
+.reviewHistory {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+.reviewHistory summary {
+  cursor: pointer;
+}
+.reviewHistory li {
+  margin: 0.8rem 0;
+}

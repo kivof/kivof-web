@@ -52,6 +52,8 @@ export function upstreamErrorCode(value: unknown): string | undefined {
     "model_unavailable_or_output_rejected",
     "provider_unavailable",
     "review_rejected",
+    "revision_conflict",
+    "label_review_capacity_exceeded",
     "live_worker_busy",
     "live_session_expired",
     "live_unavailable",

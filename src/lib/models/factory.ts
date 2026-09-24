@@ -1,3 +1,8 @@
+import {
+  type FactoryLabelReview,
+  factoryRevision,
+  parseFactoryReview,
+} from "./factoryReview";
 export const factoryScenarios = [
   "nominal",
   "occlusion",
@@ -10,6 +15,9 @@ export const factoryScenarios = [
 ] as const;
 export type FactoryScenario = (typeof factoryScenarios)[number];
 export type FactoryRecord = {
+  revision: number;
+  review: FactoryLabelReview | null;
+  reviews: FactoryLabelReview[];
   id: string;
   created_at: string;
   scenario?: string;
@@ -114,7 +122,20 @@ export function parseFactoryRecord(raw: unknown): FactoryRecord {
       throw new Error("invalid_factory_graph");
     return { from, to, relation: text(edge.relation) };
   });
+  const reviews = array(value.label_reviews ?? [], 50).map(parseFactoryReview);
+  const revision = factoryRevision(value.revision ?? 1);
+  const review =
+    value.label_review == null ? null : parseFactoryReview(value.label_review);
+  if (
+    review &&
+    (review.revision !== revision ||
+      !reviews.some((item) => item.id === review.id))
+  )
+    throw new Error("invalid_factory_review_history");
   return {
+    revision,
+    review,
+    reviews,
     id: text(value.id, 128),
     created_at: text(value.created_at),
     source: text(value.source),

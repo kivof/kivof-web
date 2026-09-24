@@ -12,6 +12,7 @@ import {
   type FactoryRecord as Record,
 } from "@/lib/models/factory";
 import { factoryCopy } from "./copy";
+import { FactoryLabelReview } from "./FactoryLabelReview";
 import { FactoryRecord } from "./FactoryRecord";
 import styles from "./FactoryStyles.module.css";
 
@@ -138,6 +139,19 @@ export function FactoryPanel() {
             </select>
           </label>
           <FactoryRecord record={current} copy={t} locale={locale} />
+          <FactoryLabelReview
+            key={current.id}
+            record={current}
+            copy={t}
+            locale={locale}
+            onReviewed={(updated) =>
+              setRecords((previous) =>
+                previous.map((record) =>
+                  record.id === updated.id ? updated : record,
+                ),
+              )
+            }
+          />
         </>
       ) : (
         <div className={styles.empty}>
