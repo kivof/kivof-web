@@ -96,7 +96,7 @@ export const fr: DeckCopy = {
     title: "Voir l’usine\nen mouvement.",
     body: "La démonstration fournie, dans son propre cadre.",
     points: [],
-    note: "Vidéo enregistrée · Lancez la lecture pour commencer.",
+    note: "Vidéo enregistrée · Démarre sans son. Activez le son dans le lecteur.",
   },
   operator: {
     label: "02 / L’OPÉRATEUR",
@@ -120,7 +120,7 @@ export const fr: DeckCopy = {
     title: "Regarder\nde plus près.",
     body: "Une deuxième démonstration fournie.",
     points: [],
-    note: "Vidéo enregistrée · Lancez la lecture pour commencer.",
+    note: "Vidéo enregistrée · Démarre sans son. Activez le son dans le lecteur.",
   },
   export: {
     label: "02 / PARTAGER LA SCÈNE",
@@ -189,7 +189,7 @@ export const fr: DeckCopy = {
     title: "Du parcours\nà ses preuves.",
     body: "La troisième démonstration fournie.",
     points: [],
-    note: "Vidéo enregistrée · Lancez la lecture pour commencer.",
+    note: "Vidéo enregistrée · Démarre sans son. Activez le son dans le lecteur.",
   },
   exporterIntro: {
     label: "02 / ISAAC WEB EXPORTER",

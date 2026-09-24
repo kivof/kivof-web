@@ -46,8 +46,20 @@ test("exactly three distinct supplied videos and two separate demo slides are al
   );
   for (const id of ordered) {
     const definition = mediaDefinition(id);
-    if (definition.kind === "video")
-      assert.equal(new URL(definition.src).searchParams.get("autoplay"), "0");
+    if (definition.kind === "video") {
+      const url = new URL(definition.src);
+      assert.equal(url.origin, "https://player.vimeo.com");
+      assert.equal(url.pathname, `/video/${definition.id}`);
+      assert.deepEqual(Object.fromEntries(url.searchParams), {
+        badge: "0",
+        autopause: "0",
+        player_id: "0",
+        app_id: "58479",
+        autoplay: "1",
+        muted: "1",
+        dnt: "1",
+      });
+    }
   }
   assert.throws(() => mediaDefinition("https://evil.invalid" as DeckMediaId));
 });

@@ -94,7 +94,7 @@ export const en: DeckCopy = {
     title: "Watch the\nfactory run.",
     body: "The supplied demonstration, in its own frame.",
     points: [],
-    note: "Recorded video · Playback starts when you press play.",
+    note: "Recorded video · Starts muted. Enable sound in the player.",
   },
   operator: {
     label: "02 / THE OPERATOR",
@@ -118,7 +118,7 @@ export const en: DeckCopy = {
     title: "Take a\ncloser look.",
     body: "A second supplied demonstration.",
     points: [],
-    note: "Recorded video · Playback starts when you press play.",
+    note: "Recorded video · Starts muted. Enable sound in the player.",
   },
   export: {
     label: "02 / SHARE THE SCENE",
@@ -187,7 +187,7 @@ export const en: DeckCopy = {
     title: "From a run\nto its evidence.",
     body: "The third supplied demonstration.",
     points: [],
-    note: "Recorded video · Playback starts when you press play.",
+    note: "Recorded video · Starts muted. Enable sound in the player.",
   },
   exporterIntro: {
     label: "02 / ISAAC WEB EXPORTER",

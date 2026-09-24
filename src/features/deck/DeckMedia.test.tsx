@@ -17,12 +17,23 @@ test("only the active video mounts a frame; inactive print slides never mount me
       />,
     );
     const id = slideMedia[deckContent.en[index].id];
-    const video = id && deckMedia[id].kind === "video";
+    const media = id ? deckMedia[id] : undefined;
+    const video = media?.kind === "video";
     assert.equal((html.match(/<iframe\b/g) ?? []).length, video ? 1 : 0);
-    if (video && id) {
-      assert.ok(html.includes("autoplay=0"));
-      assert.ok(html.includes('title="'));
+    if (media?.kind === "video") {
+      assert.ok(html.includes("autoplay=1&amp;muted=1"));
+      assert.ok(html.includes('data-media-kind="video"'));
+      assert.ok(html.includes(`title="${media.title}"`));
+      assert.ok(
+        html.includes(
+          'allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"',
+        ),
+      );
+      assert.ok(
+        html.includes('referrerPolicy="strict-origin-when-cross-origin"'),
+      );
       assert.ok(html.includes('rel="noopener noreferrer"'));
+      assert.equal(html.includes("api/player.js"), false);
     }
   }
 });

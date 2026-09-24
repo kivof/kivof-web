@@ -96,7 +96,7 @@ export const es: DeckCopy = {
     title: "Ver la fábrica\nen acción.",
     body: "La demostración facilitada, en su propio encuadre.",
     points: [],
-    note: "Vídeo grabado · Pulsa reproducir para comenzar.",
+    note: "Vídeo grabado · Empieza silenciado. Activa el sonido en el reproductor.",
   },
   operator: {
     label: "02 / EL OPERADOR",
@@ -120,7 +120,7 @@ export const es: DeckCopy = {
     title: "Mirar\nmás de cerca.",
     body: "Una segunda demostración facilitada.",
     points: [],
-    note: "Vídeo grabado · Pulsa reproducir para comenzar.",
+    note: "Vídeo grabado · Empieza silenciado. Activa el sonido en el reproductor.",
   },
   export: {
     label: "02 / COMPARTIR LA ESCENA",
@@ -189,7 +189,7 @@ export const es: DeckCopy = {
     title: "De la ejecución\na sus evidencias.",
     body: "La tercera demostración facilitada.",
     points: [],
-    note: "Vídeo grabado · Pulsa reproducir para comenzar.",
+    note: "Vídeo grabado · Empieza silenciado. Activa el sonido en el reproductor.",
   },
   exporterIntro: {
     label: "02 / ISAAC WEB EXPORTER",

@@ -96,7 +96,7 @@ export const de: DeckCopy = {
     title: "Die Fabrik\nin Bewegung.",
     body: "Die bereitgestellte Demonstration im eigenen Bild.",
     points: [],
-    note: "Aufgezeichnetes Video · Wiedergabe per Klick starten.",
+    note: "Aufgezeichnetes Video · Startet stumm. Ton im Player einschalten.",
   },
   operator: {
     label: "02 / DER BETREIBER",
@@ -120,7 +120,7 @@ export const de: DeckCopy = {
     title: "Genauer\nhinsehen.",
     body: "Eine zweite bereitgestellte Demonstration.",
     points: [],
-    note: "Aufgezeichnetes Video · Wiedergabe per Klick starten.",
+    note: "Aufgezeichnetes Video · Startet stumm. Ton im Player einschalten.",
   },
   export: {
     label: "02 / DIE SZENE TEILEN",
@@ -189,7 +189,7 @@ export const de: DeckCopy = {
     title: "Vom Lauf\nzu seinen Nachweisen.",
     body: "Die dritte bereitgestellte Demonstration.",
     points: [],
-    note: "Aufgezeichnetes Video · Wiedergabe per Klick starten.",
+    note: "Aufgezeichnetes Video · Startet stumm. Ton im Player einschalten.",
   },
   exporterIntro: {
     label: "02 / ISAAC WEB EXPORTER",

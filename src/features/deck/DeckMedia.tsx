@@ -42,17 +42,23 @@ export function DeckMedia({
     }
   }
   return (
-    <figure className={styles.media} data-media={mediaId}>
+    <figure
+      className={styles.media}
+      data-media={mediaId}
+      data-media-kind={media.kind}
+    >
       <div className={styles.mediaScreen}>
         {mounted ? (
           <iframe
             key={`${mediaId}-${version}`}
             src={media.src}
-            title={title}
+            title={media.kind === "video" ? media.title : title}
             allow={
-              mediaId === "workspace"
-                ? "microphone 'self'; fullscreen 'self'"
-                : "fullscreen; picture-in-picture"
+              media.kind === "video"
+                ? "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                : mediaId === "workspace"
+                  ? "microphone 'self'; fullscreen 'self'"
+                  : "fullscreen; picture-in-picture"
             }
             allowFullScreen
             referrerPolicy="strict-origin-when-cross-origin"

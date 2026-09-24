@@ -78,6 +78,10 @@
     aspect-ratio: auto;
   }
 }
+.media[data-media-kind="video"] .mediaScreen {
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
 @media print {
   .mediaScreen {
     height: 31rem;
