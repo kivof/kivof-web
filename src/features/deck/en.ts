@@ -3,8 +3,8 @@ export const en: Slide[] = [
   {
     label: "KIVOF / PHYSICAL AI",
     title: "Every run.\nA better next step.",
-    body: "The evidence workspace for industrial robot operations and learning.",
-    points: ["THEKER · HackSpain 2026", "Harness Forge demonstrator"],
+    body: "The evidence workspace for a simulated cheese-sorting production line.",
+    points: ["HPE & NVIDIA · Geneva 2026", "Cheese Factory · Harness Forge"],
     note: "Software demonstrator. Hardware autonomy and commissioning require separate validation.",
     visual: "cell",
   },
@@ -33,15 +33,15 @@ export const en: Slide[] = [
     visual: "loop",
   },
   {
-    label: "03 / HARNESS FORGE",
-    title: "One cable.\nThree guides.\nA verifiable result.",
-    body: "The THEKER proof centers on cable routing and connector insertion under controlled variation.",
+    label: "03 / CHEESE FACTORY",
+    title: "One cheese.\nThe correct bin.\nAn inspectable decision.",
+    body: "A camera observes the conveyor. Classification selects a bin. A bounded sorting trial records placement and rejection evidence.",
     points: [
-      "Nominal cable assembly",
-      "Camera occlusion",
-      "Force spike and bounded recovery",
+      "Classify and sort into the target bin",
+      "Hold uncertain or stale observations",
+      "Preserve placement failures for review",
     ],
-    note: "CPU simulation supplies inspectable evidence. Isaac Sim and physical trials remain separate runtime capabilities.",
+    note: "Deterministic sorting simulation and native Isaac trials carry separate provenance. A simulated result is not physical validation.",
     visual: "proof",
   },
   {
@@ -89,7 +89,7 @@ export const en: Slide[] = [
       "Connect and commission compatible hardware",
       "Evaluate a held-out physical task",
     ],
-    note: "Kivof · THEKER challenge · Built by JO · 20 September 2026",
+    note: "Kivof · Cheese Factory · Built by JO · 24 September 2026",
     visual: "cell",
   },
 ];

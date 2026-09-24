@@ -1,5 +1,14 @@
 export type Locale = "en" | "es" | "de" | "fr";
 const rows = `
+factory|Cheese Factory|Cheese Factory|Cheese Factory|Cheese Factory
+factorySceneTitle|Cheese Factory · perception to placement|Cheese Factory · de percepción a colocación|Cheese Factory · Wahrnehmung bis Ablage|Cheese Factory · perception et dépose
+factoryConcept|Conceptual sorting workflow · no recorded measurements|Flujo conceptual de clasificación · sin mediciones registradas|Konzeptioneller Sortierablauf · keine aufgezeichneten Messungen|Processus de tri conceptuel · aucune mesure enregistrée
+factoryCamera|Observe & classify|Observar y clasificar|Beobachten & klassifizieren|Observer et classifier
+factoryRobot|Pick & place|Agarrar y colocar|Greifen & ablegen|Saisir et déposer
+factoryBelt|Conveyor|Cinta transportadora|Förderband|Convoyeur
+factoryBins|Sorting bins|Contenedores de clasificación|Sortierbehälter|Bacs de tri
+factoryReject|Uncertain? Hold for review.|¿Incierto? Revisar antes de actuar.|Unsicher? Zur Prüfung zurückhalten.|Incertain ? Suspendre pour revue.
+challengeLabel|CHEESE FACTORY / GENEVA 2026|CHEESE FACTORY / GINEBRA 2026|CHEESE FACTORY / GENF 2026|CHEESE FACTORY / GENÈVE 2026
 release|Release|Soltar|Loslassen|Relâcher
 camera_sha256|Rendered frame SHA-256|SHA-256 del fotograma renderizado|SHA-256 des gerenderten Bildes|SHA-256 de l’image rendue
 recordedRobot|Recorded robot|Robot registrado|Aufgezeichneter Roboter|Robot enregistré
@@ -187,7 +196,7 @@ hero1|Every robot run.|Cada ejecución.|Jeder Roboterlauf.|Chaque exécution.
 hero2|A smarter next step.|Un siguiente paso mejor.|Ein besserer nächster Schritt.|Une meilleure prochaine étape.
 heroBody|Connect operations, sensor evidence and learning. Understand what happened, test an improvement, and keep physical authority where it belongs.|Conecta operaciones, evidencias y aprendizaje. Comprende lo ocurrido, prueba mejoras y conserva la autoridad física en el controlador.|Betrieb, Sensordaten und Lernen verbinden. Abläufe verstehen, Verbesserungen testen und die Bewegungsfreigabe lokal behalten.|Reliez opérations, preuves et apprentissage. Comprenez les faits, testez une amélioration et conservez l’autorité physique au contrôleur.
 simulationBadge|SIMULATION WORKSPACE|ESPACIO DE SIMULACIÓN|SIMULATIONSUMGEBUNG|ESPACE DE SIMULATION
-sceneTitle|Harness Forge · cable assembly cell|Harness Forge · célula de cableado|Harness Forge · Kabelmontagezelle|Harness Forge · cellule de câblage
+sceneTitle|Harness Forge · robot simulation|Harness Forge · simulación robótica|Harness Forge · Robotersimulation|Harness Forge · simulation robotique
 sceneCaption|Conceptual cell view · inspect recorded evidence below|Vista conceptual · inspecciona las evidencias registradas|Konzeptionelle Zelle · aufgezeichnete Nachweise prüfen|Vue conceptuelle · consultez les preuves enregistrées
 localAuthority|Local controller retains motion authority|El controlador local mantiene la autoridad de movimiento|Bewegungsfreigabe bleibt beim lokalen Controller|Le contrôleur local conserve l’autorité de mouvement
 flow1|Observe|Observar|Beobachten|Observer
@@ -195,11 +204,11 @@ flow2|Understand|Comprender|Verstehen|Comprendre
 flow3|Evaluate|Evaluar|Evaluieren|Évaluer
 flow4|Improve|Mejorar|Verbessern|Améliorer
 feature1|Operations, in context|Operaciones, en contexto|Betrieb im Kontext|Les opérations, en contexte
-feature1Body|Inspect run history, synchronized sensor observations and independent completion checks.|Inspecciona ejecuciones, sensores sincronizados y verificaciones independientes.|Laufhistorie, synchronisierte Beobachtungen und unabhängige Abschlussprüfungen einsehen.|Consultez les exécutions, observations synchronisées et vérifications indépendantes.
+feature1Body|Connect conveyor observations, classification decisions and independently checked sorting outcomes.|Conecta observaciones de cinta, decisiones de clasificación y resultados de separación verificados.|Förderbandbeobachtungen, Klassifikation und unabhängig geprüfte Sortierergebnisse verbinden.|Reliez observations du convoyeur, décisions de classification et résultats de tri vérifiés.
 feature2|From failure to evidence|Del fallo a la evidencia|Vom Fehler zum Nachweis|De l’échec à la preuve
-feature2Body|Review force spikes and occlusions. Attach labels to immutable run identities.|Revisa picos de fuerza y oclusiones. Etiqueta ejecuciones identificadas de forma inmutable.|Kraftspitzen und Verdeckungen prüfen. Unveränderliche Lauf-IDs annotieren.|Examinez pics de force et occlusions. Annotez des identifiants immuables.
+feature2Body|Review uncertain classifications, stale observations and placement failures. Keep each decision linked to its evidence.|Revisa clasificaciones inciertas, observaciones caducadas y fallos de colocación. Vincula cada decisión a su evidencia.|Unsichere Klassifikationen, veraltete Beobachtungen und Ablagefehler prüfen. Jede Entscheidung bleibt mit ihren Nachweisen verbunden.|Examinez classifications incertaines, observations périmées et échecs de dépose. Reliez chaque décision à ses preuves.
 feature3|Test before the next step|Prueba antes del siguiente paso|Vor dem nächsten Schritt testen|Tester avant la prochaine étape
-feature3Body|Compare declared simulation scenarios and inspect what the verifier actually observed.|Compara escenarios de simulación e inspecciona lo que observó el verificador.|Deklarierte Simulationsszenarien vergleichen und Prüferbeobachtungen einsehen.|Comparez les scénarios déclarés et les observations du vérificateur.
+feature3Body|Compare controlled sorting scenarios, inspect the reject decision and review what the verifier actually observed.|Compara escenarios controlados, inspecciona las decisiones de rechazo y revisa lo observado por el verificador.|Kontrollierte Sortierszenarien vergleichen, Ablehnungen prüfen und Prüferbeobachtungen einsehen.|Comparez les scénarios contrôlés, inspectez les décisions de rejet et les observations du vérificateur.
 signIn|Sign in|Iniciar sesión|Anmelden|Se connecter
 signInTitle|Your next run starts here.|Tu próxima ejecución empieza aquí.|Der nächste Lauf beginnt hier.|Votre prochaine exécution commence ici.
 signInBody|Enter the demo operator credentials to inspect the simulation workspace.|Introduce las credenciales de demo para inspeccionar la simulación.|Mit den Demo-Zugangsdaten die Simulation untersuchen.|Saisissez les identifiants de démonstration pour inspecter la simulation.
@@ -219,7 +228,7 @@ labels|Data labeling|Etiquetado|Datenannotation|Annotation
 simulation|Simulation lab|Laboratorio de simulación|Simulationslabor|Laboratoire de simulation
 chat|Assistant|Asistente|Assistent|Assistant
 overviewTitle|The cell. The evidence. The next step.|La célula. La evidencia. El siguiente paso.|Die Zelle. Der Nachweis. Der nächste Schritt.|La cellule. La preuve. La suite.
-overviewBody|A shared view of the Harness Forge evaluation loop.|Una vista compartida del ciclo de evaluación de Harness Forge.|Gemeinsame Sicht auf die Harness-Forge-Evaluation.|Une vue partagée de l’évaluation Harness Forge.
+overviewBody|Inspect recorded robot trials in Harness Forge. Open Cheese Factory for the sorting challenge.|Inspecciona pruebas robóticas registradas en Harness Forge. Abre Cheese Factory para el reto de clasificación.|Aufgezeichnete Roboterversuche in Harness Forge prüfen. Cheese Factory öffnet die Sortieraufgabe.|Inspectez les essais robotiques enregistrés dans Harness Forge. Ouvrez Cheese Factory pour le défi de tri.
 totalRuns|Recorded runs|Ejecuciones registradas|Aufgezeichnete Läufe|Exécutions enregistrées
 successRuns|Verified successes|Éxitos verificados|Verifizierte Erfolge|Succès vérifiés
 failedRuns|Failed runs|Ejecuciones fallidas|Fehlgeschlagene Läufe|Échecs
@@ -270,7 +279,7 @@ assistantTitle|What would you like to understand?|¿Qué quieres comprender?|Was
 assistantBody|Ask about a run, explore sensor evidence, or generate a visual explanation.|Pregunta sobre una ejecución, explora sensores o genera una explicación visual.|Nach Läufen fragen, Sensordaten erkunden oder visuelle Erklärungen erzeugen.|Interrogez une exécution, explorez les capteurs ou générez une explication visuelle.
 suggest1|Explain the latest run and its verification.|Explica la última ejecución y su verificación.|Erkläre den neuesten Lauf und seine Verifizierung.|Explique la dernière exécution et sa vérification.
 suggest2|Show the sensor quality as a table.|Muestra la calidad de sensores en una tabla.|Zeige die Sensorqualität als Tabelle.|Présente la qualité des capteurs dans un tableau.
-suggest3|Draw a diagram of the cable routing workflow.|Dibuja el flujo de guiado del cable.|Zeichne den Ablauf der Kabelführung.|Dessine le processus de guidage du câble.
+suggest3|Draw the cheese classification and sorting workflow.|Dibuja el flujo de clasificación y separación de quesos.|Zeichne den Ablauf zur Käseklassifikation und Sortierung.|Dessine le processus de classification et de tri des fromages.
 message|Message|Mensaje|Nachricht|Message
 placeholder|Ask Kivof. Type /image for an illustration…|Pregunta a Kivof. Usa /image para ilustrar…|Kivof fragen. /image für eine Illustration…|Interrogez Kivof. /image pour une illustration…
 send|Send message|Enviar mensaje|Nachricht senden|Envoyer
@@ -296,7 +305,7 @@ next|Next slide|Siguiente diapositiva|Nächste Folie|Diapositive suivante
 fullscreen|Fullscreen|Pantalla completa|Vollbild|Plein écran
 print|Print deck|Imprimir presentación|Präsentation drucken|Imprimer
 slide|Slide|Diapositiva|Folie|Diapositive
-footer|Built for the THEKER challenge · HackSpain 2026|Para el reto THEKER · HackSpain 2026|Für die THEKER-Challenge · HackSpain 2026|Pour le défi THEKER · HackSpain 2026
+footer|Built for Cheese Factory · HPE & NVIDIA · Geneva 2026|Para Cheese Factory · HPE y NVIDIA · Ginebra 2026|Für Cheese Factory · HPE & NVIDIA · Genf 2026|Pour Cheese Factory · HPE et NVIDIA · Genève 2026
 proof|Harness Forge|Harness Forge|Harness Forge|Harness Forge
 sessionOnly|Conversation is saved to this workspace. Voice captions stay in this session.|La conversación se guarda. Los subtítulos de voz quedan en esta sesión.|Gespräche werden gespeichert. Sprachtexte bleiben in dieser Sitzung.|La conversation est enregistrée. Les sous-titres vocaux restent dans cette session.
 clearHistory|Clear visible conversation; the audit record is retained.|Borrar conversación visible; se conserva la auditoría.|Sichtbares Gespräch löschen; Prüfprotokoll bleibt erhalten.|Effacer la conversation visible ; l’audit est conservé.

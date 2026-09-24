@@ -3,8 +3,8 @@ export const es: Slide[] = [
   {
     label: "KIVOF / IA FÍSICA",
     title: "Cada ejecución.\nUn siguiente paso mejor.",
-    body: "El espacio de evidencias para operaciones robóticas industriales y aprendizaje.",
-    points: ["THEKER · HackSpain 2026", "Demostrador Harness Forge"],
+    body: "El espacio de evidencias para una línea simulada de clasificación de quesos.",
+    points: ["HPE y NVIDIA · Ginebra 2026", "Cheese Factory · Harness Forge"],
     note: "Demostrador de software. La autonomía física requiere validación y puesta en marcha independientes.",
     visual: "cell",
   },
@@ -33,15 +33,15 @@ export const es: Slide[] = [
     visual: "loop",
   },
   {
-    label: "03 / HARNESS FORGE",
-    title: "Un cable.\nTres guías.\nUn resultado verificable.",
-    body: "La prueba THEKER se centra en guiar cables e insertar conectores con variaciones controladas.",
+    label: "03 / CHEESE FACTORY",
+    title: "Un queso.\nEl contenedor correcto.\nUna decisión verificable.",
+    body: "Una cámara observa la cinta. La clasificación elige el contenedor. Una prueba acotada registra la colocación y los rechazos.",
     points: [
-      "Ensamblaje nominal",
-      "Oclusión de cámara",
-      "Pico de fuerza y recuperación acotada",
+      "Clasificar y colocar en el contenedor previsto",
+      "Retener observaciones inciertas o caducadas",
+      "Conservar los fallos de colocación para revisión",
     ],
-    note: "La simulación CPU produce evidencias inspeccionables. Isaac Sim y los ensayos físicos son capacidades independientes.",
+    note: "La simulación determinista y los ensayos nativos de Isaac tienen orígenes distintos. Un resultado simulado no es validación física.",
     visual: "proof",
   },
   {
@@ -89,7 +89,7 @@ export const es: Slide[] = [
       "Conectar y validar hardware compatible",
       "Evaluar una tarea física reservada",
     ],
-    note: "Kivof · Reto THEKER · Desarrollado por JO · 20 de septiembre de 2026",
+    note: "Kivof · Cheese Factory · Desarrollado por JO · 24 de septiembre de 2026",
     visual: "cell",
   },
 ];

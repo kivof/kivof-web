@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CheeseLine } from "@/components/ui/data-display/CheeseLine/CheeseLine";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import {
   Preferences,
   usePreferences,
@@ -44,7 +44,7 @@ export function SignIn() {
         <section className={styles.visual}>
           <span>{t.eyebrow}</span>
           <h1>{t.signInTitle}</h1>
-          <RecordedScene title={t.sceneTitle} />
+          <CheeseLine copy={t} />
           <p>{t.localAuthority}</p>
         </section>
         <section className={styles.formPanel}>

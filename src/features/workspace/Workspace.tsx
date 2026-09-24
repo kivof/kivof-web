@@ -83,7 +83,7 @@ export function Workspace({
             <Icon name="shield" />
             <p>{t.localAuthority}</p>
           </div>
-          <Link href="/deck/JO202609190900">
+          <Link href="/deck/JO202609240900">
             <Icon name="expand" size={17} />
             {t.deck}
           </Link>

@@ -1,0 +1,97 @@
+.scene {
+  --diagram-line: 2;
+  --diagram-arm: 22;
+  --diagram-dot: 5;
+  margin: 0;
+  width: 100%;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.labels {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem;
+  font: 0.65rem var(--fontMono);
+  color: var(--muted);
+}
+.scene svg {
+  width: 100%;
+  height: auto;
+}
+.grid {
+  stroke: var(--line);
+  opacity: 0.45;
+  fill: none;
+}
+.belt,
+.robotBase {
+  fill: var(--raised);
+  stroke: var(--muted);
+  stroke-width: var(--diagram-line);
+}
+.rail {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: var(--diagram-line);
+}
+.cheese {
+  fill: var(--accentSoft);
+  stroke: var(--accent);
+  stroke-width: var(--diagram-line);
+}
+.hole,
+.binMark {
+  fill: var(--accent);
+}
+.scan {
+  fill: var(--accentSoft);
+  fill-opacity: 0.3;
+  stroke: var(--accent);
+  stroke-dasharray: 4 5;
+}
+.camera,
+.joint,
+.bin {
+  fill: var(--panel);
+  stroke: var(--muted);
+  stroke-width: var(--diagram-line);
+}
+.lens {
+  fill: var(--accent);
+}
+.arm {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: var(--diagram-arm);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.gripper {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: var(--diagram-dot);
+  stroke-linecap: round;
+}
+.route {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: var(--diagram-line);
+  stroke-dasharray: 5 7;
+}
+.scene figcaption {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.scene figcaption strong {
+  color: var(--ink);
+  font-weight: 500;
+}

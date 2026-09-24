@@ -3,8 +3,8 @@ export const de: Slide[] = [
   {
     label: "KIVOF / PHYSISCHE KI",
     title: "Jeder Lauf.\nEin besserer nächster Schritt.",
-    body: "Der Nachweis-Arbeitsbereich für industrielle Roboteroperationen und Lernen.",
-    points: ["THEKER · HackSpain 2026", "Harness-Forge-Demonstrator"],
+    body: "Der Nachweis-Arbeitsbereich für eine simulierte Käsesortierlinie.",
+    points: ["HPE & NVIDIA · Genf 2026", "Cheese Factory · Harness Forge"],
     note: "Software-Demonstrator. Physische Autonomie und Inbetriebnahme benötigen separate Validierung.",
     visual: "cell",
   },
@@ -33,15 +33,15 @@ export const de: Slide[] = [
     visual: "loop",
   },
   {
-    label: "03 / HARNESS FORGE",
-    title: "Ein Kabel.\nDrei Führungen.\nEin prüfbares Ergebnis.",
-    body: "Der THEKER-Nachweis betrifft Kabelführung und Steckermontage unter kontrollierter Variation.",
+    label: "03 / CHEESE FACTORY",
+    title: "Ein Käse.\nDer richtige Behälter.\nEine prüfbare Entscheidung.",
+    body: "Eine Kamera beobachtet das Förderband. Die Klassifikation wählt den Behälter. Ein begrenzter Sortierversuch zeichnet Ablage und Ablehnungen auf.",
     points: [
-      "Nominale Montage",
-      "Kameraverdeckung",
-      "Kraftspitze und begrenzte Wiederherstellung",
+      "Klassifizieren und im Zielbehälter ablegen",
+      "Unsichere oder veraltete Beobachtungen zurückhalten",
+      "Ablagefehler zur Prüfung bewahren",
     ],
-    note: "CPU-Simulation liefert prüfbare Nachweise. Isaac Sim und physische Versuche sind separate Laufzeitfähigkeiten.",
+    note: "Deterministische Sortiersimulation und native Isaac-Versuche tragen getrennte Herkunftsangaben. Simulation ist keine physische Validierung.",
     visual: "proof",
   },
   {
@@ -89,7 +89,7 @@ export const de: Slide[] = [
       "Kompatible Hardware verbinden und einrichten",
       "Eine zurückgehaltene physische Aufgabe evaluieren",
     ],
-    note: "Kivof · THEKER-Challenge · Entwickelt von JO · 20. September 2026",
+    note: "Kivof · Cheese Factory · Entwickelt von JO · 24. September 2026",
     visual: "cell",
   },
 ];

@@ -3,8 +3,8 @@ export const fr: Slide[] = [
   {
     label: "KIVOF / IA PHYSIQUE",
     title: "Chaque exécution.\nUne meilleure prochaine étape.",
-    body: "L’espace de preuves pour les opérations robotiques industrielles et l’apprentissage.",
-    points: ["THEKER · HackSpain 2026", "Démonstrateur Harness Forge"],
+    body: "L’espace de preuves pour une ligne simulée de tri des fromages.",
+    points: ["HPE et NVIDIA · Genève 2026", "Cheese Factory · Harness Forge"],
     note: "Démonstrateur logiciel. L’autonomie physique et la mise en service exigent une validation distincte.",
     visual: "cell",
   },
@@ -33,15 +33,15 @@ export const fr: Slide[] = [
     visual: "loop",
   },
   {
-    label: "03 / HARNESS FORGE",
-    title: "Un câble.\nTrois guides.\nUn résultat vérifiable.",
-    body: "La preuve THEKER porte sur le guidage de câble et l’insertion de connecteur sous variations contrôlées.",
+    label: "03 / CHEESE FACTORY",
+    title: "Un fromage.\nLe bon bac.\nUne décision vérifiable.",
+    body: "Une caméra observe le convoyeur. La classification choisit un bac. Un essai borné enregistre la dépose et les rejets.",
     points: [
-      "Assemblage nominal",
-      "Occlusion caméra",
-      "Pic de force et récupération bornée",
+      "Classifier et déposer dans le bac prévu",
+      "Suspendre les observations incertaines ou périmées",
+      "Conserver les échecs de dépose pour la revue",
     ],
-    note: "La simulation CPU fournit des preuves inspectables. Isaac Sim et les essais physiques sont des capacités distinctes.",
+    note: "La simulation déterministe et les essais Isaac natifs ont des provenances distinctes. Un résultat simulé ne constitue pas une validation physique.",
     visual: "proof",
   },
   {
@@ -89,7 +89,7 @@ export const fr: Slide[] = [
       "Connecter et valider le matériel compatible",
       "Évaluer une tâche physique réservée",
     ],
-    note: "Kivof · Défi THEKER · Développé par JO · 20 septembre 2026",
+    note: "Kivof · Cheese Factory · Développé par JO · 24 septembre 2026",
     visual: "cell",
   },
 ];

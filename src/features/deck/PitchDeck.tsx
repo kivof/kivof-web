@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { CheeseLine } from "@/components/ui/data-display/CheeseLine/CheeseLine";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import {
   Preferences,
   usePreferences,
@@ -13,7 +13,7 @@ import styles from "./PitchDeckStyles.module.css";
 function Visual({ slide }: { slide: Slide }) {
   const { t } = usePreferences();
   if (slide.visual === "cell" || slide.visual === "proof")
-    return <RecordedScene title={t.sceneTitle} />;
+    return <CheeseLine copy={t} />;
   return (
     <div className={styles.visual}>
       {slide.visual === "layers"
@@ -93,7 +93,7 @@ export function PitchDeck() {
         <Link href="/" className={styles.brand}>
           kivof.
         </Link>
-        <span>HARNESS FORGE / THEKER</span>
+        <span>{t.challengeLabel}</span>
         <div>
           <Preferences />
           <button

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
+import { CheeseLine } from "@/components/ui/data-display/CheeseLine/CheeseLine";
 import { Icon } from "@/components/ui/data-display/Icon/Icon";
-import { RecordedScene } from "@/components/ui/data-display/RecordedScene/RecordedScene";
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import {
   Preferences,
@@ -17,7 +17,7 @@ export function Landing() {
           <span>K</span>kivof<span className={styles.brandDot}>.</span>
         </Link>
         <nav>
-          <Link href="/deck/JO202609190900">{t.deck}</Link>
+          <Link href="/deck/JO202609240900">{t.deck}</Link>
           <Preferences />
           <Link className={styles.smallButton} href="/login">
             {t.signIn}
@@ -42,7 +42,7 @@ export function Landing() {
                 {t.openDemo}
                 <Icon name="arrow" />
               </Link>
-              <Link href="/deck/JO202609190900">
+              <Link href="/deck/JO202609240900">
                 {t.deck}
                 <Icon name="chevron" size={15} />
               </Link>
@@ -54,10 +54,10 @@ export function Landing() {
           </div>
           <div className={styles.heroVisual}>
             <div className={styles.visualBar}>
-              <span>{t.sceneTitle}</span>
+              <span>{t.factorySceneTitle}</span>
               <Badge tone="good">{t.simulationBadge}</Badge>
             </div>
-            <RecordedScene title={t.sceneTitle} />
+            <CheeseLine copy={t} />
             <div className={styles.flow}>
               {["flow1", "flow2", "flow3", "flow4"].map((key, index) => (
                 <div key={key}>
@@ -80,7 +80,7 @@ export function Landing() {
         </section>
         <section className={styles.control}>
           <div>
-            <span className={styles.eyebrow}>KIVOF / THEKER</span>
+            <span className={styles.eyebrow}>{t.challengeLabel}</span>
             <h2>{t.controlTitle}</h2>
             <p>{t.controlBody}</p>
           </div>
