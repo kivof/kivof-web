@@ -97,7 +97,16 @@
   font-size: 0.65rem;
   margin-top: 1rem;
 }
-.error {
+.demoAccess button {
+  width: 100%;
+}
+.separator {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+.formPanel > .error {
   color: var(--danger);
   font-size: 0.75rem;
 }

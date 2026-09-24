@@ -26,8 +26,9 @@ async function handle(
     }
     const data = await proxyRequest(request, path);
     if (path === "realtime/session") data.url = settings.realtime;
-    const token = path === "auth/login" ? data.token : undefined;
-    if (path === "auth/login") {
+    const startsSession = path === "auth/login" || path === "auth/demo";
+    const token = startsSession ? data.token : undefined;
+    if (startsSession) {
       if (typeof token !== "string" || !token || token.length >= 4096)
         throw new ApiError(502, "invalid_response");
       delete data.token;

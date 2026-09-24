@@ -9,6 +9,7 @@ import {
 
 const routes: Record<string, string[]> = {
   "auth/login": ["POST"],
+  "auth/demo": ["POST"],
   "auth/me": ["GET"],
   "auth/logout": ["POST"],
   overview: ["GET"],
@@ -69,14 +70,25 @@ export async function proxyRequest(request: NextRequest, path: string) {
   const settings = config();
   if (!allowedRoute(path, request.method)) throw new ApiError(404, "not_found");
   if (request.method !== "GET") verifyOrigin(request);
+  if (path === "auth/demo" && !settings.demoLoginEnabled)
+    throw new ApiError(403, "demo_login_disabled");
   if (!settings.backend) throw new ApiError(503, "configuration_missing");
   const token = request.cookies.get(settings.cookieName)?.value;
-  if (path !== "auth/login" && !token) throw new ApiError(401, "unauthorized");
+  if (path !== "auth/login" && path !== "auth/demo" && !token)
+    throw new ApiError(401, "unauthorized");
   const body =
     request.method === "GET"
       ? undefined
       : await boundedText(request, settings.maxBodyBytes);
-  if (body) jsonObject(JSON.parse(body));
+  if (path === "auth/demo") {
+    let input: Record<string, unknown>;
+    try {
+      input = jsonObject(JSON.parse(body ?? ""));
+    } catch {
+      throw new ApiError(400, "invalid_request");
+    }
+    if (Object.keys(input).length) throw new ApiError(400, "invalid_request");
+  } else if (body) jsonObject(JSON.parse(body));
   const headers = upstreamHeaders(request.headers, token);
   const upstream = await fetch(`${settings.backend}/v1/${path}`, {
     method: request.method,

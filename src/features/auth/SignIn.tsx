@@ -8,27 +8,33 @@ import {
   Preferences,
   usePreferences,
 } from "@/features/preferences/Preferences";
+import { startDemoSession } from "@/lib/api/auth";
 import { api } from "@/lib/api/client";
 import styles from "./SignInStyles.module.css";
-export function SignIn() {
+export function SignIn({ demoEnabled }: { demoEnabled: boolean }) {
   const { t } = usePreferences();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(false);
-  async function submit(event: React.FormEvent) {
+  const [busy, setBusy] = useState<"demo" | "password" | null>(null);
+  const [error, setError] = useState<"demo" | "password" | null>(null);
+  function submit(event: React.FormEvent) {
     event.preventDefault();
-    setBusy(true);
-    setError(false);
+    void login("password");
+  }
+  async function login(method: "demo" | "password") {
+    if (busy) return;
+    setBusy(method);
+    setError(null);
     try {
-      await api("auth/login", { email, password });
+      if (method === "demo") await startDemoSession();
+      else await api("auth/login", { email, password });
       setPassword("");
       router.push("/workspace");
     } catch {
-      setError(true);
+      setError(method);
     } finally {
-      setBusy(false);
+      setBusy(null);
     }
   }
   return (
@@ -50,7 +56,26 @@ export function SignIn() {
         <section className={styles.formPanel}>
           <span className={styles.mark}>K</span>
           <h2>{t.signIn}</h2>
-          <p>{t.signInBody}</p>
+          <p>{demoEnabled ? t.demoSignInBody : t.signInBody}</p>
+          {demoEnabled && (
+            <div className={styles.demoAccess}>
+              <button
+                disabled={busy !== null}
+                type="button"
+                onClick={() => void login("demo")}
+              >
+                {busy === "demo" ? t.loading : t.tryDemo}
+                <Icon name="arrow" />
+              </button>
+              <small>{t.demoSessionNote}</small>
+              <p className={styles.separator}>{t.orUseCredentials}</p>
+            </div>
+          )}
+          {error && (
+            <p role="alert" className={styles.error}>
+              {error === "demo" ? t.demoAuthError : t.authError}
+            </p>
+          )}
           <form onSubmit={submit}>
             <label>
               {t.email}
@@ -74,13 +99,8 @@ export function SignIn() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </label>
-            {error && (
-              <p role="alert" className={styles.error}>
-                {t.authError}
-              </p>
-            )}
-            <button disabled={busy} type="submit">
-              {busy ? t.loading : t.signIn}
+            <button disabled={busy !== null} type="submit">
+              {busy === "password" ? t.loading : t.signIn}
               <Icon name="arrow" />
             </button>
           </form>

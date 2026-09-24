@@ -49,6 +49,8 @@ export function upstreamErrorCode(value: unknown): string | undefined {
     "unauthorized",
     "invalid_request",
     "rate_limited",
+    "request_budget_exhausted",
+    "demo_login_disabled",
     "model_unavailable_or_output_rejected",
     "provider_unavailable",
     "review_rejected",

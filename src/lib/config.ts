@@ -13,6 +13,7 @@ export function config() {
     origin: checkedUrl(process.env.APP_ORIGIN, ["http:", "https:"]),
     realtime: checkedUrl(process.env.REALTIME_CALL_URL, ["https:"]),
     secureCookie: process.env.SESSION_COOKIE_SECURE !== "false",
+    demoLoginEnabled: process.env.DEMO_LOGIN_ENABLED === "true",
     surface: process.env.KIVOF_SURFACE ?? "product",
     cookieName: "kivof_session",
     sessionSeconds: 8 * 60 * 60,
