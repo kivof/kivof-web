@@ -11,6 +11,7 @@ import {
   parseObservationInput,
   type FactoryRecord as Record,
 } from "@/lib/models/factory";
+import { factorySimulationInput } from "@/lib/models/factoryNative";
 import { factoryCopy } from "./copy";
 import { FactoryLabelReview } from "./FactoryLabelReview";
 import { FactoryRecord } from "./FactoryRecord";
@@ -20,6 +21,8 @@ export function FactoryPanel() {
   const { t: shared, locale } = usePreferences();
   const t = { ...shared, ...factoryCopy[locale] };
   const [scenario, setScenario] = useState("nominal");
+  const [engine, setEngine] = useState("cpu");
+  const [failedEngine, setFailedEngine] = useState("");
   const [scenarios, setScenarios] = useState<string[]>([...factoryScenarios]);
   const [records, setRecords] = useState<Record[]>([]);
   const [selected, setSelected] = useState("");
@@ -56,7 +59,7 @@ export function FactoryPanel() {
     try {
       const body = importing
         ? parseObservationInput(observation)
-        : { scenario };
+        : factorySimulationInput(scenario, engine);
       const result = parseFactoryRecord(
         await api(importing ? "factory/analyze" : "factory/simulate", body),
       );
@@ -68,7 +71,10 @@ export function FactoryPanel() {
       window.dispatchEvent(new Event("kivof:workspace-changed"));
     } catch {
       if (importing) setImportError(true);
-      else setError(true);
+      else {
+        setError(true);
+        setFailedEngine(engine);
+      }
     } finally {
       setBusy(false);
     }
@@ -77,6 +83,17 @@ export function FactoryPanel() {
     <div className={styles.factory}>
       <p className={styles.intro}>{t.intro}</p>
       <div className={styles.toolbar}>
+        <label>
+          {t.factoryEngine}
+          <select
+            value={engine}
+            disabled={busy}
+            onChange={(event) => setEngine(event.target.value)}
+          >
+            <option value="cpu">{t.factoryCpu}</option>
+            <option value="isaac">{t.factoryIsaac}</option>
+          </select>
+        </label>
         <label>
           {t.scenario}
           <select
@@ -110,10 +127,12 @@ export function FactoryPanel() {
           <Icon name="activity" size={18} />
         </button>
       </div>
-      <p className={styles.notice}>{t.simulationNote}</p>
+      <p className={styles.notice}>
+        {engine === "isaac" ? t.nativeRequestNote : t.simulationNote}
+      </p>
       {error && (
         <p role="alert" className={styles.error}>
-          {t.error}{" "}
+          {failedEngine === "isaac" ? t.nativeUnavailable : t.error}{" "}
           <button type="button" onClick={() => void refresh()}>
             {t.retry}
           </button>
@@ -131,7 +150,12 @@ export function FactoryPanel() {
             >
               {records.map((record) => (
                 <option key={record.id} value={record.id}>
-                  {t[record.scenario ?? ""] ?? t.analyze} ·{" "}
+                  {record.source === "isaac-sim"
+                    ? "Isaac Sim"
+                    : record.source === "cpu-cheese-factory-simulation"
+                      ? "CPU"
+                      : t.analyze}{" "}
+                  · {t[record.scenario ?? ""] ?? t.analyze} ·{" "}
                   {t[record.status] ?? record.status} ·{" "}
                   {new Date(record.created_at).toLocaleString(locale)}
                 </option>

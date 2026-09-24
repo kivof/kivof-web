@@ -205,3 +205,40 @@
 .reviewHistory li {
   margin: 0.8rem 0;
 }
+
+.nativeGrid {
+  display: grid;
+  gap: 1.2rem;
+}
+.nativeFrame {
+  margin: 0;
+  max-width: 32rem;
+}
+.nativeFrame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radiusSmall);
+}
+.nativeFrame figcaption {
+  color: var(--muted);
+  font-size: 0.72rem;
+  margin-top: 0.5rem;
+}
+.nativeFrame code {
+  display: block;
+  overflow-wrap: anywhere;
+  margin-top: 0.35rem;
+}
+.nativeFrame label {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  margin-top: 0.7rem;
+}
+@media (min-width: 58rem) {
+  .nativeGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

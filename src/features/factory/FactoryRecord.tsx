@@ -2,6 +2,7 @@ import { AnswerBlocks } from "@/components/ui/data-display/AnswerBlocks/AnswerBl
 import { Badge } from "@/components/ui/feedback/Badge/Badge";
 import type { Locale } from "@/lib/i18n";
 import type { FactoryRecord as FactoryEvidence } from "@/lib/models/factory";
+import { FactoryNativeEvidence } from "./FactoryNativeEvidence";
 import styles from "./FactoryStyles.module.css";
 
 export function FactoryRecord({
@@ -30,6 +31,21 @@ export function FactoryRecord({
         </span>
         <code>{record.id}</code>
       </div>
+      <p className={styles.notice}>
+        {record.native
+          ? t.nativeResultNote
+          : record.source === "cpu-cheese-factory-simulation"
+            ? t.simulationNote
+            : t.submittedOrigin}
+      </p>
+      {record.native && (
+        <FactoryNativeEvidence
+          key={record.id}
+          native={record.native}
+          copy={t}
+          locale={locale}
+        />
+      )}
       {!record.origin_verified && (
         <p className={styles.notice}>{t.submittedOrigin}</p>
       )}
@@ -60,11 +76,19 @@ export function FactoryRecord({
           <dl>
             <div>
               <dt>{t.age_ms}</dt>
-              <dd>{number.format(record.quality.age_ms)} ms</dd>
+              <dd>
+                {record.quality.age_ms == null
+                  ? t.unknown
+                  : `${number.format(record.quality.age_ms)} ms`}
+              </dd>
             </div>
             <div>
               <dt>{t.max_skew_ms}</dt>
-              <dd>{number.format(record.quality.max_skew_ms)} ms</dd>
+              <dd>
+                {record.quality.max_skew_ms == null
+                  ? t.unknown
+                  : `${number.format(record.quality.max_skew_ms)} ms`}
+              </dd>
             </div>
           </dl>
           {record.quality.issues.length > 0 && (

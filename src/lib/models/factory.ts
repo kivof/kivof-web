@@ -1,3 +1,4 @@
+import { type FactoryNative, parseFactoryNative } from "./factoryNative";
 import {
   type FactoryLabelReview,
   factoryRevision,
@@ -15,6 +16,7 @@ export const factoryScenarios = [
 ] as const;
 export type FactoryScenario = (typeof factoryScenarios)[number];
 export type FactoryRecord = {
+  native: FactoryNative | null;
   revision: number;
   review: FactoryLabelReview | null;
   reviews: FactoryLabelReview[];
@@ -34,8 +36,8 @@ export type FactoryRecord = {
   quality: {
     passed: boolean;
     issues: string[];
-    age_ms: number;
-    max_skew_ms: number;
+    age_ms: number | null;
+    max_skew_ms: number | null;
   };
   verification: {
     passed: boolean;
@@ -106,8 +108,9 @@ export function parseFactoryRecord(raw: unknown): FactoryRecord {
     throw new Error("invalid_factory_decision");
   if (!["simulated", "recorded", "physical"].includes(text(value.data_origin)))
     throw new Error("invalid_factory_origin");
+  const native = parseFactoryNative(value);
   const observations =
-    value.observations == null ? null : object(value.observations);
+    native || value.observations == null ? null : object(value.observations);
   const nodes = array(ontology.nodes, 64).map((n) => {
     const node = object(n);
     return { id: text(node.id), type: text(node.type) };
@@ -133,6 +136,7 @@ export function parseFactoryRecord(raw: unknown): FactoryRecord {
   )
     throw new Error("invalid_factory_review_history");
   return {
+    native,
     revision,
     review,
     reviews,
@@ -152,8 +156,9 @@ export function parseFactoryRecord(raw: unknown): FactoryRecord {
     quality: {
       passed: boolean(quality.passed),
       issues: array(quality.issues, 32).map((v) => text(v)),
-      age_ms: number(quality.age_ms),
-      max_skew_ms: number(quality.max_skew_ms),
+      age_ms: quality.age_ms == null ? null : number(quality.age_ms),
+      max_skew_ms:
+        quality.max_skew_ms == null ? null : number(quality.max_skew_ms),
     },
     verification: {
       passed: boolean(verification.passed),
